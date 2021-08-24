@@ -6,23 +6,12 @@ import * as Yup from 'yup';
 import Typography from '@material-ui/core/Typography';
 import useStyles from './useStyles';
 import { CircularProgress } from '@material-ui/core';
+import { EmailPasswordInterface } from './EmailPasswordInterface';
 
 interface Props {
   handleSubmit: (
-    {
-      email,
-      password,
-    }: {
-      email: string;
-      password: string;
-    },
-    {
-      setStatus,
-      setSubmitting,
-    }: FormikHelpers<{
-      email: string;
-      password: string;
-    }>,
+    { email, password }: EmailPasswordInterface,
+    { setStatus, setSubmitting }: FormikHelpers<EmailPasswordInterface>,
   ) => void;
 }
 
