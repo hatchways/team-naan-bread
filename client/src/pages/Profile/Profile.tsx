@@ -4,6 +4,7 @@ import { useAuth } from '../../context/useAuthContext';
 import { useHistory } from 'react-router-dom';
 import { Box, Container, Link, MenuItem, MenuList } from '@material-ui/core';
 import ProfilePhoto from './ProfilePhoto/ProfilePhoto';
+import { Link as RouterLink } from 'react-router-dom';
 
 export default function Profile(): JSX.Element {
   const { loggedInUser } = useAuth();
@@ -24,7 +25,9 @@ export default function Profile(): JSX.Element {
           <Box>
             <MenuList>
               <MenuItem>
-                <Link href="#">Profile photo</Link>
+                <Link component={RouterLink} to="settings">
+                  Profile photo
+                </Link>
               </MenuItem>
               <MenuItem>My account</MenuItem>
             </MenuList>
