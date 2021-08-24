@@ -7,6 +7,7 @@ import { User } from '../../interface/User';
 import AvatarDisplay from '../AvatarDisplay/AvatarDisplay';
 import Search from '../Search/Search';
 import AuthMenu from '../AuthMenu/AuthMenu';
+import { Link as RouterLink } from 'react-router-dom';
 import { Link } from '@material-ui/core';
 
 interface Props {
@@ -30,7 +31,7 @@ const ChatSideBanner = ({ loggedInUser }: Props): JSX.Element => {
   return (
     <Grid className={classes.chatSideBanner}>
       <Box className={classes.userPanel}>
-        <Link href="/profile">
+        <Link component={RouterLink} to="settings">
           <AvatarDisplay loggedIn user={loggedInUser} />
         </Link>
         <Typography className={classes.userText} variant="h5">

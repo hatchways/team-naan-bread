@@ -48,7 +48,6 @@ export const AuthProvider: FunctionComponent = ({ children }): JSX.Element => {
       await loginWithCookies().then((data: AuthApiData) => {
         if (data.success) {
           updateLoginContext(data.success);
-          console.log(history);
           if (history.location.pathname === '/login' || history.location.pathname === '/register') {
             history.push('/dashboard');
           }
