@@ -8,10 +8,7 @@ const useStyles = makeStyles((theme) => ({
   photo: {
     width: 100,
     height: 100,
-    alignSelf: 'center',
-    alignContent: 'center',
     margin: 55,
-    display: 'flex',
   },
   delete_button: {
     alignSelf: 'center',
