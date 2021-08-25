@@ -1,12 +1,19 @@
 import Grid from '@material-ui/core/Grid';
 import { Avatar, Box, Button, Paper, Typography } from '@material-ui/core';
 import useStyles from './useStyles';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { useSnackBar } from '../../../context/useSnackbarContext';
 import { useDropzone } from 'react-dropzone';
+import uploadProfilePhoto from '../../../helpers/APICalls/uploadProfilePhoto';
+import { User } from '../../../interface/User';
+import deleteProfilePhoto from '../../../helpers/APICalls/deleteProfilePhoto';
 
-export default function ProfilePhoto(): JSX.Element {
+interface Props {
+  loggedInUser: User;
+}
+
+export default function ProfilePhoto({ loggedInUser }: Props): JSX.Element {
   const [photo, setPhoto] = useState<string | undefined>('');
   const classes = useStyles();
   const { updateSnackBarMessage } = useSnackBar();
@@ -19,20 +26,26 @@ export default function ProfilePhoto(): JSX.Element {
     },
   });
 
+  useEffect(() => {
+    setPhoto(loggedInUser.profile_photo_url);
+  }, [loggedInUser.profile_photo_url]);
+
   const changePhoto = (file: File | null) => {
     if (file) {
       const reader = new FileReader();
       reader.readAsDataURL(file);
-      reader.onloadend = () => {
+      reader.onloadend = async () => {
         if (reader.result) {
           setPhoto(reader.result.toString());
+          await uploadProfilePhoto(reader.result.toString());
           updateSnackBarMessage('new profile photo added');
         }
       };
     }
   };
-  const deletePhoto = () => {
+  const deletePhoto = async () => {
     setPhoto('');
+    await deleteProfilePhoto();
     updateSnackBarMessage('profile photo deleted');
   };
 
@@ -44,7 +57,7 @@ export default function ProfilePhoto(): JSX.Element {
             Profile photo
           </Typography>
 
-          <Avatar alt="Remy Sharp" src={photo!.toString()} className={classes.photo} />
+          <Avatar alt="Remy Sharp" src={photo} className={classes.photo} />
           <Box mb={10} display="flex" alignItems="center" justifyContent="center">
             <Typography align="center" variant="overline">
               be sure to use a photo that clearly shows your face
