@@ -12,7 +12,7 @@ const AuthHeader = ({ linkTo, btnText, linkText }: Props): JSX.Element => {
   const classes = useStyles();
 
   return (
-    <Box p={3} className={classes.authHeader}>
+    <Box p={2} className={classes.authHeader}>
       <Link to={linkTo} className={classes.underlinedLink}>
         <Button color="default">{linkText}</Button>
       </Link>

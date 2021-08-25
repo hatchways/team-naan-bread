@@ -84,10 +84,10 @@ export default function Login({ handleSubmit }: Props): JSX.Element {
             </Button>
             <div style={{ height: 80 }} />
             <Typography className={classes.donotHaveAnAccount}>
-              Dont have an account?
+              {'Dont have an account? '}
               {
                 <Link to="/signup" className={classes.signupLink}>
-                  Sign up
+                  {'Sign up'}
                 </Link>
               }
             </Typography>

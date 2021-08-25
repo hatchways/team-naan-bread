@@ -23,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
   link: { textDecoration: 'none' },
   underlinedLink: {
     marginRight: 30,
+    fontWeight: 'bold',
   },
   loginBtn: {
     width: 130,

@@ -37,8 +37,8 @@ const useStyles = makeStyles((theme) => ({
     justifySelf: 'center',
     alignContent: 'center',
     justifyContent: 'center',
-    padding: 80,
-    margin: 30,
+    padding: '2rem 7rem',
+    margin: '3rem',
   },
 }));
 
