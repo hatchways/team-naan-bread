@@ -16,7 +16,7 @@ const AuthHeader = ({ linkTo, btnText, linkText }: Props): JSX.Element => {
       <Link to={linkTo} className={classes.underlinedLink}>
         <Button color="default">{linkText}</Button>
       </Link>
-      <AuthHeaderButton linkTo="/signup" btnText={btnText} btnType="signup" />
+      <AuthHeaderButton linkTo={linkTo} btnText={btnText} />
     </Box>
   );
 };

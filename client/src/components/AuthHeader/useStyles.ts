@@ -25,17 +25,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight: 30,
     fontWeight: 'bold',
   },
-  loginBtn: {
-    width: 130,
-    height: 44,
-    borderRadius: 0,
-    filter: 'drop-shadow(0px 2px 6px rgba(74,106,149,0.2))',
-    backgroundColor: theme.palette.secondary.main,
-    color: theme.palette.primary.main,
-    boxShadow: 'none',
-    marginRight: 10,
-  },
-  signupBtn: {
+  btn: {
     width: 130,
     height: 44,
     borderRadius: 0,
