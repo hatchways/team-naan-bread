@@ -10,10 +10,10 @@ const useStyles = makeStyles(() => ({
   authWrapper: {
     display: 'flex',
     alignItems: 'flex-start',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start',
     flexDirection: 'column',
     minHeight: '100vh',
-    paddingTop: 23,
+    backgroundColor: 'red',
   },
   welcome: {
     fontSize: 26,
@@ -21,6 +21,17 @@ const useStyles = makeStyles(() => ({
     color: '#000000',
     fontWeight: 700,
     fontFamily: "'Open Sans'",
+  },
+  sitterText: {
+    alignSelf: 'center',
+    color: 'black',
+  },
+  header: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: '100vw',
   },
 }));
 
