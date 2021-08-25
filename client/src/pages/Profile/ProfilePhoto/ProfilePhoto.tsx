@@ -57,7 +57,7 @@ export default function ProfilePhoto({ loggedInUser }: Props): JSX.Element {
             Profile photo
           </Typography>
 
-          <Avatar alt="Remy Sharp" src={photo} className={classes.photo} />
+          <Avatar src={photo} className={classes.photo} />
           <Box mb={10} display="flex" alignItems="center" justifyContent="center">
             <Typography align="center" variant="overline">
               be sure to use a photo that clearly shows your face
