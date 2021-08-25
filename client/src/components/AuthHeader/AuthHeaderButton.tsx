@@ -5,17 +5,12 @@ import useStyles from './useStyles';
 interface Props {
   linkTo: string;
   btnText?: string;
-  btnType?: string;
 }
-const AuthHeaderButton = ({ linkTo, btnText, btnType }: Props): JSX.Element => {
+const AuthHeaderButton = ({ linkTo, btnText }: Props): JSX.Element => {
   const classes = useStyles();
   return (
     <Link to={linkTo} className={classes.link}>
-      <Button
-        color={btnType == 'login' ? 'primary' : 'secondary'}
-        className={btnType == 'login' ? classes.loginBtn : classes.signupBtn}
-        variant="outlined"
-      >
+      <Button color="primary" className={classes.btn} variant="outlined">
         {btnText}
       </Button>
     </Link>

@@ -7,12 +7,12 @@ import Typography from '@material-ui/core/Typography';
 import useStyles from './useStyles';
 import { CircularProgress } from '@material-ui/core';
 import { Link } from 'react-router-dom';
-import { EmailPasswordInterface } from './EmailPasswordInterface';
+import { AuthInterface } from '../../../interface/AuthInterface';
 
 interface Props {
   handleSubmit: (
-    { email, password }: EmailPasswordInterface,
-    { setStatus, setSubmitting }: FormikHelpers<EmailPasswordInterface>,
+    { email, password }: AuthInterface,
+    { setStatus, setSubmitting }: FormikHelpers<AuthInterface>,
   ) => void;
 }
 

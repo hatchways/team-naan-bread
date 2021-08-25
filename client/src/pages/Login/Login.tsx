@@ -10,7 +10,7 @@ import AuthHeader from '../../components/AuthHeader/AuthHeader';
 import LogoHeader from '../../components/LogoHeader/LogoHeader';
 import { useAuth } from '../../context/useAuthContext';
 import { useSnackBar } from '../../context/useSnackbarContext';
-import { EmailPasswordInterface } from './LoginForm/EmailPasswordInterface';
+import { AuthInterface } from '../../interface/AuthInterface';
 import logo from '../../Images/logo.png';
 
 export default function Login(): JSX.Element {
@@ -18,10 +18,7 @@ export default function Login(): JSX.Element {
   const { updateLoginContext } = useAuth();
   const { updateSnackBarMessage } = useSnackBar();
 
-  const handleSubmit = (
-    { email, password }: EmailPasswordInterface,
-    { setSubmitting }: FormikHelpers<EmailPasswordInterface>,
-  ) => {
+  const handleSubmit = ({ email, password }: AuthInterface, { setSubmitting }: FormikHelpers<AuthInterface>) => {
     login(email, password).then((data) => {
       if (data.error) {
         setSubmitting(false);
