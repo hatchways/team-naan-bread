@@ -51,10 +51,8 @@ export default function Register(): JSX.Element {
               <AuthHeader linkTo="/login" btnText="LOGIN" linkText="BECOME A SITTER" />
             </Box>
           </Grid>
-          <Grid container xs={12} sm={6} md={6} elevation={6} component={Paper} className={classes.formCard}>
-            <Grid item xs={12} sm={8} md={8} className={classes.formContainer}>
-              <SignUpForm handleSubmit={handleSubmit} />
-            </Grid>
+          <Grid item xs={12} sm={6} md={6} elevation={6} component={Paper} className={classes.formCard}>
+            <SignUpForm handleSubmit={handleSubmit} />
           </Grid>
         </Box>
       </Grid>

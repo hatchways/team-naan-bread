@@ -15,22 +15,12 @@ const useStyles = makeStyles((theme) => ({
     minHeight: '100vh',
     backgroundColor: theme.palette.secondary.main,
   },
-  welcome: {
-    fontSize: 26,
-    paddingBottom: 20,
-    color: '#000000',
-    fontWeight: 700,
-    fontFamily: "'Open Sans'",
-  },
   header: {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     width: '100vw',
-  },
-  formContainer: {
-    backgroundColor: theme.palette.secondary.main,
   },
   formCard: {
     alignSelf: 'center',
@@ -39,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     padding: '2rem 7rem',
     margin: '2rem',
+    backgroundColor: theme.palette.secondary.main,
   },
 }));
 

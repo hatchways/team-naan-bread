@@ -46,10 +46,8 @@ export default function Login(): JSX.Element {
               <AuthHeader linkTo="/signup" btnText="SIGN UP" linkText="BECOME A SITTER" />
             </Box>
           </Grid>
-          <Grid container xs={12} sm={6} md={6} elevation={6} component={Paper} className={classes.formCard}>
-            <Grid item xs={12} sm={8} md={8} className={classes.formContainer}>
-              <LoginForm handleSubmit={handleSubmit} />
-            </Grid>
+          <Grid item xs={12} sm={6} md={6} elevation={6} component={Paper} className={classes.formCard}>
+            <LoginForm handleSubmit={handleSubmit} />
           </Grid>
         </Box>
       </Grid>
