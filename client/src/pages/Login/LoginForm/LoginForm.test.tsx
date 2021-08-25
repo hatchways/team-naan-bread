@@ -19,7 +19,7 @@ describe('LoginForm tests', () => {
     expect(email).toBeInTheDocument();
     const password = getByLabelText('Password');
     expect(password).toBeInTheDocument();
-    const login = getByText('Login');
+    const login = getByText('LOGIN');
     expect(login).toBeInTheDocument();
 
     fireEvent.change(email, { target: { value: 'testUser@gmail.com' } });

@@ -5,8 +5,7 @@ import { Formik, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 import Typography from '@material-ui/core/Typography';
 import useStyles from './useStyles';
-import { CircularProgress } from '@material-ui/core';
-import { Link } from 'react-router-dom';
+import { CircularProgress, Link } from '@material-ui/core';
 
 interface Props {
   handleSubmit: (
@@ -125,7 +124,7 @@ const SignUpForm = ({ handleSubmit }: Props): JSX.Element => {
             <Typography className={classes.alreadyHaveAnAccount}>
               {'Already have an account? '}
               {
-                <Link to="/login" className={classes.loginLink}>
+                <Link href="/login" className={classes.loginLink}>
                   {'Login'}
                 </Link>
               }
