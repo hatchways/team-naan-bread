@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     minHeight: '100vh',
     '& .MuiInput-underline:before': {
@@ -13,7 +13,7 @@ const useStyles = makeStyles(() => ({
     justifyContent: 'flex-start',
     flexDirection: 'column',
     minHeight: '100vh',
-    backgroundColor: 'red',
+    backgroundColor: theme.palette.secondary.main,
   },
   welcome: {
     fontSize: 26,
@@ -22,16 +22,23 @@ const useStyles = makeStyles(() => ({
     fontWeight: 700,
     fontFamily: "'Open Sans'",
   },
-  sitterText: {
-    alignSelf: 'center',
-    color: 'black',
-  },
   header: {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     width: '100vw',
+  },
+  formContainer: {
+    backgroundColor: theme.palette.secondary.main,
+  },
+  formCard: {
+    alignSelf: 'center',
+    justifySelf: 'center',
+    alignContent: 'center',
+    justifyContent: 'center',
+    padding: 80,
+    margin: 30,
   },
 }));
 

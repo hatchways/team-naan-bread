@@ -3,7 +3,6 @@ import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import { FormikHelpers } from 'formik';
-import Typography from '@material-ui/core/Typography';
 import useStyles from './useStyles';
 import login from '../../helpers/APICalls/login';
 import LoginForm from './LoginForm/LoginForm';
@@ -12,7 +11,6 @@ import LogoHeader from '../../components/LogoHeader/LogoHeader';
 import { useAuth } from '../../context/useAuthContext';
 import { useSnackBar } from '../../context/useSnackbarContext';
 import { EmailPasswordInterface } from './LoginForm/EmailPasswordInterface';
-import { Button, CardMedia, Link } from '@material-ui/core';
 import logo from '../../Images/logo.png';
 
 export default function Login(): JSX.Element {
@@ -48,28 +46,16 @@ export default function Login(): JSX.Element {
           <Grid container elevation={6} component={Paper} square>
             <Box className={classes.header}>
               <LogoHeader logo={logo} />
-              <AuthHeader
-                linkTo="/signup"
-                asideText="Don't have an account?"
-                btnText="Create account"
-                linkText="BECOME A SITTER"
-              />
+              <AuthHeader linkTo="/signup" btnText="SIGN UP" linkText="BECOME A SITTER" />
             </Box>
+          </Grid>
+          <Grid container xs={12} sm={6} md={6} elevation={6} component={Paper} className={classes.formCard}>
+            <Grid item xs={12} sm={8} md={8} className={classes.formContainer}>
+              <LoginForm handleSubmit={handleSubmit} />
+            </Grid>
           </Grid>
         </Box>
       </Grid>
     </Grid>
   );
 }
-
-// <Box width="100%" maxWidth={450} p={3} alignSelf="center">
-//   <Grid container>
-//     <Grid item xs>
-//       <Typography className={classes.welcome} component="h1" variant="h5">
-//         Welcome back!
-//       </Typography>
-//     </Grid>
-//   </Grid>
-//   <LoginForm handleSubmit={handleSubmit} />
-// </Box>
-// <Box p={1} alignSelf="center" />

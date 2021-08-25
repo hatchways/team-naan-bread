@@ -1,7 +1,5 @@
-import { Link } from 'react-router-dom';
 import useStyles from './useStyles';
-import { Typography } from '@material-ui/core';
-import { Button, CardMedia, Box } from '@material-ui/core';
+import { CardMedia, Box } from '@material-ui/core';
 
 interface Props {
   logo: string;
