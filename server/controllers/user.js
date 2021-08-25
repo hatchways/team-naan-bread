@@ -31,6 +31,9 @@ const deletePhoto = async (user) => {
 exports.uploadProfilePhoto = asyncHandler(async (req, res, next) => {
   const image = req.body.image;
   const user = await User.findById(req.user.id);
+  if (!user) {
+    res.sendStatus(403);
+  }
   if (user.profile_photo) {
     await deletePhoto(user);
   }
@@ -45,6 +48,10 @@ exports.uploadProfilePhoto = asyncHandler(async (req, res, next) => {
 });
 exports.deleteProfilePhoto = asyncHandler(async (req, res, next) => {
   const user = await User.findById(req.user.id);
+  if (!user) {
+    res.sendStatus(403);
+  }
+
   await deletePhoto(user);
   user.save();
 
