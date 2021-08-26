@@ -33,9 +33,6 @@ exports.postRequest = asyncHandler( async (req, res, next) => {
   const user = await User.findById(userId);
   const sitter = await User.findById(sitterId);
 
-  console.log(user)
-  console.log(sitter)
-
   if (!userId || !sitterId) {
     res.status(400);
     throw new Error("The request must have valid user and sitter.")
@@ -54,4 +51,25 @@ exports.postRequest = asyncHandler( async (req, res, next) => {
   });
 
   res.send(request);
+});
+
+// @route PUT /request/:id?status=approved or declined
+// @desc update request status finding by id
+// @access Private
+exports.updateRequest = asyncHandler( async (req, res, next) => {
+  const requestId = req.params.id;
+  const requestState = req.query.state
+
+  if (!requestId || !requestState) {
+    res.status(400);
+    throw new Error("Missing request ID or queried state");
+  }
+
+  const updatedRequest = await Request.findByIdAndUpdate(requestId, 
+    { [requestState]: true },
+    { new: true }
+  );
+
+  res.send(updatedRequest);
+
 });
