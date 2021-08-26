@@ -1,15 +1,13 @@
 const mongoose = require('mongoose');
 
 const requestSchema = mongoose.Schema({
-  user_id: {
-    type: Number,
-    required: true,
-    unique: true
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "user",
   },
-  sitter_id: {
-    type: Number,
-    required: true,
-    unique: true
+  sitterId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "user",
   },
   start: {
     type: Date,
