@@ -37,7 +37,7 @@ export default function ProfilePhoto({ loggedInUser }: Props): JSX.Element {
       reader.onloadend = async () => {
         if (reader.result) {
           setPhoto(reader.result.toString());
-          await uploadProfilePhoto(reader.result.toString());
+          await uploadProfilePhoto(file);
           updateSnackBarMessage('new profile photo added');
         }
       };

@@ -29,18 +29,17 @@ const deletePhoto = async (user) => {
 };
 
 exports.uploadProfilePhoto = asyncHandler(async (req, res, next) => {
-  const image = req.body.image;
+  const image = req.file;
   const user = await User.findById(req.user.id);
   if (!user) {
-    res.sendStatus(403);
+    return res.sendStatus(403);
   }
-  if (user.profile_photo) {
+  if (user.profile_photo.url) {
     await deletePhoto(user);
   }
-  const uploadedResponse = await cloudinary.uploader.upload(image);
   user.profile_photo = {
-    url: uploadedResponse.url,
-    public_id: uploadedResponse.public_id,
+    url: image.path,
+    public_id: image.filename,
   };
   user.save();
 
