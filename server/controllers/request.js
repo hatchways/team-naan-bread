@@ -35,12 +35,12 @@ exports.postRequest = asyncHandler( async (req, res, next) => {
 
   if (!userId || !sitterId) {
     res.status(400);
-    throw new Error("The request must have valid user and sitter.")
+    throw new Error("The request must have valid user and sitter.");
   }
 
   if (!start || !end) {
     res.status(400);
-    throw new Error("Requests must have start and end dates")
+    throw new Error("Requests must have start and end dates");
   }
 
   const request = await Request.create({
