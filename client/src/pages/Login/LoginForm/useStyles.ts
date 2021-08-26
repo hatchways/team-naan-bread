@@ -15,9 +15,14 @@ const useStyles = makeStyles((theme) => ({
     height: '2rem',
     padding: '5px',
   },
-  forgot: {
+  donotHaveAnAccount: {
     paddingRight: 10,
-    color: '#3a8dff',
+    color: '#000000',
+    fontWeight: 'bold',
+  },
+  signupLink: {
+    paddingRight: 10,
+    color: theme.palette.primary.main,
   },
   submit: {
     margin: theme.spacing(3, 2, 2),
@@ -27,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: theme.shape.borderRadius,
     marginTop: 49,
     fontSize: 16,
-    backgroundColor: '#3a8dff',
+    backgroundColor: theme.palette.primary.main,
     fontWeight: 'bold',
   },
 }));
