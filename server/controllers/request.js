@@ -57,19 +57,24 @@ exports.postRequest = asyncHandler( async (req, res, next) => {
 // @desc update request status finding by id
 // @access Private
 exports.updateRequest = asyncHandler( async (req, res, next) => {
-  const requestId = req.params.id;
-  const requestState = req.query.state
-
-  if (!requestId || !requestState) {
-    res.status(400);
-    throw new Error("Missing request ID or queried state");
+  const requestState = req.query.state;
+  const requestId = { _id: req.params.id };
+  try {
+    Request.findOneAndUpdate(
+      requestId,
+      { [requestState]: true },
+      { new: true },
+      function(err, doc) {
+        if (err) {
+          res.status(400).send("Request not found");
+        } else {
+          res.send(doc);
+        }
+      }
+    )
   }
-
-  const updatedRequest = await Request.findByIdAndUpdate(requestId, 
-    { [requestState]: true },
-    { new: true }
-  );
-
-  res.send(updatedRequest);
+  catch(error) {
+    res.status(400).send(error);
+  }
 
 });
