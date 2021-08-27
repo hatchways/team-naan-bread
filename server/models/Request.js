@@ -17,6 +17,12 @@ const requestSchema = mongoose.Schema({
     type: Date,
     required: true
   },
+  offest: {
+    type: Number,
+    required: true,
+    min: -12,
+    max: 12
+  },
   accepted: {
     type: Boolean,
     default: false
