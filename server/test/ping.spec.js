@@ -1,17 +1,13 @@
 const chai = require("chai");
 const chaiHttp = require("chai-http");
 const { app, server } = require("../app.js");
+const { dropDB, connectDB } = require("../db");
 var mongoose = require("mongoose");
 
 chai.should();
 chai.use(chaiHttp);
 
 describe(`TASK API`, () => {
-  after((done) => {
-    mongoose.connection.close();
-    server.close();
-    done();
-  });
   describe("/GET /", () => {
     it("it should return 200 and message", (done) => {
       chai
