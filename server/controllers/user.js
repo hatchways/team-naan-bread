@@ -32,7 +32,7 @@ exports.uploadProfilePhoto = asyncHandler(async (req, res, next) => {
   const image = req.file;
   const user = await User.findById(req.user.id);
   if (!user) {
-    return res.sendStatus(403);
+    return res.sendStatus(404);
   }
   if (user.profilePhoto.url) {
     await deletePhoto(user);
@@ -48,7 +48,7 @@ exports.uploadProfilePhoto = asyncHandler(async (req, res, next) => {
 exports.deleteProfilePhoto = asyncHandler(async (req, res, next) => {
   const user = await User.findById(req.user.id);
   if (!user) {
-    res.sendStatus(403);
+    return res.sendStatus(404);
   }
 
   await deletePhoto(user);
