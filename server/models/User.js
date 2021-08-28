@@ -20,9 +20,9 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  profile_photo: {
+  profilePhoto: {
     url: String,
-    public_id: String,
+    publicId: String,
   },
 });
 

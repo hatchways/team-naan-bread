@@ -34,12 +34,12 @@ exports.uploadProfilePhoto = asyncHandler(async (req, res, next) => {
   if (!user) {
     return res.sendStatus(403);
   }
-  if (user.profile_photo.url) {
+  if (user.profilePhoto.url) {
     await deletePhoto(user);
   }
-  user.profile_photo = {
+  user.profilePhoto = {
     url: image.path,
-    public_id: image.filename,
+    publicId: image.filename,
   };
   user.save();
 

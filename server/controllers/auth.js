@@ -101,7 +101,7 @@ exports.loadUser = asyncHandler(async (req, res, next) => {
         id: user._id,
         username: user.username,
         email: user.email,
-        profile_photo_url: user.profile_photo.url,
+        profilePhotoUrl: user.profilePhotoUrl,
       },
     },
   });

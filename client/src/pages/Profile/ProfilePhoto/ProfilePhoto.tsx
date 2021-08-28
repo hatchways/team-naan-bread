@@ -28,8 +28,8 @@ export default function ProfilePhoto({ loggedInUser }: Props): JSX.Element {
   });
 
   useEffect(() => {
-    setPhoto(loggedInUser.profile_photo_url);
-  }, [loggedInUser.profile_photo_url]);
+    setPhoto(loggedInUser.profilePhotoUrl);
+  }, [loggedInUser.profilePhotoUrl]);
 
   const changePhoto = (file: File | null) => {
     setLoading(true);
