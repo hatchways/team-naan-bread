@@ -19,7 +19,11 @@ const userSchema = new mongoose.Schema({
   register_date: {
     type: Date,
     default: Date.now
-  }
+  },
+  requests: [{
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: "request"
+  }]
 });
 
 userSchema.methods.matchPassword = async function (enteredPassword) {
