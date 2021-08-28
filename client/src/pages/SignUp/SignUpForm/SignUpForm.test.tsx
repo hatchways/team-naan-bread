@@ -21,7 +21,7 @@ describe('SignUpForm tests', () => {
     expect(email).toBeInTheDocument();
     const password = getByLabelText('Password');
     expect(password).toBeInTheDocument();
-    const createBtn = getByText('Create');
+    const createBtn = getByText('SIGN UP');
     expect(createBtn).toBeInTheDocument();
 
     fireEvent.change(username, { target: { value: 'testUser' } });
