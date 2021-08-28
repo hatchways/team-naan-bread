@@ -6,11 +6,6 @@ const asyncHandler = require("express-async-handler");
 // @desc get requests related to a logged user
 // @access Private
 exports.getRequests = asyncHandler( async (req, res, next) => {
-  const loggedUserId = req.user.id;
-  if (!loggedUserId) {
-    res.status(401);
-    throw new Error("Not authorized")
-  }
   const requests = await Request.aggregate([
     {
       $lookup: {
@@ -60,7 +55,7 @@ exports.updateRequest = asyncHandler( async (req, res, next) => {
   const requestState = req.query.state;
   const requestId = { _id: req.params.id };
   try {
-    Request.findOneAndUpdate(
+    await Request.findOneAndUpdate(
       requestId,
       { [requestState]: true },
       { new: true },
