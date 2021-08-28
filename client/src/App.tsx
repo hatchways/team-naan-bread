@@ -5,6 +5,7 @@ import Login from './pages/Login/Login';
 import Signup from './pages/SignUp/SignUp';
 import Dashboard from './pages/Dashboard/Dashboard';
 import Profile from './pages/Profile/Profile';
+import MySitters from './pages/MySitters/MySitters';
 import { AuthProvider } from './context/useAuthContext';
 import { SocketProvider } from './context/useSocketContext';
 import { SnackBarProvider } from './context/useSnackbarContext';
@@ -27,9 +28,10 @@ function App(): JSX.Element {
                 <Route exact path="/dashboard">
                   <Dashboard />
                 </Route>
-                <Route path="*">
+                {/* <Route path="*">
                   <Redirect to="/login" />
-                </Route>
+                </Route> */}
+                <Route exact path="/my-sitters" component={MySitters} />
               </Switch>
             </SocketProvider>
           </AuthProvider>
