@@ -3,24 +3,26 @@ const User = require("../models/User");
 const asyncHandler = require("express-async-handler");
 
 // @route GET /request
-// @desc get requests related to a logged user
+// @desc get requests related to a logged in user or sitter
 // @access Private
 exports.getRequests = asyncHandler( async (req, res, next) => {
-  const loggedUserId = req.user.id;
-  if (!loggedUserId) {
-    res.status(401);
-    throw new Error("Not authorized")
-  }
-  const requests = await Request.aggregate([
-    {
-      $lookup: {
-        from: "user",
-        localField: "userId",
-        foreignField: "_id",
-        as: "userRequest"
+  const userId = req.user.id;
+
+  const requests = await Request.find(
+    { $or: [
+      { sitterId: userId },
+      { userId: userId }
+    ]},
+    function(err, docs) {
+      if (err) {
+        res.status(400);
+        throw new Error(err);
+      } else {
+        return docs;
       }
     }
-  ]);
+  );
+  
   res.send(requests);
 });
 
@@ -59,22 +61,28 @@ exports.postRequest = asyncHandler( async (req, res, next) => {
 exports.updateRequest = asyncHandler( async (req, res, next) => {
   const requestState = req.query.state;
   const requestId = { _id: req.params.id };
-  try {
-    Request.findOneAndUpdate(
-      requestId,
-      { [requestState]: true },
-      { new: true },
-      function(err, doc) {
-        if (err) {
-          res.status(400).send("Request not found");
-        } else {
-          res.send(doc);
-        }
-      }
-    )
-  }
-  catch(error) {
-    res.status(400).send(error);
+
+  if (!(requestState === 'accepted' || requestState === 'declined')) {
+    res.status(400);
+    throw new Error('Request must be accepted or declined. Not update');
   }
 
+  if (!requestId._id) {
+    res.status(400);
+    throw new Error('Request ID is required. Not updated');
+  }
+  
+  await Request.findOneAndUpdate(
+    requestId,
+    { [requestState]: true },
+    { new: true },
+    function(err, doc) {
+      if (err) {
+        res.status(400)
+        throw new Error(err);
+      } else {
+        res.send(doc);
+      }
+    }
+  )
 });
