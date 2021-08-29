@@ -24,8 +24,8 @@ exports.searchUsers = asyncHandler(async (req, res, next) => {
 });
 
 const deletePhoto = async (user) => {
-  await cloudinary.uploader.destroy(user.profile_photo.public_id);
-  user.profile_photo = null;
+  await cloudinary.uploader.destroy(user.profilePhoto.publicId);
+  user.profilePhoto = null;
 };
 
 exports.uploadProfilePhoto = asyncHandler(async (req, res, next) => {
