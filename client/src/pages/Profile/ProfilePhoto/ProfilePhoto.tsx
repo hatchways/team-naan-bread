@@ -71,8 +71,8 @@ export default function ProfilePhoto({ loggedInUser }: Props): JSX.Element {
             disabled={loading}
             size="large"
             variant="outlined"
-            color="secondary"
-            endIcon={loading && <CircularProgress color="secondary" />}
+            color="primary"
+            endIcon={loading && <CircularProgress size={18} color="primary" />}
           >
             <div {...getRootProps({ className: 'dropzone' })}>
               <input {...getInputProps()} />
