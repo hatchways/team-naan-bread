@@ -2,7 +2,7 @@
 import { FetchOptions } from "../../interface/FetchOptions";
 import { RequestData } from "../../interface/Request";
 
-const getRequests = async (): Promise<RequestData> => {
+const getRequests = async (): Promise<RequestData[]> => {
   const fetchOptions: FetchOptions = {
     method: 'GET',
     credentials: 'include',
