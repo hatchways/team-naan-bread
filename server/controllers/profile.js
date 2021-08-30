@@ -26,14 +26,14 @@ exports.createProfile = asyncHandler(async (req, res, next) => {
 
     const profile = await Profile.create({
         _id: req.user.id,
-        first_name: firstName,
-        last_name: lastName,
+        firstName: firstName,
+        lastName: lastName,
         gender: gender,
-        birth_date: birthDate,
-        availability_dates: availabilityDates,
-        phone_number: phoneNumber,
-        where_you_live: whereYouLive,
-        describe_yourself: describeYourself,
+        birthDate: birthDate,
+        availabilityDates: availabilityDates,
+        phoneNumber: phoneNumber,
+        whereYouLive: whereYouLive,
+        describeYourself: describeYourself,
         email: email,
       })
 
@@ -41,15 +41,15 @@ exports.createProfile = asyncHandler(async (req, res, next) => {
         success: {
           profile: {
             id: profile._id,
-            firstName: profile.first_name,
-            lastName: profile.last_name,
+            firstName: profile.firstName,
+            lastName: profile.lastName,
             gender: profile.gender,
-            birthDate: profile.birth_date,
-            availabilityDates: profile.availability_dates,
+            birthDate: profile.birthDate,
+            availabilityDates: profile.availabilityDates,
             email: profile.email,
-            phoneNumber: profile.phone_number,
-            whereYouLive: profile.where_you_live,
-            describeYourself: profile.describe_yourself,
+            phoneNumber: profile.phoneNumber,
+            whereYouLive: profile.whereYouLive,
+            describeYourself: profile.describeYourself,
           }
         }
       });
@@ -80,15 +80,15 @@ exports.updateProfile = asyncHandler(async (req, res, next) => {
         success: {
           profile: {
             id: profile._id,
-            firstName: profile.first_name,
-            lastName: profile.last_name,
+            firstName: profile.firstName,
+            lastName: profile.lastName,
             gender: profile.gender,
-            birthDate: profile.birth_date,
-            availabilityDates: profile.availability_dates,
+            birthDate: profile.birthDate,
+            availabilityDates: profile.availabilityDates,
             email: profile.email,
-            phoneNumber: profile.phone_number,
-            whereYouLive: profile.where_you_live,
-            describeYourself: profile.describe_yourself,
+            phoneNumber: profile.phoneNumber,
+            whereYouLive: profile.whereYouLive,
+            describeYourself: profile.describeYourself,
           }
         }
       });

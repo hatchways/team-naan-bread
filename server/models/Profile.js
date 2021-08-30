@@ -12,20 +12,20 @@ const profileSchema = new mongoose.Schema({
         type: String,
         type: String,
     },
-    birth_date:{
+    birthDate:{
         type: String,
     },
-    availability_dates:{},
+    availabilityDates:{},
     email: {
         type: String,
      },
-    phone_number: {
+    phoneNumber: {
         type: Number,
     },
-    where_you_live: {
+    whereYouLive: {
         type: String,
     },
-    describe_yourself: {
+    describeYourself: {
         type: String,
     }
   },
