@@ -5,7 +5,7 @@ import { Formik, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 import Typography from '@material-ui/core/Typography';
 import useStyles from './useStyles';
-import { CircularProgress } from '@material-ui/core';
+import { CircularProgress, Link } from '@material-ui/core';
 
 interface Props {
   handleSubmit: (
@@ -51,6 +51,12 @@ const SignUpForm = ({ handleSubmit }: Props): JSX.Element => {
     >
       {({ handleSubmit, handleChange, values, touched, errors, isSubmitting }) => (
         <form onSubmit={handleSubmit} className={classes.form} noValidate>
+          <Box textAlign="center" className={classes.alreadyHaveAnAccount}>
+            <Typography variant="h4" component="h4">
+              Sign up
+            </Typography>
+          </Box>
+          <div style={{ height: '2rem' }} />
           <TextField
             id="username"
             label={<Typography className={classes.label}>Username</Typography>}
@@ -64,6 +70,7 @@ const SignUpForm = ({ handleSubmit }: Props): JSX.Element => {
             }}
             name="username"
             autoComplete="username"
+            variant="outlined"
             autoFocus
             helperText={touched.username ? errors.username : ''}
             error={touched.username && Boolean(errors.username)}
@@ -83,6 +90,7 @@ const SignUpForm = ({ handleSubmit }: Props): JSX.Element => {
             }}
             name="email"
             autoComplete="email"
+            variant="outlined"
             helperText={touched.email ? errors.email : ''}
             error={touched.email && Boolean(errors.email)}
             value={values.email}
@@ -101,6 +109,7 @@ const SignUpForm = ({ handleSubmit }: Props): JSX.Element => {
             }}
             type="password"
             autoComplete="current-password"
+            variant="outlined"
             helperText={touched.password ? errors.password : ''}
             error={touched.password && Boolean(errors.password)}
             value={values.password}
@@ -109,8 +118,17 @@ const SignUpForm = ({ handleSubmit }: Props): JSX.Element => {
 
           <Box textAlign="center">
             <Button type="submit" size="large" variant="contained" color="primary" className={classes.submit}>
-              {isSubmitting ? <CircularProgress style={{ color: 'white' }} /> : 'Create'}
+              {isSubmitting ? <CircularProgress style={{ color: 'white' }} /> : 'SIGN UP'}
             </Button>
+            <div style={{ height: '4rem' }} />
+            <Typography className={classes.alreadyHaveAnAccount}>
+              {'Already have an account? '}
+              {
+                <Link href="/login" className={classes.loginLink}>
+                  {'Login'}
+                </Link>
+              }
+            </Typography>
           </Box>
         </form>
       )}

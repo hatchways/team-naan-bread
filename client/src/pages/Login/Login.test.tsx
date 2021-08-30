@@ -28,9 +28,11 @@ describe('Login tests', () => {
     );
     const account = getByText("Don't have an account?");
     expect(account).toBeInTheDocument();
-    const create = getByText('Create account');
+    const create = getByText('LOGIN');
     expect(create).toBeInTheDocument();
-    const title = getByText('Welcome back!');
+    const title = getByText('Login');
     expect(title).toBeInTheDocument();
+    const sitter = getByText('BECOME A SITTER');
+    expect(sitter).toBeInTheDocument();
   });
 });
