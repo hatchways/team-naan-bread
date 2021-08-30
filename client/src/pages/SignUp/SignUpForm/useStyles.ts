@@ -27,8 +27,17 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: theme.shape.borderRadius,
     marginTop: 49,
     fontSize: 16,
-    backgroundColor: '#3a8dff',
+    backgroundColor: theme.palette.primary.main,
     fontWeight: 'bold',
+  },
+  alreadyHaveAnAccount: {
+    paddingRight: 10,
+    color: '#000000',
+    fontWeight: 'bold',
+  },
+  loginLink: {
+    paddingRight: 10,
+    color: theme.palette.primary.main,
   },
 }));
 
