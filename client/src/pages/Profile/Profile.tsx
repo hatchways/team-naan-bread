@@ -34,7 +34,7 @@ export default function Profile(): JSX.Element {
           </Box>
         </Grid>
         <Grid item xs={12} sm={6} container direction="column" justify="space-evenly" alignItems="center">
-          <ProfilePhoto />
+          <ProfilePhoto loggedInUser={loggedInUser} />
         </Grid>
       </Grid>
     </Container>
