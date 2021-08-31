@@ -18,6 +18,7 @@ export default function ProfilePhoto({ loggedInUser }: Props): JSX.Element {
   const classes = useStyles();
   const { updateSnackBarMessage } = useSnackBar();
   const [loading, setLoading] = useState(false);
+  const [loadingDelete, setLoadingDelete] = useState(false);
 
   const { getRootProps, getInputProps } = useDropzone({
     maxFiles: 1,
@@ -47,8 +48,10 @@ export default function ProfilePhoto({ loggedInUser }: Props): JSX.Element {
     }
   };
   const deletePhoto = async () => {
-    setPhoto('');
+    setLoadingDelete(true);
     await deleteProfilePhoto();
+    setPhoto('');
+    setLoadingDelete(false);
     updateSnackBarMessage('profile photo deleted');
   };
 
@@ -80,7 +83,12 @@ export default function ProfilePhoto({ loggedInUser }: Props): JSX.Element {
             </div>
           </Button>
           <Box m={3}>
-            <Button onClick={deletePhoto} startIcon={<DeleteIcon />} className={classes.delete_button}>
+            <Button
+              disabled={loadingDelete}
+              onClick={deletePhoto}
+              startIcon={loadingDelete ? <CircularProgress size={12} /> : <DeleteIcon />}
+              className={classes.delete_button}
+            >
               delete photo
             </Button>
           </Box>
