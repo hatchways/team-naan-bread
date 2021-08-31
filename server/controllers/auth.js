@@ -1,6 +1,7 @@
 const User = require("../models/User");
 const asyncHandler = require("express-async-handler");
 const generateToken = require("../utils/generateToken");
+const Profile = require("../models/Profile");
 
 // @route POST /auth/register
 // @desc Register user
@@ -27,6 +28,16 @@ exports.registerUser = asyncHandler(async (req, res, next) => {
     email,
     password,
   });
+
+  //creating the email and adding the id to the profile
+  const profile = await Profile.create({
+    email: user.email,
+    _id: user._id
+  })
+
+  if(profile){
+    console.log("Profile created")
+  }
 
   if (user) {
     const token = generateToken(user._id);
