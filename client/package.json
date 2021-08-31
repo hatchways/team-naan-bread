@@ -19,6 +19,7 @@
     "eslint": "^7.26.0",
     "formik": "^2.2.6",
     "material-ui-image": "^3.3.2",
+    "material-ui-phone-number": "^2.2.6",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-dropzone": "^11.3.4",
@@ -53,6 +54,7 @@
     ]
   },
   "devDependencies": {
+    "@types/material-ui-phone-number": "^2.2.1",
     "@types/react-router-dom": "^5.1.7",
     "@typescript-eslint/eslint-plugin": "^4.23.0",
     "@typescript-eslint/parser": "^4.23.0",

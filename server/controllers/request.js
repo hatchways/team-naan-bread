@@ -8,29 +8,31 @@ const asyncHandler = require("express-async-handler");
 exports.getRequests = asyncHandler( async (req, res, next) => {
   const userId = req.user.id;
 
-  const requests = await Request.find(
+  // get request and related users data
+  await Request.find(
     { $or: [
-      { sitterId: userId },
-      { userId: userId }
-    ]},
-    function(err, docs) {
-      if (err) {
-        res.status(400);
-        throw new Error(err);
-      } else {
-        return docs;
-      }
+      { sitter: userId },
+      { user: userId }
+    ]}
+  )
+  .populate('user')
+  .populate('sitter')
+  .exec(function(err, docs) {
+    if (err) {
+      throw new Error('Error getting requests, no results.')
+    } else {
+      console.log(docs)
+      res.send(docs);
     }
-  );
+  });
   
-  res.send(requests);
 });
 
 // @route POST /request
 // @desc post requests with user id and sitter id
 // @access Private
 exports.postRequest = asyncHandler( async (req, res, next) => {
-  const { userId, sitterId, start, end } = req.body;
+  const { userId, sitterId, start, end, offset } = req.body;
 
   const user = await User.findById(userId);
   const sitter = await User.findById(sitterId);
@@ -44,12 +46,13 @@ exports.postRequest = asyncHandler( async (req, res, next) => {
     res.status(400);
     throw new Error("Requests must have start and end dates");
   }
-
+  
   const request = await Request.create({
-    userId: user._id,
-    sitterId: sitter._id,
+    user: user._id,
+    sitter: sitter._id,
     start,
-    end
+    end,
+    offset
   });
 
   res.send(request);

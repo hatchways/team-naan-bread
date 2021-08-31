@@ -25,7 +25,7 @@ export default function Profile(): JSX.Element {
           <Box>
             <MenuList>
               <MenuItem>
-                <Link component={RouterLink} to="settings">
+                <Link component={RouterLink} to="/settings/profile">
                   Profile photo
                 </Link>
               </MenuItem>

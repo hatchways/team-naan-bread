@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 
 const requestSchema = mongoose.Schema({
-  userId: {
+  user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "user",
   },
-  sitterId: {
+  sitter: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "user",
   },
@@ -17,7 +17,7 @@ const requestSchema = mongoose.Schema({
     type: Date,
     required: true
   },
-  offest: {
+  offset: {
     type: Number,
     required: true,
     min: -12,
