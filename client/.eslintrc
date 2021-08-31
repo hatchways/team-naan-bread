@@ -15,19 +15,11 @@
   },
   "rules": {
     // suppress errors for missing 'import React' in files
-<<<<<<< HEAD
-    "react/react-in-jsx-scope": "off",
-    "react/prop-types": "off",
-    "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "error",
-    "prettier/prettier": [
-=======
    "react/react-in-jsx-scope": "off",
    "react/prop-types": "off",
-   "react-hooks/rules-of-hooks": "error",
+   "react-hooks/rules-of-hooks": "error", 
    "react-hooks/exhaustive-deps": "error",
    "prettier/prettier": [
->>>>>>> main
       "error", { "endOfLine": "auto" }
     ]
   }
