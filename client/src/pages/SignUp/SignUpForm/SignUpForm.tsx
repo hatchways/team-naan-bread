@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 import Typography from '@material-ui/core/Typography';
 import useStyles from './useStyles';
 import { CircularProgress, Link } from '@material-ui/core';
+import { Link as RouterLink } from 'react-router-dom';
 
 interface Props {
   handleSubmit: (
@@ -124,7 +125,7 @@ const SignUpForm = ({ handleSubmit }: Props): JSX.Element => {
             <Typography className={classes.alreadyHaveAnAccount}>
               {'Already have an account? '}
               {
-                <Link href="/login" className={classes.loginLink}>
+                <Link component={RouterLink} to="/login" className={classes.loginLink}>
                   {'Login'}
                 </Link>
               }
