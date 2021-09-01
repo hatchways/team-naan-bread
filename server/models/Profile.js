@@ -27,7 +27,11 @@ const profileSchema = new mongoose.Schema({
     },
     describeYourself: {
         type: String,
-    }
+    },
+    requests: [{
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: "request"
+    }]
   },
   {
       timestamps: true

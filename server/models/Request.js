@@ -3,11 +3,11 @@ const mongoose = require('mongoose');
 const requestSchema = mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "user",
+    ref: "profile",
   },
   sitter: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "user",
+    ref: "profile",
   },
   start: {
     type: Date,
