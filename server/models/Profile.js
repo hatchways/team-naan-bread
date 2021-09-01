@@ -20,7 +20,7 @@ const profileSchema = new mongoose.Schema({
         type: String,
      },
     phoneNumber: {
-        type: Number,
+        type: String,
     },
     whereYouLive: {
         type: String,
