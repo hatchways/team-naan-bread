@@ -22,7 +22,6 @@ exports.getRequests = asyncHandler( async (req, res, next) => {
     if (err) {
       throw new Error('Error getting requests, no results.')
     } else {
-      console.log(docs)
       res.send(docs);
     }
   });
