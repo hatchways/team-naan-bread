@@ -28,7 +28,11 @@ const profileSchema = new mongoose.Schema({
     describeYourself: {
         type: String,
     },
-    requests: [{
+    requestsReceived: [{
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: "request"
+    }],
+    requestsSubmitted: [{
         type: mongoose.Schema.Types.ObjectId, 
         ref: "request"
     }]

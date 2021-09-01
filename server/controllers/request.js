@@ -1,5 +1,6 @@
 const Request = require("../models/Request");
 const User = require("../models/User");
+const Profile = require("../models/Profile");
 const asyncHandler = require("express-async-handler");
 
 // @route GET /request
@@ -34,9 +35,6 @@ exports.getRequests = asyncHandler( async (req, res, next) => {
 exports.postRequest = asyncHandler( async (req, res, next) => {
   const { userId, sitterId, start, end, offset } = req.body;
 
-  const user = await User.findById(userId);
-  const sitter = await User.findById(sitterId);
-
   if (!userId || !sitterId) {
     res.status(400);
     throw new Error("The request must have valid user and sitter.");
@@ -47,13 +45,18 @@ exports.postRequest = asyncHandler( async (req, res, next) => {
     throw new Error("Requests must have start and end dates");
   }
   
+  // create request
   const request = await Request.create({
-    user: user._id,
-    sitter: sitter._id,
+    user: userId,
+    sitter: sitterId,
     start,
     end,
     offset
   });
+
+  // update profiles of user and sitter
+  await Profile.updateOne({ _id: userId }, { $push: { requestsSubmitted: request._id } });
+  await Profile.updateOne({ _id: sitterId }, { $push: { requestsReceived: request._id } });
 
   res.send(request);
 });
