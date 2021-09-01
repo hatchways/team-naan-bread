@@ -27,5 +27,5 @@ exports.markNotificationAsRead = asyncHandler(async (req, res, next) => {
   });
   res.sendStatus(200);
 });
-exports.getAllUnreadNotifications = asyncHandler(async (req, res, next) => {});
+exports.getAllNotifications = asyncHandler(async (req, res, next) => {});
 exports.getUnreadNotifications = asyncHandler(async (req, res, next) => {});
