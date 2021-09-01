@@ -34,4 +34,11 @@ exports.getAllNotifications = asyncHandler(async (req, res, next) => {
   }).sort("createdAt");
   res.status(200).json(notifications);
 });
-exports.getUnreadNotifications = asyncHandler(async (req, res, next) => {});
+exports.getUnreadNotifications = asyncHandler(async (req, res, next) => {
+  const loggedInUserId = req.user.id;
+  const notifications = await Notification.find({
+    userId: loggedInUserId,
+    read: false,
+  }).sort("createdAt");
+  res.status(200).json(notifications);
+});
