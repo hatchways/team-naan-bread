@@ -14,8 +14,18 @@ exports.createNotification = asyncHandler(async (req, res, next) => {
     title: title,
     description: description,
   });
-  res.status(200).json(newNotification);
+  res.status(201).json(newNotification);
 });
-exports.markNotificationAsRead = asyncHandler(async (req, res, next) => {});
+exports.markNotificationAsRead = asyncHandler(async (req, res, next) => {
+  const { id } = req.params;
+  const notification = await Notification.findById(id);
+  if (!notification.userId.equals(req.user.id)) {
+    return res.sendStatus(403);
+  }
+  const seenNotification = await Notification.findByIdAndUpdate(id, {
+    read: true,
+  });
+  res.sendStatus(200);
+});
 exports.getAllUnreadNotifications = asyncHandler(async (req, res, next) => {});
 exports.getUnreadNotifications = asyncHandler(async (req, res, next) => {});

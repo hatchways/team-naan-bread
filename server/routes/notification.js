@@ -9,7 +9,7 @@ const {
 } = require("../controllers/notification");
 
 router.route("/").post(protect, createNotification);
-router.route("/:id").post(protect, markNotificationAsRead);
+router.route("/seen/:id").post(protect, markNotificationAsRead);
 router.route("/all").get(protect, getAllUnreadNotifications);
 router.route("/all-unread").get(protect, getUnreadNotifications);
 
