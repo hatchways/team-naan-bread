@@ -18,6 +18,7 @@ exports.getRequests = asyncHandler( async (req, res, next) => {
   )
   .populate('user')
   .populate('sitter')
+  .sort({ start: 'asc' })
   .exec(function(err, docs) {
     if (err) {
       throw new Error('Error getting requests, no results.')

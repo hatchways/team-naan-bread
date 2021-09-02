@@ -15,6 +15,8 @@ export default function MySitters(): JSX.Element {
       .then(data => setRequests(data));
   }, []);
 
+  console.log(requests)
+
   return (
     <Container className={classes.root}>
       <Box className={classes.mySittersContent} component="main">
