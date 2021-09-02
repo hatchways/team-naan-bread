@@ -3,9 +3,14 @@ export interface RequestData {
   accepted: boolean;
   declined: boolean;
   paid: boolean;
-  userId: string;
-  sitterId: string;
+  user: RequestUser;
+  sitter: RequestUser;
   start: Date;
   end: Date;
   offset: number;
+}
+
+export interface RequestUser {
+  firstName: string;
+  lastName: string;
 }

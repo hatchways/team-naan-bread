@@ -15,6 +15,11 @@ const useStyles = makeStyles((theme) => ({
   },
   mySittersColumns: {
     margin: theme.spacing(4)
+  },
+  cardBookingsTitle: {
+    textTransform: "uppercase",
+    fontWeight: "bold",
+    fontSize: "0.9em"
   }
 }));
 
