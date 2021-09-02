@@ -12,7 +12,7 @@ const notificationSchema = mongoose.Schema(
     read: { type: Boolean, default: false },
     userId: {
       type: mongoose.Schema.Types.ObjectId,
-      red: "user",
+      ref: "user",
     },
   },
   { timestamps: true }
