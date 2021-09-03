@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     textTransform: "uppercase",
     fontWeight: "bold",
     fontSize: "0.9em"
-  }
+  },
 }));
 
 export default useStyles;

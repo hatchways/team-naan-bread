@@ -5,6 +5,8 @@ import { RequestData } from "../../interface/Request";
 import { Container, Grid, Box, Card, CardContent, Typography } from '@material-ui/core';
 import useStyles from "./useStyles";
 
+const mockImg = 'https://badairies.co.uk/assets/admin/plugins/images/users/4.jpg';
+
 export default function MySitters(): JSX.Element {
   const classes = useStyles();
 
@@ -37,8 +39,7 @@ export default function MySitters(): JSX.Element {
     const year = dateStart.getFullYear();
     const timeStart = dateStart.getHours()
     const timeEnd = dateEnd.getHours()
-    const ampm = timeStart >= 12 ? "pm" : "am";
-    return `${day}, ${month} ${year}, ${timeStart}-${timeEnd} ${ampm}`
+    return `${day}, ${month} ${year}, ${timeStart}-${timeEnd} HS.`
   }
 
   return (
@@ -54,11 +55,17 @@ export default function MySitters(): JSX.Element {
                 {currentBookings.length 
                 && createDate(currentBookings[0].start, currentBookings[0].end)}
               </Typography>
-              <Typography>{`
-                ${currentBookings.length && currentBookings[0].user.firstName} 
-                ${currentBookings.length && currentBookings[0].user.lastName} 
-              `}
-              </Typography>
+              <Box>
+                <Box>
+                  <img src={mockImg} alt="user" />
+                </Box>
+                <Typography>{`
+                  ${currentBookings.length && currentBookings[0].user.firstName} 
+                  ${currentBookings.length && currentBookings[0].user.lastName} 
+                `}
+                </Typography>
+              </Box>
+
             </CardContent>
           </Card>
           {requests.map(req => <span key={req._id}>Accepted: {req._id}</span> )}
