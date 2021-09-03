@@ -4,7 +4,7 @@ import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import { FormikHelpers } from 'formik';
 import useStyles from './useStyles';
-import login from '../../helpers/APICalls/login';
+import { login, loginDemo } from '../../helpers/APICalls/login';
 import LoginForm from './LoginForm/LoginForm';
 import AuthHeader from '../../components/AuthHeader/AuthHeader';
 import LogoHeader from '../../components/LogoHeader/LogoHeader';
@@ -19,20 +19,29 @@ export default function Login(): JSX.Element {
   const { updateSnackBarMessage } = useSnackBar();
 
   const handleSubmit = ({ email, password }: AuthInterface, { setSubmitting }: FormikHelpers<AuthInterface>) => {
-    login(email, password).then((data) => {
+    if (email == 'demo@email.com') {
+      const data = loginDemo(email, password);
       if (data.error) {
         setSubmitting(false);
         updateSnackBarMessage(data.error.message);
       } else if (data.success) {
         updateLoginContext(data.success);
-      } else {
-        // should not get here from backend but this catch is for an unknown issue
-        console.error({ data });
-
-        setSubmitting(false);
-        updateSnackBarMessage('An unexpected error occurred. Please try again');
       }
-    });
+    } else {
+      login(email, password).then((data) => {
+        if (data.error) {
+          setSubmitting(false);
+          updateSnackBarMessage(data.error.message);
+        } else if (data.success) {
+          updateLoginContext(data.success);
+        } else {
+          // should not get here from backend but this catch is for an unknown issue
+          console.error({ data });
+          setSubmitting(false);
+          updateSnackBarMessage('An unexpected error occurred. Please try again');
+        }
+      });
+    }
   };
 
   return (

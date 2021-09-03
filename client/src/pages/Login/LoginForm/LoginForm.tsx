@@ -18,7 +18,6 @@ interface Props {
 
 export default function Login({ handleSubmit }: Props): JSX.Element {
   const classes = useStyles();
-
   return (
     <Formik
       initialValues={{
@@ -75,7 +74,7 @@ export default function Login({ handleSubmit }: Props): JSX.Element {
             variant="outlined"
             helperText={touched.password ? errors.password : ''}
             error={touched.password && Boolean(errors.password)}
-            value={values.password}
+            value={values.email == 'demo@email.com' ? (values.password = 'demoPassword') : values.password}
             onChange={handleChange}
           />
           <Box textAlign="center">

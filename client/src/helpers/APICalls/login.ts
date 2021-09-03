@@ -14,5 +14,22 @@ const login = async (email: string, password: string): Promise<AuthApiData> => {
       error: { message: 'Unable to connect to server. Please try again' },
     }));
 };
-
-export default login;
+const loginDemo = (email: string, password: string): AuthApiData => {
+  if (email == 'demo@email.com' && password == 'demoPassword') {
+    const user = {
+      success: {
+        message: 'User registered successfully',
+        user: {
+          email: 'demo@gmail.com',
+          username: 'demo',
+          id: '127728hwhwhh',
+          profilePhotoUrl: 'demo.jpg',
+        },
+        token: 'token',
+      },
+    };
+    return user;
+  }
+  return { error: { message: 'Unable to connect to server. Please try again' } };
+};
+export { login, loginDemo };
