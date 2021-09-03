@@ -38,6 +38,7 @@ exports.validateCreateNotification = [
     "warning",
     "info",
     "confirmation",
+    null,
   ]),
   check("title").trim().escape().notEmpty(),
   check("description").trim().escape(),
