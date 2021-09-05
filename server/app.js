@@ -5,6 +5,7 @@ const express = require("express");
 const socketio = require("socket.io");
 const { notFound, errorHandler } = require("./middleware/error");
 const connectDB = require("./db");
+const seedDatabase = require("./controllers/demo");
 const { join } = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");

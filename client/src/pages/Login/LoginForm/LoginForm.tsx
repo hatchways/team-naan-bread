@@ -7,7 +7,11 @@ import Typography from '@material-ui/core/Typography';
 import useStyles from './useStyles';
 import { CircularProgress, Link } from '@material-ui/core';
 import { AuthInterface } from '../../../interface/AuthInterface';
+import { AuthApiData } from '../../../interface/AuthApiData';
 import { Link as RouterLink } from 'react-router-dom';
+import demouser from '../../../helpers/APICalls/demouser';
+import { useAuth } from '../../../context/useAuthContext';
+import { useSnackBar } from '../../../context/useSnackbarContext';
 
 interface Props {
   handleSubmit: (
@@ -18,6 +22,18 @@ interface Props {
 
 export default function Login({ handleSubmit }: Props): JSX.Element {
   const classes = useStyles();
+  const { updateLoginContext } = useAuth();
+  const { updateSnackBarMessage } = useSnackBar();
+  const handleClick = async () => {
+    await demouser().then((data: AuthApiData) => {
+      if (data.success) {
+        updateLoginContext(data.success);
+      } else if (data.error) {
+        updateSnackBarMessage(data.error.message);
+      }
+    });
+  };
+
   return (
     <Formik
       initialValues={{
@@ -74,12 +90,23 @@ export default function Login({ handleSubmit }: Props): JSX.Element {
             variant="outlined"
             helperText={touched.password ? errors.password : ''}
             error={touched.password && Boolean(errors.password)}
-            value={values.email == 'demo@email.com' ? (values.password = 'demoPassword') : values.password}
+            value={values.password}
             onChange={handleChange}
           />
           <Box textAlign="center">
             <Button type="submit" size="medium" variant="contained" color="primary" className={classes.submit}>
               {isSubmitting ? <CircularProgress style={{ color: 'white' }} /> : 'LOGIN'}
+            </Button>
+            <Button
+              size="medium"
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+              onClick={() => {
+                handleClick();
+              }}
+            >
+              {isSubmitting ? <CircularProgress style={{ color: 'white' }} /> : 'DEMO'}
             </Button>
             <div style={{ height: 80 }} />
             <Typography className={classes.donotHaveAnAccount}>

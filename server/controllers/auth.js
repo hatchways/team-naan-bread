@@ -32,11 +32,11 @@ exports.registerUser = asyncHandler(async (req, res, next) => {
   //creating the email and adding the id to the profile
   const profile = await Profile.create({
     email: user.email,
-    _id: user._id
-  })
+    _id: user._id,
+  });
 
-  if(profile){
-    console.log("Profile created")
+  if (profile) {
+    console.log("Profile created");
   }
 
   if (user) {
@@ -123,6 +123,5 @@ exports.loadUser = asyncHandler(async (req, res, next) => {
 // @access Public
 exports.logoutUser = asyncHandler(async (req, res, next) => {
   res.clearCookie("token");
-
   res.send("You have successfully logged out");
 });
