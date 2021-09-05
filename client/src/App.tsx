@@ -11,6 +11,7 @@ import { SocketProvider } from './context/useSocketContext';
 import { SnackBarProvider } from './context/useSnackbarContext';
 
 import './App.css';
+import NavBar from './components/NavBar/NavBar';
 
 function App(): JSX.Element {
   return (
@@ -19,6 +20,7 @@ function App(): JSX.Element {
         <SnackBarProvider>
           <AuthProvider>
             <SocketProvider>
+              <NavBar />
               <Switch>
                 <Route exact path="/settings/profile/">
                   <Profile />
