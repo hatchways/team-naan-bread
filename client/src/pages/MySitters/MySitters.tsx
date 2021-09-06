@@ -15,6 +15,7 @@ import {
 import { Settings } from "@material-ui/icons";
 import useStyles from "./useStyles";
 import BookingCard from "../../components/BookingCards/BookingCard";
+import BookingsDatePicker from "../../components/BookingsDatePicker/BookingsDatePicker";
 
 const mockImg = 'https://badairies.co.uk/assets/admin/plugins/images/users/4.jpg';
 
@@ -22,10 +23,21 @@ export default function MySitters(): JSX.Element {
   const classes = useStyles();
 
   const [requests, setRequests] = useState<RequestData[]>([]);
+  const [dates, setDates] = useState<Date[]>([])
 
   useEffect(() => {
     getRequests()
-      .then(data => setRequests(data));
+      .then(data => {
+        setRequests(data)
+        const dates: Date[] = [];
+        data.map(booking => {
+          if (booking.accepted) {
+            const bookingDate = new Date(booking.start)
+            dates.push(bookingDate)
+          }
+        });
+        setDates(dates);
+    });
   }, []);
   
   const currentDate = new Date();
@@ -105,7 +117,7 @@ export default function MySitters(): JSX.Element {
           </Box>
         </Grid>
         <Grid item xs={12} sm={7} className={classes.mySittersColumns}>
-          Calendar
+          <BookingsDatePicker dates={dates} />
         </Grid>
       </Box>
     </Container>
