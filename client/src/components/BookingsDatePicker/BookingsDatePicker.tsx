@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { DatePicker } from "@material-ui/pickers";
 import useStyles from "./useStyles";
+import { Box } from "@material-ui/core";
 
 interface Props {
   dates: Array<Date>;
@@ -21,7 +22,7 @@ function BookingsDatePicker({ dates }: Props): JSX.Element {
   const bookingsDates = dates.map((booking: Date) => createDateObj(booking))
 
   return (
-    <>
+    <Box className={classes.bookingsDatePicker}>
       <DatePicker 
         value={selectedDate}
         onChange={newDate => setSelectedDate(newDate)}
@@ -32,7 +33,7 @@ function BookingsDatePicker({ dates }: Props): JSX.Element {
           return <div className={haveBookings ? classes.bookingDay : undefined}>{dayComponent}</div>
         }}
       />
-    </>
+    </Box>
   );
 }
 

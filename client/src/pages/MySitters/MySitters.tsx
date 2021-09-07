@@ -42,25 +42,38 @@ export default function MySitters(): JSX.Element {
   
   const currentDate = new Date();
 
+  const nextBookingFinder = (bookings: RequestData[]) => {
+    const nextBooking: RequestData[] = []
+    bookings.forEach((booking) => {
+      if (booking.accepted && !nextBooking.length) {
+        nextBooking.push(booking)
+      }
+    });
+    return nextBooking;
+  };
+
   const currentBookings = requests.filter((request) => {
     const requestDate = new Date(request.start);
     return requestDate >= currentDate;
-  });
+  });  
+  
+  const nextBooking: RequestData[] = nextBookingFinder(currentBookings);
 
   const pastBookings = requests.filter((request) => {
     const requestDate = new Date(request.start);
     return requestDate < currentDate;
   })
 
+  // function to display bookings dates
   const createDate = (dateStart: any, dateEnd: any) => {
-    dateStart = new Date(dateStart)
-    dateEnd = new Date(dateEnd)
-    const day = dateStart.getDay()
-    let month = dateStart.toLocaleDateString("us-US", {month: "long"})
+    dateStart = new Date(dateStart);
+    dateEnd = new Date(dateEnd);
+    const day = dateStart.getDate();
+    let month = dateStart.toLocaleDateString("us-US", {month: "long"});
     month = month.charAt(0).toUpperCase() + month.slice(1);
     const year = dateStart.getFullYear();
-    const timeStart = dateStart.getHours()
-    const timeEnd = dateEnd.getHours()
+    const timeStart = dateStart.getHours();
+    const timeEnd = dateEnd.getHours();
     return `${day}, ${month} ${year}, ${timeStart}-${timeEnd} HS.`
   }
 
@@ -83,7 +96,7 @@ export default function MySitters(): JSX.Element {
               <CardContent className={classes.cardBookingContent}>
                 <Typography variant="h6" component="h6" className={classes.cardDate}>
                   {currentBookings.length 
-                  && createDate(currentBookings[0].start, currentBookings[0].end)}
+                  && createDate(nextBooking[0]?.start, nextBooking[0]?.end)}
                 </Typography>
                 <Box className={classes.cardUserInfoBox} >
                   <Box>
@@ -91,8 +104,8 @@ export default function MySitters(): JSX.Element {
                   </Box>
                   <Typography component="h3" className={classes.cardUserName}>
                     {`
-                      ${currentBookings.length && currentBookings[0].user.firstName} 
-                      ${currentBookings.length && currentBookings[0].user.lastName} 
+                      ${nextBooking[0]?.user.firstName} 
+                      ${nextBooking[0]?.user.lastName} 
                     `}
                   </Typography>
                 </Box>

@@ -6,8 +6,9 @@ const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
   root: {
     minHeight: "100vh",
-    backgroundColor: "#fafafb",
-    justifyContent: "center"
+    justifyContent: "center",
+    paddingLeft: theme.spacing(8),
+    paddingRight: theme.spacing(8)
   },
   mySittersContent: {
     display: "flex",
