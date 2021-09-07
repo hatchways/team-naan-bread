@@ -24,6 +24,18 @@ const userSchema = new mongoose.Schema({
     url: String,
     publicId: String,
   },
+  requests: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "request",
+    },
+  ],
+  notifications: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "notification",
+    },
+  ],
 });
 
 userSchema.methods.matchPassword = async function (enteredPassword) {
