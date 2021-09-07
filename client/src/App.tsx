@@ -6,6 +6,7 @@ import Signup from './pages/SignUp/SignUp';
 import EditProfile from './pages/Settings/EditProfile/EditProfile';
 import Dashboard from './pages/Dashboard/Dashboard';
 import Profile from './pages/Profile/Profile';
+import MySitters from './pages/MySitters/MySitters';
 import { AuthProvider } from './context/useAuthContext';
 import { SocketProvider } from './context/useSocketContext';
 import { SnackBarProvider } from './context/useSnackbarContext';
@@ -32,6 +33,7 @@ function App(): JSX.Element {
                 <Route path="*">
                   <Redirect to="/login" />
                 </Route>
+                <Route exact path="/my-sitters" component={MySitters} />
               </Switch>
             </SocketProvider>
           </AuthProvider>

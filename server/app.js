@@ -13,6 +13,7 @@ const authRouter = require("./routes/auth");
 const userRouter = require("./routes/user");
 const profileRouter = require("./routes/profile");
 const requestRouter = require("./routes/request");
+const setHeaders = require("./middleware/setHeaders");
 const notificationRouter = require("./routes/notification");
 
 const { json, urlencoded } = express;
@@ -38,6 +39,7 @@ app.use(json());
 app.use(urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(join(__dirname, "public")));
+app.use(setHeaders);
 
 app.use((req, res, next) => {
   req.io = io;
