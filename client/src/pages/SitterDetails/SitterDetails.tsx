@@ -14,7 +14,6 @@ export default function SitterDetails(): JSX.Element {
 
   return (
     <Grid container component="main" className={classes.root}>
-      <CssBaseline />
       <Grid item xs={12} sm={12} md={12} elevation={6} component={Paper} square>
         <Box className={classes.headerWrapper}>
           <Grid container elevation={6} component={Paper} square>

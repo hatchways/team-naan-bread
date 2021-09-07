@@ -9,7 +9,6 @@ import Profile from './pages/Profile/Profile';
 import { AuthProvider } from './context/useAuthContext';
 import { SocketProvider } from './context/useSocketContext';
 import { SnackBarProvider } from './context/useSnackbarContext';
-import SitterDetails from './pages/SitterDetails/SitterDetails';
 
 import './App.css';
 
@@ -24,7 +23,7 @@ function App(): JSX.Element {
                 <Route exact path="/settings/profile/">
                   <Profile />
                 </Route>
-                <Route exact path="/login" component={SitterDetails} />
+                <Route exact path="/login" component={Login} />
                 <Route exact path="/signup" component={Signup} />
                 <Route exact path="/settings/editProfile" component={EditProfile} />
                 <Route exact path="/dashboard">
