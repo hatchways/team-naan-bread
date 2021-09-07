@@ -29,6 +29,9 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 600,
     color: '#000000',
   },
+  notificationType: {
+    fontSize: '10px',
+  },
   menu: {
     borderColor: '#000000',
   },
@@ -36,13 +39,9 @@ const useStyles = makeStyles((theme) => ({
     color: '#11cb5f',
   },
   notificationAvatar: {
-    width: '70px',
-    height: '70px',
-    marginRight: 19,
-  },
-  listItemAvatar: {
-    marginLeft: 0,
-    marginRight: 5,
+    width: '55px',
+    height: '55px',
+    marginRight: 15,
   },
   notificationMenuItem: {
     paddingLeft: 4,

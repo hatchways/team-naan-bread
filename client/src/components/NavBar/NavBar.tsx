@@ -19,7 +19,9 @@ import {
 } from '@material-ui/core';
 import AvatarDisplay from '../AvatarDisplay/AvatarDisplay';
 import { Link as routerLink } from 'react-router-dom';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { Notification } from '../../interface/Notification';
+import getAllNotifications from '../../helpers/APICalls/Notification';
 export default function NavBar(): JSX.Element {
   const classes = useStyles();
   const { loggedInUser } = useAuth();
@@ -33,6 +35,16 @@ export default function NavBar(): JSX.Element {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const [notifications, setNotifications] = useState<[Notification]>();
+  useEffect(() => {
+    async function fetchNotifications() {
+      if (loggedInUser) {
+        const fetchedNotifications = await getAllNotifications();
+        setNotifications(fetchedNotifications);
+      }
+    }
+    fetchNotifications();
+  }, [loggedInUser]);
 
   return (
     <div className={classes.root}>
@@ -77,38 +89,28 @@ export default function NavBar(): JSX.Element {
                 <Box display={{ xs: 'none', sm: 'block' }} className={classes.arrowUp} />
                 <Box borderTop={5}>
                   <Paper>
-                    <MenuItem className={classes.notificationMenuItem} onClick={handleClose}>
-                      <ListItem>
-                        <ListItemAvatar className={classes.listItemAvatar}>
-                          <Avatar
-                            className={classes.notificationAvatar}
-                            variant="square"
-                            src={`${loggedInUser.profilePhotoUrl}`}
-                          />
-                        </ListItemAvatar>
-                        <ListItemText
-                          secondary={
-                            <div>
-                              <Typography className={classes.notification}>
-                                Marry has requested your service for 2 hours
-                              </Typography>
+                    {notifications &&
+                      notifications.map((notification, index) => (
+                        <MenuItem key={index} className={classes.notificationMenuItem} onClick={handleClose}>
+                          <ListItem>
+                            <ListItemAvatar>
+                              <Avatar className={classes.notificationAvatar} variant="square" />
+                            </ListItemAvatar>
+                            <ListItemText
+                              secondary={
+                                <div>
+                                  <Typography className={classes.notification}>{notification.title}</Typography>
 
-                              <Typography variant="button">request</Typography>
-                              <Typography className={classes.notification}>
-                                {new Date(Date.now()).toLocaleDateString()}
-                              </Typography>
-                            </div>
-                          }
-                        />
-                      </ListItem>
-                    </MenuItem>
-                    <MenuItem component={routerLink} to="#">
-                      <Box marginLeft="40%" marginRight="60%">
-                        <Button color="primary" variant="outlined">
-                          more
-                        </Button>
-                      </Box>
-                    </MenuItem>
+                                  <Typography variant="button">{notification.notificationType}</Typography>
+                                  <Typography className={classes.notification}>
+                                    {new Date(notification.createdAt).toLocaleDateString()}
+                                  </Typography>
+                                </div>
+                              }
+                            />
+                          </ListItem>
+                        </MenuItem>
+                      ))}
                   </Paper>
                 </Box>
               </Menu>
