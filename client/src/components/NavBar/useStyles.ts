@@ -5,15 +5,47 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   menuButton: {
-    marginRight: theme.spacing(1),
     padding: theme.spacing(1),
     marginLeft: theme.spacing(1),
+  },
+  arrowUp: {
+    width: 0,
+    height: 0,
+    borderLeft: '5px solid transparent',
+    borderRight: '5px solid transparent',
+    borderBottom: '5px solid black',
+    alignItems: 'center',
+    marginLeft: '50%',
+    marginRight: '50%',
   },
   bar: {
     padding: theme.spacing(1),
   },
   title: {
     flexGrow: 1,
+  },
+  notification: {
+    fontSize: '12px',
+    fontWeight: 600,
+    color: '#000000',
+  },
+  menu: {
+    borderColor: '#000000',
+  },
+  badge: {
+    color: '#11cb5f',
+  },
+  notificationAvatar: {
+    width: '70px',
+    height: '70px',
+    marginRight: 19,
+  },
+  listItemAvatar: {
+    marginLeft: 0,
+    marginRight: 5,
+  },
+  notificationMenuItem: {
+    paddingLeft: 4,
   },
 }));
 export default useStyles;
