@@ -1,4 +1,5 @@
 const User = require("../models/User");
+const Profile = require("../models/Profile");
 const asyncHandler = require("express-async-handler");
 const { cloudinary } = require("../utils/cloudinary");
 
@@ -30,29 +31,29 @@ const deletePhoto = async (user) => {
 
 exports.uploadProfilePhoto = asyncHandler(async (req, res, next) => {
   const image = req.file;
-  const user = await User.findById(req.user.id);
-  if (!user) {
+  const profile = await Profile.findById(req.user.id);
+  if (!profile) {
     return res.sendStatus(404);
   }
-  if (user.profilePhoto.url) {
-    await deletePhoto(user);
+  if (profile.profilePhoto.url) {
+    await deletePhoto(profile);
   }
-  user.profilePhoto = {
+  profile.profilePhoto = {
     url: image.path,
     publicId: image.filename,
   };
-  user.save();
+  profile.save();
 
   res.sendStatus(200);
 });
 exports.deleteProfilePhoto = asyncHandler(async (req, res, next) => {
-  const user = await User.findById(req.user.id);
-  if (!user) {
+  const profile = await Profile.findById(req.user.id);
+  if (!profile) {
     return res.sendStatus(404);
   }
 
-  await deletePhoto(user);
-  user.save();
+  await deletePhoto(profile);
+  profile.save();
 
   res.sendStatus(200);
 });

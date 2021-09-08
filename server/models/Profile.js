@@ -27,7 +27,11 @@ const profileSchema = new mongoose.Schema({
     },
     describeYourself: {
         type: String,
-    }
+    },
+    profilePhoto: {
+        url: String,
+        publicId: String,
+    },
   },
   {
       timestamps: true
