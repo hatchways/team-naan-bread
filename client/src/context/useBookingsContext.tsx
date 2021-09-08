@@ -1,4 +1,4 @@
 /* eslint-disable prettier/prettier */
-import { useState, useContext, createContext } from "react";
+import { useState, useContext, createContext } from 'react';
 
-const BookingsContext = createContext({})
+const BookingsContext = createContext({});
