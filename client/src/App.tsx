@@ -6,6 +6,7 @@ import Signup from './pages/SignUp/SignUp';
 import EditProfile from './pages/Settings/EditProfile/EditProfile';
 import Dashboard from './pages/Dashboard/Dashboard';
 import Profile from './pages/Profile/Profile';
+import Searcher from './pages/Searcher/Searcher';
 import { AuthProvider } from './context/useAuthContext';
 import { SocketProvider } from './context/useSocketContext';
 import { SnackBarProvider } from './context/useSnackbarContext';
@@ -20,11 +21,10 @@ function App(): JSX.Element {
           <AuthProvider>
             <SocketProvider>
               <Switch>
-                <Route exact path="/settings/profile/">
-                  <Profile />
-                </Route>
+                <Route exact path="/search" component={Searcher} />
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/signup" component={Signup} />
+                <Route exact path="/settings/profile/" component={Profile} />
                 <Route exact path="/settings/editProfile" component={EditProfile} />
                 <Route exact path="/dashboard">
                   <Dashboard />
