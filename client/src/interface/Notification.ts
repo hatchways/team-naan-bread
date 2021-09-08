@@ -5,4 +5,5 @@ export interface Notification {
   read: boolean;
   userId: string;
   createdAt: string;
+  _id: string;
 }

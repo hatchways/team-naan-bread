@@ -5,6 +5,10 @@ const fetchOptions: FetchOptions = {
   method: 'GET',
   credentials: 'include',
 };
+const putFetchOptions: FetchOptions = {
+  method: 'PUT',
+  credentials: 'include',
+};
 
 const getAllNotifications = async (): Promise<[Notification]> => {
   return await fetch(`/notification/all`, fetchOptions)
@@ -18,4 +22,10 @@ const getAllUnreadNotifications = async (): Promise<[Notification]> => {
     .catch(() => ({ error: { message: 'Unable to connect to server. Please try again' } }));
 };
 
-export { getAllNotifications, getAllUnreadNotifications };
+const markAsRead = async (id: string) => {
+  return await fetch(`/notification/seen/${id}`, putFetchOptions)
+    .then((res) => res.json())
+    .catch(() => ({ error: { message: 'Unable to connect to server. Please try again' } }));
+};
+
+export { getAllNotifications, getAllUnreadNotifications, markAsRead };

@@ -15,7 +15,7 @@ import {
 } from '@material-ui/core';
 import { Notification } from '../../../interface/Notification';
 import React, { useEffect, useState } from 'react';
-import { getAllUnreadNotifications } from '../../../helpers/APICalls/Notification';
+import { getAllUnreadNotifications, markAsRead } from '../../../helpers/APICalls/Notification';
 
 export default function NotificationsMenu(): JSX.Element {
   const classes = useStyles();
@@ -24,6 +24,10 @@ export default function NotificationsMenu(): JSX.Element {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    notifications?.map(async (notification) => {
+      await markAsRead(notification._id);
+    });
+
     setAnchorEl(event.currentTarget);
   };
 
