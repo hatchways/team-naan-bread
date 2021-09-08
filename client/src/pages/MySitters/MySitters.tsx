@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { useState, useEffect } from "react";
 import getRequests from '../../helpers/APICalls/getRequests';
+import updateRequest from '../../helpers/APICalls/updateRequest';
 import { RequestData } from "../../interface/Request";
 import { 
   Container, 
@@ -24,6 +25,8 @@ export default function MySitters(): JSX.Element {
 
   const [requests, setRequests] = useState<RequestData[]>([]);
   const [dates, setDates] = useState<Date[]>([])
+  const [cardAction, setCardAction] = useState<boolean>(false);
+  const [selectedBooking, setSelectedBooking] = useState<string>("");
 
   useEffect(() => {
     getRequests()
@@ -61,7 +64,7 @@ export default function MySitters(): JSX.Element {
 
   const pastBookings = requests.filter((request) => {
     const requestDate = new Date(request.start);
-    return requestDate < currentDate;
+    return (requestDate < currentDate && request.accepted);
   })
 
   // function to display bookings dates
@@ -75,6 +78,33 @@ export default function MySitters(): JSX.Element {
     const timeStart = dateStart.getHours();
     const timeEnd = dateEnd.getHours();
     return `${day}, ${month} ${year}, ${timeStart}-${timeEnd} HS.`
+  }
+
+  // display card action
+  const displayCardActions = (booking: RequestData): void => {
+    if (!booking.accepted && !booking.declined) {
+      setCardAction(true);
+      setSelectedBooking(booking._id)
+    }
+  };
+
+  // update selected request
+  const updateSelectedRequest = (bookingId: string, state: string) => {
+    updateRequest(bookingId, state)
+    .then(() => setCardAction(false))
+    .then(() => getRequests()
+    .then(data => {
+      setRequests(data)
+      const dates: Date[] = [];
+      data.map(booking => {
+        if (booking.accepted) {
+          const bookingDate = new Date(booking.start)
+          dates.push(bookingDate)
+        }
+      });
+      setDates(dates);
+    })
+    )
   }
 
   return (
@@ -117,7 +147,14 @@ export default function MySitters(): JSX.Element {
               title="Current Bookings"
               classes={{title: classes.cardBookingHeaderTitle}}
             />
-            <BookingCard createDate={createDate} requests={currentBookings} />
+            <BookingCard 
+              createDate={createDate} 
+              requests={currentBookings}
+              cardAction={cardAction}
+              selectedBooking={selectedBooking}
+              displayCardActions={displayCardActions}
+              updateSelectedRequest={updateSelectedRequest}
+            />
           </Box>
           <Box className={classes.cardWrapperBookings}>
             <CardHeader
@@ -125,7 +162,14 @@ export default function MySitters(): JSX.Element {
               classes={{title: classes.cardBookingHeaderTitle}}
             />
             <Box overflow="hidden">
-              <BookingCard createDate={createDate}  requests={pastBookings}/>
+              <BookingCard 
+                createDate={createDate} 
+                requests={pastBookings}
+                cardAction={cardAction}
+                selectedBooking={selectedBooking}
+                displayCardActions={displayCardActions}
+                updateSelectedRequest={updateSelectedRequest}
+              />
             </Box>
           </Box>
         </Grid>
