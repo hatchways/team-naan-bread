@@ -52,7 +52,7 @@ export default function NotificationsMenu(): JSX.Element {
           <Typography variant="button">Notifications</Typography>
         </Badge>
       </Button>
-      {notifications && notifications.length > 1 && (
+      {notifications && notifications.length >= 1 && (
         <Menu
           className={classes.menu}
           elevation={0}
@@ -79,7 +79,15 @@ export default function NotificationsMenu(): JSX.Element {
                   <MenuItem key={index} className={classes.notificationMenuItem} onClick={handleClose}>
                     <ListItem>
                       <ListItemAvatar>
-                        <Avatar className={classes.notificationAvatar} variant="square" />
+                        <Avatar
+                          src={
+                            notification.context
+                              ? notification.context.profilePhotoURL
+                              : 'https://res.cloudinary.com/dalisapxa/image/upload/v1630880229/DEV/logo_nywmrf.png'
+                          }
+                          className={classes.notificationAvatar}
+                          variant="square"
+                        />
                       </ListItemAvatar>
                       <ListItemText
                         secondary={

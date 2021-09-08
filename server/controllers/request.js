@@ -1,6 +1,7 @@
 const Request = require('../models/Request');
 const User = require('../models/User');
 const Profile = require('../models/Profile');
+const Notification = require('../models/Notification');
 const asyncHandler = require('express-async-handler');
 
 // @route GET /request
@@ -49,8 +50,24 @@ exports.postRequest = asyncHandler(async (req, res, next) => {
   });
 
   // update profiles of user and sitter
-  await Profile.updateOne({ _id: userId }, { $push: { requestsSubmitted: request._id } });
+  const updatedUserProfile = await Profile.findOneAndUpdate(
+    { _id: userId },
+    { $push: { requestsSubmitted: request._id } },
+  );
   await Profile.updateOne({ _id: sitterId }, { $push: { requestsReceived: request._id } });
+  console.log(updatedUserProfile);
+  const currentUser = await User.findById(userId);
+
+  const newNotification = await Notification.create({
+    userId: sitterId,
+    notificationType: 'dog sitting',
+    title: `${
+      updatedUserProfile && updatedUserProfile.firstName ? updatedUserProfile.firstName : 'someone'
+    } has requested your service for ${parseInt(Math.abs(request.start - request.end) / 36e5)} hours`,
+    context: {
+      profilePhotoURL: currentUser.profilePhoto.url,
+    },
+  });
 
   res.send(request);
 });

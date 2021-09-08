@@ -3,7 +3,11 @@ export interface Notification {
   title: string;
   description?: string;
   read: boolean;
-  userId: string;
   createdAt: string;
   _id: string;
+  context?: NotificationContext;
+}
+
+interface NotificationContext {
+  profilePhotoURL: string;
 }
