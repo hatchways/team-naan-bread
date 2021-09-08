@@ -74,7 +74,7 @@ interface Props {
 
 export default function EditProfileForm({ userProfile, handleSubmit }: Props): JSX.Element {
   const classes = useStyles();
-  if (userProfile._id === '') return <>Loading</>;
+  if (userProfile._id === '') return <></>;
   return (
     <Formik
       initialValues={{
@@ -224,8 +224,9 @@ export default function EditProfileForm({ userProfile, handleSubmit }: Props): J
           />
           {/* Where You Live */}
           <TextField
-            variant="outlined"
+            id="select"
             key={'whereYouLive'}
+            variant="outlined"
             label={<Typography className={classes.label}>Where You Live</Typography>}
             fullWidth
             margin="normal"
@@ -233,13 +234,20 @@ export default function EditProfileForm({ userProfile, handleSubmit }: Props): J
               shrink: true,
             }}
             InputProps={{
-              classes: { input: classes.inputs },
+              classes: { input: classes.select },
             }}
+            select
             name={'whereYouLive'}
             autoComplete={'whereYouLive'}
             defaultValue={values.whereYouLive}
             onChange={handleChange}
-          />
+          >
+            {['New York City', 'Los Angeles', 'Chicago', 'Houston', 'Phoenix'].map((text) => (
+              <MenuItem classes={{ selected: classes.menuItem }} key={text} value={text}>
+                {text}
+              </MenuItem>
+            ))}
+          </TextField>
           {/* Describe Yourself */}
           <TextField
             variant="outlined"
