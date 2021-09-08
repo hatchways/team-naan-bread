@@ -16,6 +16,13 @@ const useStyles = makeStyles((theme) => ({
       width: '300px',
     },
   },
+  header: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: '100vw',
+  },
 }));
 
 export default useStyles;
