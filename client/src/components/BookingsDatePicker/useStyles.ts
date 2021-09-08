@@ -34,6 +34,10 @@ const useStyles = makeStyles((theme) => ({
     "& p.MuiTypography-body2": {
       fontSize: "0.86rem",
       fontWeight: "bold"
+    },
+    "& .MuiPickersDay-daySelected": {
+      backgroundColor: "#f1f1f1",
+      color: "rgba(0, 0, 0, 0.87)",
     }
   }
 }));

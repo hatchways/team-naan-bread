@@ -62,6 +62,8 @@ function BookingCard({
                         <Link href="#" onClick={(): void => {
                           updateSelectedRequest(booking._id, "accepted")
                           }}>Accept</Link>
+                      </Typography>
+                      <Typography>
                         <Link href="#" onClick={(): void => {
                           updateSelectedRequest(booking._id, "declined")
                           }}>Decline</Link>

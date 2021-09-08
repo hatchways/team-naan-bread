@@ -63,16 +63,16 @@ const useStyles = makeStyles((theme) => ({
   },
   cardOptions: {
     position: "absolute",
-    top: theme.spacing(3),
-    right: theme.spacing(0),
+    top: 0,
+    right: 0,
     "& p": {
       padding: theme.spacing(1),
-      boxShadow: "4px 4px 4px rgba(0,0,0,0.3)",
+      boxShadow: "2px 2px 2px rgba(0,0,0,0.3)",
       backgroundColor: "#ffffff",
       fontSize: "0.7rem",
       border: "1px solid #dddddd",
       "& a": {
-        margin: "0 2px"
+        margin: "0 4px"
       }
     }
   }
