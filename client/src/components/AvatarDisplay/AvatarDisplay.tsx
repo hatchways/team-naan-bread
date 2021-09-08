@@ -1,13 +1,12 @@
 import Avatar from '@material-ui/core/Avatar';
-import { User } from '../../interface/User';
 
 interface Props {
   loggedIn: boolean;
-  user: User;
+  photo: string | undefined;
 }
 
-const AvatarDisplay = ({ user }: Props): JSX.Element => {
-  return <Avatar src={`${user.profilePhotoUrl}`} />;
+const AvatarDisplay = ({ photo }: Props): JSX.Element => {
+  return <Avatar src={`${photo}`} />;
 };
 
 export default AvatarDisplay;
