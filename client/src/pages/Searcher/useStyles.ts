@@ -64,6 +64,16 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: 'transparent',
     },
   },
+  buttonHolder: {
+    display: 'flex',
+    width: '100%',
+    justifyContent: 'center',
+    marginTop: 15,
+  },
+  button: {
+    paddingLeft: 20,
+    paddingRight: 20,
+  },
 }));
 
 export default useStyles;

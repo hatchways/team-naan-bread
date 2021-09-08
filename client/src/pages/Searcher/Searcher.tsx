@@ -48,7 +48,6 @@ export default function Searcher(): JSX.Element {
     '10 am',
     '11 am',
     '12 pm',
-    '12 pm',
     '1 pm',
     '2 pm',
     '3 pm',
@@ -86,7 +85,7 @@ export default function Searcher(): JSX.Element {
   };
 
   function checkResults() {
-    if (results.profiles !== []) {
+    if (results.profiles != []) {
       return (
         <Box className={classes.resultsBox}>
           {results.profiles.map((profile) => {
@@ -130,18 +129,23 @@ export default function Searcher(): JSX.Element {
               <Box className={classes.innerTimeHolder}>
                 <InputLabel id="label">To</InputLabel>
                 <Select labelId="label" id="select" value={to} onChange={handleTimeTo}>
-                  {times.map((text) => (
-                    <MenuItem key={text} value={text}>
-                      {text}
-                    </MenuItem>
-                  ))}
+                  {times.map(
+                    (text) =>
+                      text != from && (
+                        <MenuItem key={text} value={text}>
+                          {text}
+                        </MenuItem>
+                      ),
+                  )}
                 </Select>
               </Box>
             </Box>
             <ProfileSearch handleChange={handleChange} handleSubmit={handleSubmit} />
-            <Button variant="contained" onClick={handleSubmit}>
-              Search
-            </Button>
+            <Box className={classes.buttonHolder}>
+              <Button className={classes.button} variant="contained" onClick={handleSubmit}>
+                Search
+              </Button>
+            </Box>
           </Grid>
           {checkResults()}
         </Box>
