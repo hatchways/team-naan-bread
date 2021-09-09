@@ -46,15 +46,14 @@ export default function NotificationsMenu(): JSX.Element {
   }, [loggedInUser]);
 
   return (
-    <div className={classes.menuButton}>
-      <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+    <Box padding={1} marginLeft={1}>
+      <Button aria-controls="notificationsMenu" aria-haspopup="true" onClick={handleClick}>
         <Badge variant="dot" color="primary" invisible={notifications && notifications.length < 1}>
           <Typography variant="button">Notifications</Typography>
         </Badge>
       </Button>
       {notifications && notifications.length >= 1 && (
         <Menu
-          className={classes.menu}
           elevation={0}
           getContentAnchorEl={null}
           anchorOrigin={{
@@ -65,49 +64,64 @@ export default function NotificationsMenu(): JSX.Element {
             vertical: 'top',
             horizontal: 'center',
           }}
-          id="simple-menu"
+          id="notificationsMenu"
           anchorEl={anchorEl}
           keepMounted
           open={Boolean(anchorEl)}
           onClose={handleClose}
         >
-          <Box display={{ xs: 'none', sm: 'block' }} className={classes.arrowUp} />
-          <Box borderTop={5}>
+          <Box
+            display={{ xs: 'none', sm: 'block' }}
+            height={0}
+            width={0}
+            borderLeft={'5px solid transparent'}
+            borderRight={'5px solid transparent'}
+            borderBottom={'5px solid black'}
+            alignItems={'center'}
+            marginLeft={'50%'}
+            marginRight={'50%'}
+          />
+
+          <Box borderColor={'#000000'} borderTop={5}>
             <Paper>
               {notifications &&
                 notifications.map((notification, index) => (
-                  <MenuItem key={index} className={classes.notificationMenuItem} onClick={handleClose}>
-                    <ListItem>
-                      <ListItemAvatar>
-                        <Avatar
-                          src={
-                            notification.context
-                              ? notification.context.profilePhotoURL
-                              : 'https://res.cloudinary.com/dalisapxa/image/upload/v1630880229/DEV/logo_nywmrf.png'
-                          }
-                          className={classes.notificationAvatar}
-                          variant="square"
-                        />
-                      </ListItemAvatar>
-                      <ListItemText
-                        secondary={
-                          <div>
-                            <Typography className={classes.notification}>{notification.title}</Typography>
+                  <Box key={index} paddingLeft={'4px'}>
+                    <MenuItem onClick={handleClose}>
+                      <ListItem>
+                        <Box marginRight={'14px'}>
+                          <ListItemAvatar>
+                            <Avatar
+                              src={
+                                notification.context
+                                  ? notification.context.profilePhotoURL
+                                  : 'https://res.cloudinary.com/dalisapxa/image/upload/v1630880229/DEV/logo_nywmrf.png'
+                              }
+                              variant="square"
+                            />
+                          </ListItemAvatar>
+                        </Box>
 
-                            <Typography variant="button">{notification.notificationType}</Typography>
-                            <Typography className={classes.notification}>
-                              {new Date(notification.createdAt).toLocaleDateString()}
-                            </Typography>
-                          </div>
-                        }
-                      />
-                    </ListItem>
-                  </MenuItem>
+                        <ListItemText
+                          secondary={
+                            <div>
+                              <Typography className={classes.notification}>{notification.title}</Typography>
+
+                              <Typography variant="button">{notification.notificationType}</Typography>
+                              <Typography className={classes.notification}>
+                                {new Date(notification.createdAt).toLocaleDateString()}
+                              </Typography>
+                            </div>
+                          }
+                        />
+                      </ListItem>
+                    </MenuItem>
+                  </Box>
                 ))}
             </Paper>
           </Box>
         </Menu>
       )}
-    </div>
+    </Box>
   );
 }
