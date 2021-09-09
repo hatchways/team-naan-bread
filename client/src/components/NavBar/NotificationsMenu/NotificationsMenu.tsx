@@ -89,29 +89,36 @@ export default function NotificationsMenu(): JSX.Element {
                   <Box key={index} paddingLeft={'4px'}>
                     <MenuItem onClick={handleClose}>
                       <ListItem>
-                        <Box marginRight={'14px'}>
-                          <ListItemAvatar>
-                            <Avatar
-                              src={
-                                notification.context
-                                  ? notification.context.profilePhotoURL
-                                  : 'https://res.cloudinary.com/dalisapxa/image/upload/v1630880229/DEV/logo_nywmrf.png'
-                              }
-                              variant="square"
-                            />
-                          </ListItemAvatar>
-                        </Box>
+                        <ListItemAvatar>
+                          <Avatar
+                            src={
+                              notification.context
+                                ? notification.context.profilePhotoURL
+                                : 'https://res.cloudinary.com/dalisapxa/image/upload/v1630880229/DEV/logo_nywmrf.png'
+                            }
+                            variant="square"
+                            className={classes.notificationAvatar}
+                          />
+                        </ListItemAvatar>
 
                         <ListItemText
                           secondary={
-                            <div>
-                              <Typography className={classes.notification}>{notification.title}</Typography>
-
-                              <Typography variant="button">{notification.notificationType}</Typography>
-                              <Typography className={classes.notification}>
-                                {new Date(notification.createdAt).toLocaleDateString()}
+                            <Box>
+                              <Typography>
+                                <Box fontSize={12} fontWeight={600} color="#000000">
+                                  {notification.title}
+                                </Box>
                               </Typography>
-                            </div>
+
+                              <Typography variant="button">
+                                <Box fontSize={10}>{notification.notificationType}</Box>
+                              </Typography>
+                              <Typography>
+                                <Box fontSize={12} fontWeight={600} color="#000000">
+                                  {new Date(notification.createdAt).toLocaleDateString()}
+                                </Box>
+                              </Typography>
+                            </Box>
                           }
                         />
                       </ListItem>
