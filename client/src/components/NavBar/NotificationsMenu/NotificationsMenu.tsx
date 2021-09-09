@@ -20,6 +20,7 @@ import { getAllUnreadNotifications, markAsRead } from '../../../helpers/APICalls
 export default function NotificationsMenu(): JSX.Element {
   const classes = useStyles();
   const { loggedInUser } = useAuth();
+  const defaultLogoURL = 'https://res.cloudinary.com/dalisapxa/image/upload/v1630880229/DEV/logo_nywmrf.png';
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
@@ -91,11 +92,7 @@ export default function NotificationsMenu(): JSX.Element {
                       <ListItem>
                         <ListItemAvatar>
                           <Avatar
-                            src={
-                              notification.context
-                                ? notification.context.profilePhotoURL
-                                : 'https://res.cloudinary.com/dalisapxa/image/upload/v1630880229/DEV/logo_nywmrf.png'
-                            }
+                            src={notification.context ? notification.context.profilePhotoURL : defaultLogoURL}
                             variant="square"
                             className={classes.notificationAvatar}
                           />
