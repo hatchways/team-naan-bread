@@ -7,10 +7,9 @@ import Typography from '@material-ui/core/Typography';
 import useStyles from './useStyles';
 import { CircularProgress, Link } from '@material-ui/core';
 import { Link as RouterLink } from 'react-router-dom';
-import demouser from '../../../helpers/APICalls/demouser';
 import { useAuth } from '../../../context/useAuthContext';
 import { useSnackBar } from '../../../context/useSnackbarContext';
-import { AuthApiData } from '../../../interface/AuthApiData';
+import { login } from '../../../helpers/APICalls/login';
 
 interface Props {
   handleSubmit: (
@@ -39,11 +38,15 @@ const SignUpForm = ({ handleSubmit }: Props): JSX.Element => {
   const { updateLoginContext } = useAuth();
   const { updateSnackBarMessage } = useSnackBar();
   const handleClick = async () => {
-    await demouser().then((data: AuthApiData) => {
-      if (data.success) {
-        updateLoginContext(data.success);
-      } else if (data.error) {
+    login('demo@email.com', 'password').then((data) => {
+      if (data.error) {
         updateSnackBarMessage(data.error.message);
+      } else if (data.success) {
+        updateLoginContext(data.success);
+      } else {
+        // should not get here from backend but this catch is for an unknown issue
+        console.error({ data });
+        updateSnackBarMessage('An unexpected error occurred. Please try again');
       }
     });
   };

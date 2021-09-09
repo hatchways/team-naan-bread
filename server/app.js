@@ -5,6 +5,7 @@ const express = require('express');
 const socketio = require('socket.io');
 const { notFound, errorHandler } = require('./middleware/error');
 const connectDB = require('./db');
+const { populate } = require('./controllers/demo');
 const { join } = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
@@ -19,6 +20,7 @@ const notificationRouter = require('./routes/notification');
 const { json, urlencoded } = express;
 
 connectDB();
+populate();
 const app = express();
 const server = http.createServer(app);
 
