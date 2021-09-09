@@ -36,6 +36,7 @@ export default function Dashboard(): JSX.Element {
         <Link to={'/settings/editProfile'}>
           <Button variant="contained"> Check Profile</Button>
         </Link>
+        <Link to="/my-sitters">My Sitters</Link>
         <ChatSideBanner loggedInUser={loggedInUser} />
       </Grid>
     </Grid>
