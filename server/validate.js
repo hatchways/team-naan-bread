@@ -7,7 +7,7 @@ exports.validateRegister = [
     "password",
     "Please enter a password with 6 or more characters"
   ).isLength({
-    min: 6
+    min: 6,
   }),
   (req, res, next) => {
     const errors = validationResult(req);
@@ -16,7 +16,7 @@ exports.validateRegister = [
     if (!errors.isEmpty())
       return res.status(400).json({ errors: errors.array() });
     next();
-  }
+  },
 ];
 
 exports.validateLogin = [
@@ -28,5 +28,26 @@ exports.validateLogin = [
     if (!errors.isEmpty())
       return res.status(400).json({ errors: errors.array() });
     next();
-  }
+  },
+];
+
+exports.validateCreateNotification = [
+  check("userReceivedId").notEmpty().isString(),
+  check("notificationType").isIn([
+    "success",
+    "warning",
+    "info",
+    "confirmation",
+    null,
+  ]),
+  check("title").trim().escape().notEmpty(),
+  check("description").trim().escape(),
+
+  (req, res, next) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty())
+      return res.status(400).json({ errors: errors.array() });
+    next();
+  },
 ];

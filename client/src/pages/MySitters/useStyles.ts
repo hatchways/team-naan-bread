@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from '@material-ui/core/styles';
 
 const drawerWidth = 240;
 
@@ -11,8 +11,8 @@ const useStyles = makeStyles((theme) => ({
     paddingRight: theme.spacing(8)
   },
   mySittersContent: {
-    display: "flex",
-    flexDirection: "row",
+    display: 'flex',
+    flexDirection: 'row',
   },
   mySittersColumns: {
     margin: theme.spacing(4)

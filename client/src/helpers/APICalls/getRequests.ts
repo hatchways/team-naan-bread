@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
-import { FetchOptions } from "../../interface/FetchOptions";
-import { RequestData } from "../../interface/Request";
+import { FetchOptions } from '../../interface/FetchOptions';
+import { RequestData } from '../../interface/Request';
 
 const getRequests = async (): Promise<RequestData[]> => {
   const fetchOptions: FetchOptions = {
