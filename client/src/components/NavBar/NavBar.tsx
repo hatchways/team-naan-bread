@@ -1,20 +1,18 @@
-import useStyles from './useStyles';
 import { useAuth } from '../../context/useAuthContext';
 import { AppBar, Toolbar, Button, IconButton, Link, Box } from '@material-ui/core';
 import AvatarDisplay from '../AvatarDisplay/AvatarDisplay';
 import { Link as routerLink } from 'react-router-dom';
 import NotificationsMenu from './NotificationsMenu/NotificationsMenu';
 export default function NavBar(): JSX.Element {
-  const classes = useStyles();
   const { loggedInUser } = useAuth();
 
   return (
-    <div className={classes.root}>
+    <Box flexGrow={1}>
       {loggedInUser && (
-        <AppBar className={classes.bar} color="secondary" position="static">
-          <Toolbar>
-            <div className={classes.title}>
-              <Box display={{ xs: 'none', sm: 'block' }}>
+        <AppBar color="secondary" position="static">
+          <Box padding={1}>
+            <Toolbar>
+              <Box flexGrow={1} display={{ xs: 'none', sm: 'block' }}>
                 <Link component={routerLink} to="/dashboard">
                   <img
                     src="https://res.cloudinary.com/dalisapxa/image/upload/v1630805884/DEV/logo_jizgel.png"
@@ -22,21 +20,24 @@ export default function NavBar(): JSX.Element {
                   />
                 </Link>
               </Box>
-            </div>
 
-            <NotificationsMenu />
-            <div className={classes.menuButton}>
-              <Button>My jobs</Button>
-            </div>
+              <NotificationsMenu />
+              <Box padding={1} marginLeft={1}>
+                <Button>My jobs</Button>
+              </Box>
+              <Box padding={1} marginLeft={1}>
+                <Button>Messages</Button>
+              </Box>
 
-            <Button className={classes.menuButton}>Messages</Button>
-
-            <IconButton component={routerLink} to="/settings/profile" className={classes.menuButton}>
-              <AvatarDisplay loggedIn user={loggedInUser} />
-            </IconButton>
-          </Toolbar>
+              <Box padding={1} marginLeft={1}>
+                <IconButton component={routerLink} to="/settings/profile">
+                  <AvatarDisplay loggedIn user={loggedInUser} />
+                </IconButton>
+              </Box>
+            </Toolbar>
+          </Box>
         </AppBar>
       )}
-    </div>
+    </Box>
   );
 }
