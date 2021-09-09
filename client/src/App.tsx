@@ -13,6 +13,7 @@ import { SnackBarProvider } from './context/useSnackbarContext';
 
 import './App.css';
 import NavBar from './components/NavBar/NavBar';
+import AllNotifications from './pages/AllNotifiactions/AllNotifications';
 
 function App(): JSX.Element {
   return (
@@ -31,6 +32,9 @@ function App(): JSX.Element {
                 <Route exact path="/settings/editProfile" component={EditProfile} />
                 <Route exact path="/dashboard">
                   <Dashboard />
+                </Route>
+                <Route exact path="/notifications">
+                  <AllNotifications />
                 </Route>
                 <Route path="*">
                   <Redirect to="/login" />
