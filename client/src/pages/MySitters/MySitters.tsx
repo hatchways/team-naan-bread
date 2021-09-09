@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { RequestData } from "../../interface/Request";
 import getRequests from '../../helpers/APICalls/getRequests';
 import { 
