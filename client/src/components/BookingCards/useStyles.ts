@@ -66,14 +66,15 @@ const useStyles = makeStyles((theme) => ({
     top: 0,
     right: 0,
     "& p": {
-      padding: theme.spacing(1),
       boxShadow: "2px 2px 0px rgba(0,0,0,0.15)",
       backgroundColor: "#ffffff",
       fontSize: "0.7rem",
       fontWeight: "700",
       border: "1px solid #dddddd",
+      width: 72,
       "& a": {
-        margin: "0 4px"
+        padding: theme.spacing(1),
+        display: "block"
       }
     }
   }

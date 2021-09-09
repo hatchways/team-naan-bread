@@ -29,7 +29,7 @@ export default function MySitters(): JSX.Element {
   const [selectedBooking, setSelectedBooking] = useState<string>("");
 
   useEffect(() => {
-    const bookingRequests = async () => {
+    const fetchRequests = async () => {
       const data: RequestData[] = await getRequests();
       setRequests(data);
       const dates: Date[] = [];
@@ -41,7 +41,7 @@ export default function MySitters(): JSX.Element {
       });
       setDates(dates);
     }
-    bookingRequests();
+    fetchRequests();
   }, []);
   
   const currentDate = new Date();
@@ -90,22 +90,19 @@ export default function MySitters(): JSX.Element {
   };
 
   // update selected request
-  const updateSelectedRequest = (bookingId: string, state: string) => {
-    updateRequest(bookingId, state)
-    .then(() => setCardAction(false))
-    .then(() => getRequests()
-    .then(data => {
-      setRequests(data)
-      const dates: Date[] = [];
-      data.map(booking => {
-        if (booking.accepted) {
-          const bookingDate = new Date(booking.start)
-          dates.push(bookingDate)
-        }
-      });
-      setDates(dates);
-    })
-    )
+  const updateSelectedRequest = async (bookingId: string, state: string) => {
+    await updateRequest(bookingId, state);
+    const data = await getRequests();
+    setRequests(data);
+    const dates: Date[] = [];
+    data.map(booking => {
+      if (booking.accepted) {
+        const bookingDate = new Date(booking.start)
+        dates.push(bookingDate)
+      }
+    });
+    setCardAction(false);
+    setDates(dates);
   }
 
   return (

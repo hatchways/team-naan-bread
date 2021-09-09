@@ -30,7 +30,8 @@ const useStyles = makeStyles((theme) => ({
     },
     "& .MuiPickersCalendar-week": {
       justifyContent: "space-around",
-      fontWeight: "bold"
+      fontWeight: "bold",
+      paddingBottom: theme.spacing(1),
     },
     "& p.MuiTypography-body2": {
       fontSize: "0.86rem",
