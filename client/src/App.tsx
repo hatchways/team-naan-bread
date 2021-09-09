@@ -18,7 +18,6 @@ import './App.css';
 function App(): JSX.Element {
   return (
     <MuiThemeProvider theme={theme}>
-<<<<<<< HEAD
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <BrowserRouter>
           <SnackBarProvider>
@@ -44,31 +43,6 @@ function App(): JSX.Element {
           </SnackBarProvider>
         </BrowserRouter>
       </MuiPickersUtilsProvider>
-=======
-      <BrowserRouter>
-        <SnackBarProvider>
-          <AuthProvider>
-            <SocketProvider>
-              <Switch>
-                <Route exact path="/settings/profile/">
-                  <Profile />
-                </Route>
-                <Route exact path="/login" component={Login} />
-                <Route exact path="/signup" component={Signup} />
-                <Route exact path="/settings/editProfile" component={EditProfile} />
-                <Route exact path="/dashboard">
-                  <Dashboard />
-                </Route>
-                <Route path="*">
-                  <Redirect to="/login" />
-                </Route>
-                <Route exact path="/my-sitters" component={MySitters} />
-              </Switch>
-            </SocketProvider>
-          </AuthProvider>
-        </SnackBarProvider>
-      </BrowserRouter>
->>>>>>> main
     </MuiThemeProvider>
   );
 }
