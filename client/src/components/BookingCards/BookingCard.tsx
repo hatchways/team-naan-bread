@@ -55,8 +55,8 @@ function BookingCard({
                 <IconButton aria-label="settings" onClick={() => {
                   displayCardActions(booking)}}>
                   <Settings fontSize="small" color="disabled" />
-                  {(cardAction && selectedBooking === booking._id)
-                  ? (
+                  {(cardAction && selectedBooking === booking._id) &&
+                    (
                     <Box className={classes.cardOptions}>
                       <Typography>
                         <Link href="#" onClick={(): void => {
@@ -69,8 +69,7 @@ function BookingCard({
                           }}>Decline</Link>
                       </Typography>
                     </Box>
-                  )
-                  : null
+                    )
                   }
                 </IconButton>
               }
