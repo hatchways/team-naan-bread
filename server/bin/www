@@ -31,22 +31,21 @@ const io = require('socket.io')(server);
 const authSocket = async (socket, next) => {
   const auth = socket.handshake.auth;
   const token = socket.handshake.headers.cookie.split('=')[1];
-  console.log(`token ${JSON.stringify(token)}`);
   const { username } = auth;
   if (!token) {
-    return res.status(401).send('No token, authorization denied');
+    return next(new Error('No token, authorization denied'));
   }
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    socket.user = auth.username;
+    socket.user = username;
     socket.id = decoded.id;
     const user = await User.findById(socket.id);
-    console.log(`user ${user}`);
+    const userPropertiesPicked = (({ username, email }) => ({ username, email }))(user);
+    console.log(`user ${JSON.stringify(userPropertiesPicked)}`);
     next();
   } catch (err) {
-    res.status(401).send('Token is not valid');
-    next();
+    return next(new Error('authorization denied'));
   }
   return next();
 };
@@ -54,7 +53,6 @@ const authSocket = async (socket, next) => {
 io.use(authSocket);
 
 io.on('connection', (socket) => {
-  socket.send('Hello!');
   socket.on('go-online', (id) => {
     if (!onlineUsers.has(id)) {
       onlineUsers.add(id);
