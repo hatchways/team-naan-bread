@@ -10,7 +10,6 @@ import {
   ListItemText,
   ListItemAvatar,
   Avatar,
-  ListItem,
   Box,
 } from '@material-ui/core';
 import { Notification } from '../../../interface/Notification';
@@ -89,36 +88,34 @@ export default function NotificationsMenu(): JSX.Element {
                 notifications.map((notification, index) => (
                   <Box key={index} paddingLeft={'4px'}>
                     <MenuItem onClick={handleClose}>
-                      <ListItem>
-                        <ListItemAvatar>
-                          <Avatar
-                            src={notification.context ? notification.context.profilePhotoURL : defaultLogoURL}
-                            variant="square"
-                            className={classes.notificationAvatar}
-                          />
-                        </ListItemAvatar>
-
-                        <ListItemText
-                          secondary={
-                            <Box>
-                              <Typography>
-                                <Box fontSize={12} fontWeight={600} color="#000000">
-                                  {notification.title}
-                                </Box>
-                              </Typography>
-
-                              <Typography variant="button">
-                                <Box fontSize={10}>{notification.notificationType}</Box>
-                              </Typography>
-                              <Typography>
-                                <Box fontSize={12} fontWeight={600} color="#000000">
-                                  {new Date(notification.createdAt).toLocaleDateString()}
-                                </Box>
-                              </Typography>
-                            </Box>
-                          }
+                      <ListItemAvatar>
+                        <Avatar
+                          src={notification.context ? notification.context.profilePhotoURL : defaultLogoURL}
+                          variant="square"
+                          className={classes.notificationAvatar}
                         />
-                      </ListItem>
+                      </ListItemAvatar>
+
+                      <ListItemText
+                        secondary={
+                          <Box>
+                            <Typography>
+                              <Box fontSize={12} fontWeight={600} color="#000000">
+                                {notification.title}
+                              </Box>
+                            </Typography>
+
+                            <Typography variant="button">
+                              <Box fontSize={10}>{notification.notificationType}</Box>
+                            </Typography>
+                            <Typography>
+                              <Box fontSize={12} fontWeight={600} color="#000000">
+                                {new Date(notification.createdAt).toLocaleDateString()}
+                              </Box>
+                            </Typography>
+                          </Box>
+                        }
+                      />
                     </MenuItem>
                   </Box>
                 ))}
