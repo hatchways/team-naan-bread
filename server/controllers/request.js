@@ -55,15 +55,15 @@ exports.postRequest = asyncHandler(async (req, res, next) => {
     { $push: { requestsSubmitted: request._id } },
   );
   await Profile.updateOne({ _id: sitterId }, { $push: { requestsReceived: request._id } });
-  console.log(updatedUserProfile);
   const currentUser = await User.findById(userId);
+
+  const requestDurationInHours = parseInt((request.end - request.start) / 36e5);
+  const requesterFirstNameOrSomeone = updatedUserProfile.firstName ? updatedUserProfile.firstName : 'someone';
 
   const newNotification = await Notification.create({
     userId: sitterId,
     notificationType: 'dog sitting',
-    title: `${
-      updatedUserProfile && updatedUserProfile.firstName ? updatedUserProfile.firstName : 'someone'
-    } has requested your service for ${parseInt(Math.abs(request.start - request.end) / 36e5)} hours`,
+    title: `${requesterFirstNameOrSomeone} has requested your service for ${requestDurationInHours} hours`,
     context: {
       profilePhotoURL: currentUser.profilePhoto.url,
     },
