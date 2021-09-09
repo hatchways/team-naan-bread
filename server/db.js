@@ -8,17 +8,15 @@ const connectDB = async () => {
     useUnifiedTopology: true,
     useFindAndModify: false,
   });
+  console.log(`MongoDB Connected: ${conn.connection.host}`.cyan.underline.bold);
   if (process.env.NODE_ENV !== 'production' && mongoose.connection.readyState === 1) {
     console.log('Seeding database...');
-    mongoose.connection.dropDatabase();
     const user = await User.create({
       username: 'demo',
       email: 'demo@email.com',
       password: 'password',
     });
   }
-
-  console.log(`MongoDB Connected: ${conn.connection.host}`.cyan.underline.bold);
 };
 
 module.exports = connectDB;
