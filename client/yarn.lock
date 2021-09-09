@@ -1796,10 +1796,10 @@
   "resolved" "https://registry.npmjs.org/@types/aria-query/-/aria-query-4.2.1.tgz"
   "version" "4.2.1"
 
-"@types/babel__core@^7.0.0", "@types/babel__core@^7.1.7":
-  "integrity" "sha512-zGZJzzBUVDo/eV6KgbE0f0ZI7dInEYvo12Rb70uNQDshC3SkRMb67ja0GgRHZgAX3Za6rhaWlvbDO8rrGyAb1g=="
-  "resolved" "https://registry.npmjs.org/@types/babel__core/-/babel__core-7.1.14.tgz"
-  "version" "7.1.14"
+"@types/babel__core@^7.0.0", "@types/babel__core@^7.1.16", "@types/babel__core@^7.1.7":
+  "integrity" "sha512-EAEHtisTMM+KaKwfWdC3oyllIqswlznXCIVCt7/oRNrh+DhgT4UEBNC/jlADNjvw7UnfbcdkGQcPVZ1xYiLcrQ=="
+  "resolved" "https://registry.npmjs.org/@types/babel__core/-/babel__core-7.1.16.tgz"
+  "version" "7.1.16"
   dependencies:
     "@babel/parser" "^7.1.0"
     "@babel/types" "^7.0.0"

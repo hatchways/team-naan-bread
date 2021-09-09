@@ -67,9 +67,10 @@ const useStyles = makeStyles((theme) => ({
     right: 0,
     "& p": {
       padding: theme.spacing(1),
-      boxShadow: "2px 2px 2px rgba(0,0,0,0.3)",
+      boxShadow: "2px 2px 0px rgba(0,0,0,0.15)",
       backgroundColor: "#ffffff",
       fontSize: "0.7rem",
+      fontWeight: "700",
       border: "1px solid #dddddd",
       "& a": {
         margin: "0 4px"
