@@ -29,18 +29,19 @@ export default function MySitters(): JSX.Element {
   const [selectedBooking, setSelectedBooking] = useState<string>("");
 
   useEffect(() => {
-    getRequests()
-      .then(data => {
-        setRequests(data)
-        const dates: Date[] = [];
-        data.map(booking => {
-          if (booking.accepted) {
-            const bookingDate = new Date(booking.start)
-            dates.push(bookingDate)
-          }
-        });
-        setDates(dates);
-    });
+    const bookingRequests = async () => {
+      const data: RequestData[] = await getRequests();
+      setRequests(data);
+      const dates: Date[] = [];
+      data.map(booking => {
+        if (booking.accepted) {
+          const bookingDate = new Date(booking.start)
+          dates.push(bookingDate)
+        }
+      });
+      setDates(dates);
+    }
+    bookingRequests();
   }, []);
   
   const currentDate = new Date();
