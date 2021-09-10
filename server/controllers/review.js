@@ -22,5 +22,13 @@ exports.createReview = asyncHandler(async (req, res, next) => {
   const review = await Review.create({ rating, text, profileReviewedId, reviewerId, requestId });
   await Profile.updateOne({ _id: profileReviewedId }, { $push: { reviewsReceived: review } });
 
-  return res.status(200).json(review);
+  return res.status(201).json(review);
+});
+
+exports.getAllReviewsForProfile = asyncHandler(async (req, res, next) => {
+  const profileId = req.params.id;
+
+  const reviews = await Review.find({ profileReviewedId: profileId });
+
+  return res.status(200).json(reviews);
 });
