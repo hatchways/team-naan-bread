@@ -2,6 +2,7 @@ const asyncHandler = require('express-async-handler');
 const Profile = require('../models/Profile');
 const Request = require('../models/Request');
 const Review = require('../models/Review');
+const mongoose = require('mongoose');
 
 exports.createReview = asyncHandler(async (req, res, next) => {
   const { rating, text, profileReviewedId, requestId } = req.body;
@@ -27,8 +28,18 @@ exports.createReview = asyncHandler(async (req, res, next) => {
 
 exports.getAllReviewsForProfile = asyncHandler(async (req, res, next) => {
   const profileId = req.params.id;
+  const reviews = await Review.find({ profileReviewedId: mongoose.Types.ObjectId(profileId) });
 
-  const reviews = await Review.find({ profileReviewedId: profileId });
+  const aggregation = await Review.aggregate([
+    { $match: { profileReviewedId: mongoose.Types.ObjectId(profileId) } },
 
-  return res.status(200).json(reviews);
+    {
+      $group: {
+        _id: null,
+        averageRating: { $avg: '$rating' },
+      },
+    },
+  ]);
+  const profileAverageRating = aggregation[0].averageRating;
+  return res.status(200).json({ reviews, profileAverageRating });
 });
