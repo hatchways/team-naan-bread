@@ -58,7 +58,8 @@ exports.postRequest = asyncHandler(async (req, res, next) => {
   const currentUser = await User.findById(userId);
 
   const requestDurationInHours = parseInt((request.end - request.start) / 36e5);
-  const requesterFirstNameOrSomeone = updatedUserProfile.firstName ? updatedUserProfile.firstName : 'someone';
+  const requesterFirstNameOrSomeone =
+    updatedUserProfile && updatedUserProfile.firstName ? updatedUserProfile.firstName : 'someone';
 
   const newNotification = await Notification.create({
     userId: sitterId,
