@@ -27,5 +27,15 @@ const markAsRead = async (id: string) => {
     .then((res) => res.json())
     .catch(() => ({ error: { message: 'Unable to connect to server. Please try again' } }));
 };
+const markBatchAsRead = async (notificationsIds: string[]) => {
+  const fetchOptions: FetchOptions = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ notificationsIds }),
+    credentials: 'include',
+  };
 
-export { getAllNotifications, getAllUnreadNotifications, markAsRead };
+  return await fetch(`/notification/seen-batch`, fetchOptions);
+};
+
+export { getAllNotifications, getAllUnreadNotifications, markAsRead, markBatchAsRead };

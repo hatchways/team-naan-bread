@@ -54,3 +54,27 @@ exports.getUnreadNotifications = asyncHandler(async (req, res, next) => {
   }).sort("createdAt");
   res.status(200).json(notifications);
 });
+
+exports.markNotificationsBatchAsRead = asyncHandler(async (req, res, next) => {
+  const { notificationsIds } = req.body;
+  const loggedInUserId = req.user.id;
+  const user = await User.findById(loggedInUserId);
+  if (!user) {
+    return res.sendStatus(404);
+  }
+
+  const notificationMarkedAsSeen = await Notification.updateMany(
+    {
+      _id: {
+        $in: notificationsIds,
+      },
+      read: false,
+      userId: loggedInUserId,
+    },
+    {
+      read: true,
+    },
+  );
+
+  return res.sendStatus(200);
+});

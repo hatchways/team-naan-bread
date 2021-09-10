@@ -1,7 +1,7 @@
 import { useAuth } from '../../context/useAuthContext';
 import { Typography, Paper, ListItemText, Box, MenuList } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
-import { getAllNotifications } from '../../helpers/APICalls/Notification';
+import { getAllNotifications, markBatchAsRead } from '../../helpers/APICalls/Notification';
 import { Notification } from '../../interface/Notification';
 import NotificationsMenuItems from '../../components/NavBar/NotificationsMenu/NotificationsMenuItems/NotificationsMenuItems';
 
@@ -17,10 +17,23 @@ export default function AllNotifications(): JSX.Element {
       }
     }
     fetchNotifications();
-  }, [loggedInUser]);
+
+    async function markAllNotificationsAsRead() {
+      const notificationIds: string[] = [];
+      notifications?.forEach((notification) => {
+        if (!notification.read) {
+          notificationIds.push(notification._id);
+        }
+      });
+      if (notificationIds != []) {
+        await markBatchAsRead(notificationIds);
+      }
+    }
+    markAllNotificationsAsRead();
+  }, [notifications, loggedInUser]);
 
   return (
-    <Box marginTop={'10%'} alignItems={'center'} marginLeft={'20%'} marginRight={'20%'}>
+    <Box marginTop={'10%'} alignItems={'center'} marginLeft={'10%'} marginRight={'10%'}>
       <Paper>
         <MenuList>
           <ListItemText

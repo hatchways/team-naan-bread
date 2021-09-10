@@ -2,7 +2,7 @@ import { useAuth } from '../../../context/useAuthContext';
 import { Typography, Button, Badge, Menu, Box } from '@material-ui/core';
 import { Notification } from '../../../interface/Notification';
 import React, { useEffect, useState } from 'react';
-import { getAllUnreadNotifications, markAsRead } from '../../../helpers/APICalls/Notification';
+import { getAllUnreadNotifications, markBatchAsRead } from '../../../helpers/APICalls/Notification';
 import NotificationsMenuItems from './NotificationsMenuItems/NotificationsMenuItems';
 
 export default function NotificationsMenu(): JSX.Element {
@@ -10,12 +10,18 @@ export default function NotificationsMenu(): JSX.Element {
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    notifications?.map(async (notification) => {
-      await markAsRead(notification._id);
+  const handleClick = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    const notificationIds: string[] = [];
+    notifications?.forEach((notification) => {
+      if (!notification.read) {
+        notificationIds.push(notification._id);
+      }
     });
-
     setAnchorEl(event.currentTarget);
+
+    if (notificationIds != []) {
+      await markBatchAsRead(notificationIds);
+    }
   };
 
   const handleClose = () => {
@@ -34,7 +40,13 @@ export default function NotificationsMenu(): JSX.Element {
 
   return (
     <Box padding={1} marginLeft={1}>
-      <Button aria-controls="notificationsMenu" aria-haspopup="true" onClick={handleClick}>
+      <Button
+        aria-controls="notificationsMenu"
+        aria-haspopup="true"
+        onClick={async (e) => {
+          await handleClick(e);
+        }}
+      >
         <Badge variant="dot" color="primary" invisible={notifications && notifications.length < 1}>
           <Typography variant="button">Notifications</Typography>
         </Badge>
