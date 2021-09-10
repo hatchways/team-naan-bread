@@ -14,9 +14,7 @@ const notificationSchema = mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'user',
     },
-    context: {
-      profilePhotoURL: String,
-    },
+    context: mongoose.Schema.Types.Mixed,
   },
   { timestamps: true },
 );
