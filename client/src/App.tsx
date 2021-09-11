@@ -1,9 +1,8 @@
 import { MuiThemeProvider } from '@material-ui/core';
 import { theme } from './themes/theme';
-import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Login from './pages/Login/Login';
 import Signup from './pages/SignUp/SignUp';
-import EditProfile from './pages/Settings/EditProfile/EditProfile';
 import Dashboard from './pages/Dashboard/Dashboard';
 import Profile from './pages/Profile/Profile';
 import MySitters from './pages/MySitters/MySitters';
@@ -24,12 +23,11 @@ function App(): JSX.Element {
             <AuthProvider>
               <SocketProvider>
                 <Switch>
-                  <Route exact path="/settings/profile/">
+                  <Route exact={false} path="/settings">
                     <Profile />
                   </Route>
                   <Route exact path="/login" component={Login} />
                   <Route exact path="/signup" component={Signup} />
-                  <Route exact path="/settings/editProfile" component={EditProfile} />
                   <Route exact path="/dashboard">
                     <Dashboard />
                   </Route>

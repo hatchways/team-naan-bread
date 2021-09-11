@@ -8,6 +8,7 @@ import TextField from '@material-ui/core/TextField';
 import { CircularProgress } from '@material-ui/core';
 import MenuItem from '@material-ui/core/MenuItem';
 import MuiPhoneNumber from 'material-ui-phone-number';
+import { ProfileApiData } from '../../../../interface/ProfileApiData';
 
 interface Props {
   handleSubmit: (
@@ -24,52 +25,10 @@ interface Props {
       createdAt,
       updatedAt,
       __v,
-    }: {
-      _id: string;
-      email: string;
-      firstName: string;
-      lastName: string;
-      gender: string;
-      birthDate: string;
-      phoneNumber: string;
-      whereYouLive: string;
-      describeYourself: string;
-      createdAt: string;
-      updatedAt: string;
-      __v: string;
-    },
-    {
-      setStatus,
-      setSubmitting,
-    }: FormikHelpers<{
-      _id: string;
-      email: string;
-      firstName: string;
-      lastName: string;
-      gender: string;
-      birthDate: string;
-      phoneNumber: string;
-      whereYouLive: string;
-      describeYourself: string;
-      createdAt: string;
-      updatedAt: string;
-      __v: string;
-    }>,
+    }: ProfileApiData,
+    { setStatus, setSubmitting }: FormikHelpers<ProfileApiData>,
   ) => void;
-  userProfile: {
-    _id: string;
-    email: string;
-    firstName: string;
-    lastName: string;
-    gender: string;
-    birthDate: string;
-    phoneNumber: string;
-    whereYouLive: string;
-    describeYourself: string;
-    createdAt: string;
-    updatedAt: string;
-    __v: string;
-  };
+  userProfile: ProfileApiData;
 }
 
 export default function EditProfileForm({ userProfile, handleSubmit }: Props): JSX.Element {
