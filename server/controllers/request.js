@@ -1,7 +1,9 @@
+require("dotenv").config();
 const Request = require('../models/Request');
 const User = require('../models/User');
 const Profile = require('../models/Profile');
 const asyncHandler = require('express-async-handler');
+const stripe = require('stripe')(process.env.STRIPE);
 
 // @route GET /request
 // @desc get requests related to a logged in user or sitter
@@ -80,4 +82,66 @@ exports.updateRequest = asyncHandler(async (req, res, next) => {
       res.send(doc);
     }
   });
+});
+
+exports.payPetSitter = asyncHandler(async (req, res, next) => {
+  const { 
+    userId, 
+    customerId, 
+    sitterId,
+    email, 
+    name, 
+    service, 
+    hourlyRate, 
+    hours } = req.body;
+  const orderId = req.params.id;
+
+  const customer = await stripe.customers.retrieve(customerId);
+
+  if (!customer) {
+    customer = await stripe.customers.create({email, name});
+    await Profile.updateOne({_id: userId}, {customerId: customer.id});
+  }
+
+  if (service === "") {
+    try {
+      service = await stripe.products.create({
+        name: "Pet sitting",
+        unit_label: "Hour(s)",
+      });
+      await Profile.updateOne({_id: sitterId}, {serviceId: service.id});
+    } catch (err) {
+      res.status(400);
+      throw new Error(err, "Error creating product");
+    }
+  };
+
+  try {
+    const price = await stripe.prices.create({
+      nickname: "Metered pett sitting price",
+      product: service.id,
+      unit_amount: hourlyRate * 100,
+      currency: "usd",
+    });
+
+    const session = await stripe.checkout.sessions.create({
+      customer, 
+      payment_method_types: ["card"],
+      line_items: [
+        {
+          price: price.id,
+          quantity: hours,
+        },
+      ],
+      success_url: window.location.origin,
+      cancel_url: "",
+    });
+    
+    res.redirect(303, session.url);
+
+  } catch (err) {
+    res.status(400);
+    throw new Error(err, "Error creating checkout session");
+  }
+
 });

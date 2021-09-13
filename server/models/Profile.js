@@ -41,6 +41,17 @@ const profileSchema = new mongoose.Schema(
         ref: 'request',
       },
     ],
+    customerId: {
+      type: String,
+      default: "",
+    },
+    serviceId: {
+      type: String,
+      default: "",
+    },
+    hourlyRate: {
+      type: Number,
+    },
   },
   {
     timestamps: true,
