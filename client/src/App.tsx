@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom';
 import Login from './pages/Login/Login';
 import Signup from './pages/SignUp/SignUp';
 import EditProfile from './pages/Settings/EditProfile/EditProfile';
+import Availability from './pages/Settings/Availability/Availability';
 import Dashboard from './pages/Dashboard/Dashboard';
 import Profile from './pages/Profile/Profile';
 import { AuthProvider } from './context/useAuthContext';
@@ -26,6 +27,7 @@ function App(): JSX.Element {
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/signup" component={Signup} />
                 <Route exact path="/settings/editProfile" component={EditProfile} />
+                <Route exact path="/settings/availability" component={Availability} />
                 <Route exact path="/dashboard">
                   <Dashboard />
                 </Route>
