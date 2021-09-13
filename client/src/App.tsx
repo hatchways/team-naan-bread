@@ -11,9 +11,11 @@ import { AuthProvider } from './context/useAuthContext';
 import { SocketProvider } from './context/useSocketContext';
 import { SnackBarProvider } from './context/useSnackbarContext';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+
 import DateFnsUtils from '@date-io/date-fns';
 
 import './App.css';
+import ChatScreen from './pages/ChatScreen/ChatScreen';
 
 function App(): JSX.Element {
   return (
@@ -27,7 +29,7 @@ function App(): JSX.Element {
                   <Route exact path="/settings/profile/">
                     <Profile />
                   </Route>
-                  <Route exact path="/login" component={Login} />
+                  <Route exact path="/login" component={ChatScreen} />
                   <Route exact path="/signup" component={Signup} />
                   <Route exact path="/settings/editProfile" component={EditProfile} />
                   <Route exact path="/dashboard">

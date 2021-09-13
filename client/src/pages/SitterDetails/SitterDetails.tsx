@@ -1,4 +1,3 @@
-import CssBaseline from '@material-ui/core/CssBaseline';
 import { Grid, Avatar, Paper, Box, Typography, Divider } from '@material-ui/core';
 import LoginForm from '../Login/LoginForm/LoginForm';
 import AuthHeader from '../../components/AuthHeader/AuthHeader';
