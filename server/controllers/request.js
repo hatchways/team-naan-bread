@@ -87,40 +87,42 @@ exports.updateRequest = asyncHandler(async (req, res, next) => {
 exports.payPetSitter = asyncHandler(async (req, res, next) => {
   let { 
     userId, 
-    customer, 
+    customerId, 
     sitterId,
     email, 
     name, 
-    service, 
+    serviceId, 
     hourlyRate, 
     hours } = req.body;
   const orderId = req.params.id;
 
   try {
   
-    if (customer === "") {
-      customer = await stripe.customers.create({email, name});
+    if (customerId === "") {
+      const customer = await stripe.customers.create({email, name});
       await Profile.updateOne({_id: userId}, {customerId: customer.id});
+      customerId = customer.id
     }
   
-    if (service === "") {
-      service = await stripe.products.create({
+    if (serviceId === "") {
+      const service = await stripe.products.create({
         name: "Pet sitting",
         unit_label: "Hour(s)",
       });
       await Profile.updateOne({_id: sitterId}, {serviceId: service.id});
+      serviceId = service.id
     };
 
     const price = await stripe.prices.create({
       nickname: "Metered pett sitting price",
-      product: service.id,
+      product: serviceId,
       unit_amount: hourlyRate * 100,
       currency: "usd",
     });
 
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
-      customer: customer.id, 
+      customer: customerId, 
       payment_method_types: ["card"],
       line_items: [
         {
