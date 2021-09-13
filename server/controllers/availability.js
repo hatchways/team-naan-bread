@@ -32,3 +32,14 @@ exports.findAvailabilityById = asyncHandler(async (req, res, next) => {
     
       res.status(200).json(availability);
 })
+
+exports.findAllAvailability = asyncHandler(async (req, res, next) => {
+  const availabilities = await Availability.find({});
+
+  if (!availabilities) {
+      res.status(404);
+      throw new Error("No availabilities found");
+    }
+
+  res.status(200).json({ availabilities});
+})
