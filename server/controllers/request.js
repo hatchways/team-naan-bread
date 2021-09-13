@@ -85,9 +85,9 @@ exports.updateRequest = asyncHandler(async (req, res, next) => {
 });
 
 exports.payPetSitter = asyncHandler(async (req, res, next) => {
-  const { 
+  let { 
     userId, 
-    customerId, 
+    customer, 
     sitterId,
     email, 
     name, 
@@ -96,27 +96,21 @@ exports.payPetSitter = asyncHandler(async (req, res, next) => {
     hours } = req.body;
   const orderId = req.params.id;
 
-  const customer = await stripe.customers.retrieve(customerId);
-
-  if (!customer) {
-    customer = await stripe.customers.create({email, name});
-    await Profile.updateOne({_id: userId}, {customerId: customer.id});
-  }
-
-  if (service === "") {
-    try {
+  try {
+  
+    if (customer === "") {
+      customer = await stripe.customers.create({email, name});
+      await Profile.updateOne({_id: userId}, {customerId: customer.id});
+    }
+  
+    if (service === "") {
       service = await stripe.products.create({
         name: "Pet sitting",
         unit_label: "Hour(s)",
       });
       await Profile.updateOne({_id: sitterId}, {serviceId: service.id});
-    } catch (err) {
-      res.status(400);
-      throw new Error(err, "Error creating product");
-    }
-  };
+    };
 
-  try {
     const price = await stripe.prices.create({
       nickname: "Metered pett sitting price",
       product: service.id,
@@ -125,7 +119,8 @@ exports.payPetSitter = asyncHandler(async (req, res, next) => {
     });
 
     const session = await stripe.checkout.sessions.create({
-      customer, 
+      mode: "payment",
+      customer: customer.id, 
       payment_method_types: ["card"],
       line_items: [
         {
@@ -133,8 +128,8 @@ exports.payPetSitter = asyncHandler(async (req, res, next) => {
           quantity: hours,
         },
       ],
-      success_url: window.location.origin,
-      cancel_url: "",
+      success_url: "http://localhost/3000",
+      cancel_url: "http://localhost/3000",
     });
     
     res.redirect(303, session.url);
