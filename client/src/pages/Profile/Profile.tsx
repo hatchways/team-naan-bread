@@ -42,11 +42,13 @@ export default function Profile(): JSX.Element {
 
   //this will get the User's profile data using the getProfile API
   useEffect(() => {
-    if (loggedInUser) {
-      getProfile(loggedInUser.id).then((data: ProfileApiData) => {
-        setUserProfile(data);
-      });
+    async function fetchProfile() {
+      if (loggedInUser) {
+        const profile = await getProfile(loggedInUser.id);
+        setUserProfile(profile);
+      }
     }
+    fetchProfile();
   }, [loggedInUser]);
 
   const handleSubmit = (
