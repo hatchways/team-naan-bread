@@ -25,20 +25,7 @@ export default function Profile(): JSX.Element {
   ];
 
   const history = useHistory();
-  const [userProfile, setUserProfile] = useState<ProfileApiData>({
-    _id: '',
-    email: '',
-    firstName: '',
-    lastName: '',
-    gender: '',
-    birthDate: '',
-    phoneNumber: '',
-    whereYouLive: '',
-    describeYourself: '',
-    createdAt: '',
-    updatedAt: '',
-    __v: '',
-  });
+  const [userProfile, setUserProfile] = useState<ProfileApiData>({} as ProfileApiData);
 
   //this will get the User's profile data using the getProfile API
   useEffect(() => {

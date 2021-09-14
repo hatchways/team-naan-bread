@@ -33,7 +33,7 @@ interface Props {
 
 export default function EditProfileForm({ userProfile, handleSubmit }: Props): JSX.Element {
   const classes = useStyles();
-  if (userProfile._id === '') return <>Loading</>;
+  if (!userProfile._id) return <>Loading</>;
   return (
     <Formik
       initialValues={{
