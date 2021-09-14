@@ -13,6 +13,7 @@ const authRouter = require('./routes/auth');
 const userRouter = require('./routes/user');
 const profileRouter = require('./routes/profile');
 const requestRouter = require('./routes/request');
+const reviewRouter = require('./routes/review');
 const setHeaders = require('./middleware/setHeaders');
 const notificationRouter = require('./routes/notification');
 
@@ -50,6 +51,7 @@ app.use('/auth', authRouter);
 app.use('/users', userRouter);
 app.use('/profile', profileRouter);
 app.use('/request', requestRouter);
+app.use('/review', reviewRouter);
 app.use('/notification', notificationRouter);
 
 if (process.env.NODE_ENV === 'production') {
