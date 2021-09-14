@@ -1,12 +1,10 @@
 /* eslint-disable prettier/prettier */
 import { makeStyles } from '@material-ui/core/styles';
 
-const red = "#FF0000";
-
 const useStyles = makeStyles((theme) => ({
   bookingDay: {
     "& > .MuiButtonBase-root": {
-      backgroundColor: red,
+      backgroundColor: theme.palette.primary.main,
       fontWeight: "bold",
       color: "#ffffff"
     }
@@ -24,16 +22,24 @@ const useStyles = makeStyles((theme) => ({
       margin: theme.spacing(2),
       "& p": {
         fontSize: 20,
-        color: red
+        color: theme.palette.primary.main
+      },
+      "& .MuiPickersCalendarHeader-transitionContainer": {
+        height: 32
       }
     },
     "& .MuiPickersCalendar-week": {
       justifyContent: "space-around",
-      fontWeight: "bold"
+      fontWeight: "bold",
+      paddingBottom: theme.spacing(1),
     },
     "& p.MuiTypography-body2": {
       fontSize: "0.86rem",
       fontWeight: "bold"
+    },
+    "& .MuiPickersDay-daySelected": {
+      backgroundColor: "#f1f1f1",
+      color: "rgba(0, 0, 0, 0.87)",
     }
   }
 }));
