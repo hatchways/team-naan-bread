@@ -23,7 +23,7 @@ function App(): JSX.Element {
             <AuthProvider>
               <SocketProvider>
                 <Switch>
-                  <Route exact={false} path="/settings">
+                  <Route path="/settings">
                     <Profile />
                   </Route>
                   <Route exact path="/login" component={Login} />
