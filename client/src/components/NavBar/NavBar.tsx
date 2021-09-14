@@ -29,7 +29,6 @@ export default function NavBar(): JSX.Element {
                 <Button>Messages</Button>
               </Box>
 
-              {/*{if profile.type == sitter}*/}
               <Box padding={1} marginLeft={1}>
                 <Button component={routerLink} to="/my-sitters">
                   My Sitters
