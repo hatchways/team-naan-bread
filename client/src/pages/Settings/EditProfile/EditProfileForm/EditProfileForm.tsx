@@ -11,23 +11,7 @@ import MuiPhoneNumber from 'material-ui-phone-number';
 import { ProfileApiData } from '../../../../interface/ProfileApiData';
 
 interface Props {
-  handleSubmit: (
-    {
-      _id,
-      email,
-      firstName,
-      lastName,
-      gender,
-      birthDate,
-      phoneNumber,
-      whereYouLive,
-      describeYourself,
-      createdAt,
-      updatedAt,
-      __v,
-    }: ProfileApiData,
-    { setStatus, setSubmitting }: FormikHelpers<ProfileApiData>,
-  ) => void;
+  handleSubmit: ({}: ProfileApiData, { setStatus, setSubmitting }: FormikHelpers<ProfileApiData>) => void;
   userProfile: ProfileApiData;
 }
 
