@@ -141,10 +141,8 @@ export default function MySitters(): JSX.Element {
               />
               <CardContent className={classes.cardBookingContent}>
                 <Typography variant="h6" component="h6" className={classes.cardDate}>
-                  {currentBookings.length
-                  && dateDisplay(nextBooking[0]?.start)}
-                  {/* {currentBookings.length 
-                  && createDate(nextBooking[0]?.start, nextBooking[0]?.end)} */}
+                  {currentBookings.length 
+                  && createDate(nextBooking[0]?.start, nextBooking[0]?.end)}
                 </Typography>
                 <Box className={classes.cardUserInfoBox} >
                   <Box>
@@ -166,7 +164,7 @@ export default function MySitters(): JSX.Element {
               classes={{title: classes.cardBookingHeaderTitle}}
             />
             <BookingCard 
-              dateDisplay={dateDisplay} 
+              createDate={createDate} 
               requests={currentBookings}
               cardAction={cardAction}
               selectedBooking={selectedBooking}
@@ -181,7 +179,7 @@ export default function MySitters(): JSX.Element {
             />
             <Box overflow="hidden">
               <BookingCard 
-                dateDisplay={dateDisplay} 
+                createDate={createDate} 
                 requests={pastBookings}
                 cardAction={cardAction}
                 selectedBooking={selectedBooking}
