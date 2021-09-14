@@ -19,23 +19,17 @@ import SideBar from '../../components/SideBar/SideBar';
 import ChatContent from '../../components/Chat/ChatContent';
 import Chat from '../../components/Chat/Chat';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
-import SideBarContainer from './SideBarContainer';
-import ActiveChat from './ActiveChat';
-
-export default function ChatScreen(): JSX.Element {
+import image from '../../helpers/image';
+export default function SenderBubble(): JSX.Element {
   const classes = useStyles();
 
   return (
-    <>
-      <Box boxShadow={1} className={classes.header}>
-        <LogoHeader logo={logo} />
-        <ChatHeader linkTo="/signup" linkText="My Jobs" />
+    <Box className={classes.senderBubbleRoot}>
+      <Typography className={classes.date}>{'time'}</Typography>
+      <Box className={classes.bubble}>
+        <Typography className={classes.text}>{'text'}</Typography>
       </Box>
-      <Grid container component="main" className={classes.root}>
-        <CssBaseline />
-        <SideBarContainer />
-        <ActiveChat />
-      </Grid>
-    </>
+      {true ? <Avatar alt={'otherUser.username'} src={image} className={classes.avatar}></Avatar> : null}
+    </Box>
   );
 }

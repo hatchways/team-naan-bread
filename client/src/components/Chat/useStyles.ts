@@ -40,7 +40,6 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 8,
     height: 80,
     boxShadow: '0 2px 10px 0 rgba(88,133,196,0.05)',
-    marginBottom: 10,
     display: 'flex',
     backgroundColor: theme.palette.secondary.main,
     alignItems: 'center',
@@ -49,9 +48,9 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   sideBarChat: {
-    padding: '1rem',
+    paddingLeft: '1rem',
+    paddingRight: '1rem',
     backgroundColor: theme.palette.secondary.main,
-    marginBottom: 5,
   },
 }));
 

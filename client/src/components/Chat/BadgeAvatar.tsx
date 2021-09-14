@@ -2,6 +2,7 @@ import React from 'react';
 import { Box, Badge, Avatar } from '@material-ui/core';
 
 import { makeStyles } from '@material-ui/core/styles';
+import image from '../../helpers/image';
 
 const useStyles = makeStyles(() => ({
   profilePic: {
@@ -33,11 +34,7 @@ const BadgeAvatar = () => {
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
         overlap="circle"
       >
-        <Avatar
-          alt={'username'}
-          src={'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4QarHFR-ztiFkrO-eO7N7FP9cdH3XTEOBdg&usqp=CAU'}
-          className={classes.profilePic}
-        ></Avatar>
+        <Avatar alt={'username'} src={image} className={classes.profilePic}></Avatar>
       </Badge>
     </Box>
   );

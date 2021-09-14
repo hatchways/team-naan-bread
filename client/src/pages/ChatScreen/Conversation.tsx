@@ -19,23 +19,20 @@ import SideBar from '../../components/SideBar/SideBar';
 import ChatContent from '../../components/Chat/ChatContent';
 import Chat from '../../components/Chat/Chat';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
-import SideBarContainer from './SideBarContainer';
-import ActiveChat from './ActiveChat';
+import image from '../../helpers/image';
+import moment from 'moment';
+import SenderBubble from './SenderBubble';
+import ReceiverBubble from './ReceiverBubble';
 
-export default function ChatScreen(): JSX.Element {
+export default function Conversation(): JSX.Element {
   const classes = useStyles();
 
   return (
-    <>
-      <Box boxShadow={1} className={classes.header}>
-        <LogoHeader logo={logo} />
-        <ChatHeader linkTo="/signup" linkText="My Jobs" />
-      </Box>
-      <Grid container component="main" className={classes.root}>
-        <CssBaseline />
-        <SideBarContainer />
-        <ActiveChat />
-      </Grid>
-    </>
+    <Box className={classes.conversation}>
+      {['Hello', 'yes o', 'hey'].map((message, i) => {
+        // const time = moment(message.createdAt).format("h:mm");
+        return true ? <SenderBubble key={'SenderBubble' + i} /> : <ReceiverBubble key={'OtherUserBubble' + i} />;
+      })}
+    </Box>
   );
 }

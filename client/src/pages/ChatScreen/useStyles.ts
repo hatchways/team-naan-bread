@@ -2,23 +2,10 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    minHeight: '100vh',
+    height: '90vh',
     '& .MuiInput-underline:before': {
       borderBottom: '1.2px solid rgba(0, 0, 0, 0.2)',
     },
-  },
-  large: {
-    width: theme.spacing(20),
-    height: theme.spacing(20),
-    margin: '2rem',
-  },
-  headerWrapper: {
-    display: 'flex',
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start',
-    flexDirection: 'column',
-    minHeight: '100vh',
-    backgroundColor: theme.palette.secondary.main,
   },
   header: {
     display: 'flex',
@@ -27,77 +14,115 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'space-between',
     width: '100vw',
   },
-  sitterAboutTypo: {
-    width: '80%',
-    justifySelf: 'center',
-    alignSelf: 'center',
-  },
-  sitterBioItem: {
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  sitterBioContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    margin: '2rem',
-  },
-  detailsContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: theme.spacing(8),
-  },
-  avatarContainer: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'column',
-  },
-  detailsCard: {
-    alignSelf: 'center',
-    justifyContent: 'center',
-    width: '100vw',
-    height: '100vh',
-    backgroundColor: 'white',
-  },
-  imageList: {
-    margin: '8rem',
-    height: 'auto',
-  },
-  imageListItem: {
-    margin: '2rem',
-  },
   sideBarContainer: {
+    display: 'flex',
+    backgroundColor: theme.palette.secondary.main,
+    flexGrow: 1,
+    flexDirection: 'column',
+  },
+  sideBarChatList: {
+    flexGrow: 1,
+    backgroundColor: theme.palette.secondary.main,
+    overflow: 'auto',
+    margin: 5,
+  },
+  activeChatBody: {
+    display: 'flex',
+    backgroundColor: theme.palette.secondary.main,
+    flexDirection: 'column',
+  },
+  activeChatContainer: {
+    backgroundColor: theme.palette.secondary.main,
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  chatHeader: {
+    height: 100,
     display: 'flex',
     flexDirection: 'column',
     backgroundColor: theme.palette.secondary.main,
-  },
-  sideBarHeader: {
-    padding: '2rem',
-  },
-  messageSideBar: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    marginLeft: 20,
-    flexGrow: 1,
-  },
-  badge: {
-    height: 10,
-    width: 10,
-    borderRadius: '50%',
-    border: '2px solid white',
-    backgroundColor: '#D0DAE9',
-  },
-  online: {
-    backgroundColor: '#1CED84',
-  },
-  chatContainer: {
-    backgroundColor: 'white',
+    justifyContent: 'center',
     margin: 5,
   },
-  activeChat: {
-    backgroundColor: 'white',
+  activeChatHeader: {
+    height: 100,
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyItems: 'space-between',
+    justifyContent: 'space-between',
+    backgroundColor: theme.palette.secondary.main,
+    paddingLeft: 5,
+    margin: 5,
+  },
+  activeChatHeaderBadge: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    flexGrow: 1,
+    backgroundColor: theme.palette.secondary.main,
+  },
+  usernameText: {
+    marginLeft: 10,
+  },
+  moreHorizonIcon: {},
+  inboxMessage: {
+    marginLeft: '20px',
+    justifySelf: 'center',
+  },
+  inputRoot: {},
+  input: {
+    height: 70,
+    backgroundColor: '#F4F6FA',
+    borderRadius: 0,
+    margin: 3,
+  },
+  senderBubbleRoot: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-end',
+    margin: 5,
+  },
+  date: {
+    fontSize: 11,
+    color: '#BECCE2',
+    fontWeight: 'bold',
+    marginBottom: 5,
+  },
+  text: {
+    fontSize: 14,
+    color: '#91A3C0',
+    letterSpacing: -0.2,
+    padding: 8,
+    fontWeight: 'bold',
+  },
+  avatar: {
+    height: 15,
+    width: 15,
+    marginTop: 3,
+    marginBottom: 10,
+  },
+  bubble: {
+    background: '#F4F6FA',
+    borderRadius: '10px 10px 0 10px',
+  },
+  readBadge: {
+    padding: 8,
+  },
+  usernameDate: {
+    fontSize: 11,
+    color: '#BECCE2',
+    fontWeight: 'bold',
+    marginBottom: 5,
+  },
+  receiverRoot: {
+    display: 'flex',
+    margin: 5,
+  },
+  conversation: {
+    flexGrow: 1,
+    backgroundColor: theme.palette.secondary.main,
   },
 }));
 

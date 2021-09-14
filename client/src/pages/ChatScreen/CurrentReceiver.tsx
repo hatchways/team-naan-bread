@@ -22,20 +22,18 @@ import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import SideBarContainer from './SideBarContainer';
 import ActiveChat from './ActiveChat';
 
-export default function ChatScreen(): JSX.Element {
+export default function Input(): JSX.Element {
   const classes = useStyles();
 
   return (
-    <>
-      <Box boxShadow={1} className={classes.header}>
-        <LogoHeader logo={logo} />
-        <ChatHeader linkTo="/signup" linkText="My Jobs" />
+    <Box boxShadow={2} className={classes.activeChatHeader}>
+      <Box className={classes.activeChatHeaderBadge}>
+        <BadgeAvatar />
+        <Typography variant="h6" style={{ marginLeft: 10 }}>
+          Inbox Message
+        </Typography>
       </Box>
-      <Grid container component="main" className={classes.root}>
-        <CssBaseline />
-        <SideBarContainer />
-        <ActiveChat />
-      </Grid>
-    </>
+      <MoreHorizIcon className={classes.moreHorizonIcon} />
+    </Box>
   );
 }

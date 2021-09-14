@@ -19,23 +19,20 @@ import SideBar from '../../components/SideBar/SideBar';
 import ChatContent from '../../components/Chat/ChatContent';
 import Chat from '../../components/Chat/Chat';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
-import SideBarContainer from './SideBarContainer';
-import ActiveChat from './ActiveChat';
 
-export default function ChatScreen(): JSX.Element {
+export default function SideBarContainer(): JSX.Element {
   const classes = useStyles();
 
   return (
-    <>
-      <Box boxShadow={1} className={classes.header}>
-        <LogoHeader logo={logo} />
-        <ChatHeader linkTo="/signup" linkText="My Jobs" />
+    <Grid item xs={12} sm={3} md={3} className={classes.sideBarContainer}>
+      <Box boxShadow={2} className={classes.chatHeader}>
+        <Typography variant="h6">Inbox Message</Typography>
       </Box>
-      <Grid container component="main" className={classes.root}>
-        <CssBaseline />
-        <SideBarContainer />
-        <ActiveChat />
-      </Grid>
-    </>
+      <Box boxShadow={1} className={classes.sideBarChatList}>
+        {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((item) => (
+          <Chat key={item} />
+        ))}
+      </Box>
+    </Grid>
   );
 }
