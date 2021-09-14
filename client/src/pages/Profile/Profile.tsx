@@ -16,7 +16,6 @@ export default function Profile(): JSX.Element {
   const { loggedInUser } = useAuth();
   const { path, url } = useRouteMatch();
 
-  console.log('path:', path, 'url:', url);
   const profileMenu = [
     { text: 'Edit Profile', path: '/editProfile' },
     { text: 'Profile Photo', path: '/picture' },
