@@ -1,4 +1,5 @@
 const User = require("../models/User");
+const Profile = require('../models/Profile');
 const asyncHandler = require("express-async-handler");
 const { cloudinary } = require("../utils/cloudinary");
 
@@ -23,36 +24,36 @@ exports.searchUsers = asyncHandler(async (req, res, next) => {
   res.status(200).json({ users: users });
 });
 
-const deletePhoto = async (user) => {
-  await cloudinary.uploader.destroy(user.profilePhoto.publicId);
-  user.profilePhoto = null;
-};
+// const deletePhoto = async (user) => {
+//   await cloudinary.uploader.destroy(user.profilePhoto.publicId);
+//   user.profilePhoto = null;
+// };
 
-exports.uploadProfilePhoto = asyncHandler(async (req, res, next) => {
-  const image = req.file;
-  const user = await User.findById(req.user.id);
-  if (!user) {
-    return res.sendStatus(404);
-  }
-  if (user.profilePhoto.url) {
-    await deletePhoto(user);
-  }
-  user.profilePhoto = {
-    url: image.path,
-    publicId: image.filename,
-  };
-  user.save();
+// exports.uploadProfilePhoto = asyncHandler(async (req, res, next) => {
+//   const image = req.file;
+//   const user = await Profile.findById(req.user.id);
+//   if (!user) {
+//     return res.sendStatus(404);
+//   }
+//   if (user.profilePhoto.url) {
+//     await deletePhoto(user);
+//   }
+//   user.profilePhoto = {
+//     url: image.path,
+//     publicId: image.filename,
+//   };
+//   user.save();
 
-  res.sendStatus(200);
-});
-exports.deleteProfilePhoto = asyncHandler(async (req, res, next) => {
-  const user = await User.findById(req.user.id);
-  if (!user) {
-    return res.sendStatus(404);
-  }
+//   res.sendStatus(200);
+// });
+// exports.deleteProfilePhoto = asyncHandler(async (req, res, next) => {
+//   const user = await Profile.findById(req.user.id);
+//   if (!user) {
+//     return res.sendStatus(404);
+//   }
 
-  await deletePhoto(user);
-  user.save();
+//   await deletePhoto(user);
+//   user.save();
 
-  res.sendStatus(200);
-});
+//   res.sendStatus(200);
+// });

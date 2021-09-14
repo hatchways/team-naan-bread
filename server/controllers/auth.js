@@ -96,6 +96,7 @@ exports.loginUser = asyncHandler(async (req, res, next) => {
 // @access Private
 exports.loadUser = asyncHandler(async (req, res, next) => {
   const user = await User.findById(req.user.id);
+  const userProfile = await Profile.findById(req.user.id);
 
   if (!user) {
     res.status(401);
@@ -108,7 +109,7 @@ exports.loadUser = asyncHandler(async (req, res, next) => {
         id: user._id,
         username: user.username,
         email: user.email,
-        profilePhotoUrl: user.profilePhoto.url,
+        profilePhotoUrl: userProfile.profilePhoto.url,
       },
     },
   });

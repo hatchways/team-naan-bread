@@ -27,6 +27,10 @@ const profileSchema = new mongoose.Schema(
     describeYourself: {
       type: String,
     },
+    profilePhoto: {
+      url: String,
+      publicId: String,
+    },
     requestsReceived: [
       {
         type: mongoose.Schema.Types.ObjectId,
