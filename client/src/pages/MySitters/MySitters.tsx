@@ -81,6 +81,24 @@ export default function MySitters(): JSX.Element {
     return `${day}, ${month} ${year}, ${timeStart}-${timeEnd} HS.`
   }
 
+  const dateDisplay = (date: Date): string => {
+    const currentDate = new Date(date)
+    const formatter = new Intl.DateTimeFormat('en-US', {
+      year: "numeric", 
+      month: "long", 
+      day: "numeric",
+      hour: "numeric",
+      hour12: true
+    });
+ 
+    const dateString: string = formatter.formatToParts(currentDate).map(({type, value}) => {
+      console.log(type, value)
+      return value;
+    }).join("");
+    
+    return dateString;
+  }
+
   // display card action
   const displayCardActions = (booking: RequestData): void => {
     if (!booking.accepted && !booking.declined) {
@@ -123,8 +141,10 @@ export default function MySitters(): JSX.Element {
               />
               <CardContent className={classes.cardBookingContent}>
                 <Typography variant="h6" component="h6" className={classes.cardDate}>
-                  {currentBookings.length 
-                  && createDate(nextBooking[0]?.start, nextBooking[0]?.end)}
+                  {currentBookings.length
+                  && dateDisplay(nextBooking[0]?.start)}
+                  {/* {currentBookings.length 
+                  && createDate(nextBooking[0]?.start, nextBooking[0]?.end)} */}
                 </Typography>
                 <Box className={classes.cardUserInfoBox} >
                   <Box>
@@ -146,7 +166,7 @@ export default function MySitters(): JSX.Element {
               classes={{title: classes.cardBookingHeaderTitle}}
             />
             <BookingCard 
-              createDate={createDate} 
+              dateDisplay={dateDisplay} 
               requests={currentBookings}
               cardAction={cardAction}
               selectedBooking={selectedBooking}
@@ -161,7 +181,7 @@ export default function MySitters(): JSX.Element {
             />
             <Box overflow="hidden">
               <BookingCard 
-                createDate={createDate} 
+                dateDisplay={dateDisplay} 
                 requests={pastBookings}
                 cardAction={cardAction}
                 selectedBooking={selectedBooking}

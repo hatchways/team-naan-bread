@@ -16,7 +16,7 @@ import { Settings } from "@material-ui/icons";
 const mockImg = 'https://badairies.co.uk/assets/admin/plugins/images/users/4.jpg';
 
 interface Props {
-  createDate: any;
+  dateDisplay: any;
   requests: any;
   cardAction: boolean;
   selectedBooking: string;
@@ -34,7 +34,7 @@ interface Booking {
 }
 
 function BookingCard({ 
-  createDate, 
+  dateDisplay, 
   requests, 
   cardAction, 
   selectedBooking, 
@@ -50,7 +50,10 @@ function BookingCard({
           <Card key={booking._id} className={classes.cardBooking}>
             <CardHeader 
               classes={{title: classes.cardsBookingHeaderTitle}}
-              title={createDate(booking.start, booking.end)}
+              title={
+                <h5><span className={classes.dropDateTitle}>Drop in:</span> {dateDisplay(booking.start)}<br />
+                <span className={classes.dropDateTitle}>Drop off:</span> {dateDisplay(booking.end)}</h5>
+              }
               action={
                 <IconButton aria-label="settings" onClick={() => {
                   displayCardActions(booking)}}>
