@@ -2,19 +2,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    minHeight: '100vh',
-    justifyContent: 'center',
-    paddingLeft: theme.spacing(8),
-    paddingRight: theme.spacing(8),
-  },
-  mySittersContent: {
-    display: 'flex',
-    flexDirection: 'row',
-  },
-  mySittersColumns: {
-    margin: theme.spacing(4),
-  },
   cardWrapperNext: {
     marginBottom: theme.spacing(3),
     backgroundColor: '#ffffff',
@@ -39,7 +26,6 @@ const useStyles = makeStyles((theme) => ({
   cardBookingHeaderTitle: {
     textTransform: 'uppercase',
     fontWeight: 'bold',
-    fontSize: '0.8em',
   },
   cardsBookingHeaderTitle: {
     fontSize: '1em',
@@ -73,6 +59,28 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 'bold',
     textTransform: 'uppercase',
     color: 'rgba(0,0,0,0.4)',
+  },
+  cardOptions: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    '& p': {
+      boxShadow: '2px 2px 0px rgba(0,0,0,0.15)',
+      backgroundColor: '#ffffff',
+      fontSize: '0.7rem',
+      fontWeight: '700',
+      border: '1px solid #dddddd',
+      width: 72,
+      '& a': {
+        padding: theme.spacing(1),
+        display: 'block',
+      },
+    },
+  },
+  dropDateTitle: {
+    color: 'rgba(0,0,0,0.4)',
+    textTransform: 'uppercase',
+    fontSize: '0.8em',
   },
 }));
 

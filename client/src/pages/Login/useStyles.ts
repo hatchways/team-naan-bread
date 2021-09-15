@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     justifySelf: 'center',
     alignContent: 'center',
     justifyContent: 'center',
-    padding: '2rem 8rem',
+    padding: '2rem 7rem',
     margin: '2rem',
     backgroundColor: theme.palette.secondary.main,
   },

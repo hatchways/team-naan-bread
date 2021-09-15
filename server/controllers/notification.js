@@ -1,6 +1,6 @@
-const asyncHandler = require("express-async-handler");
-const Notification = require("../models/Notification");
-const User = require("../models/User");
+const asyncHandler = require('express-async-handler');
+const Notification = require('../models/Notification');
+const User = require('../models/User');
 
 exports.createNotification = asyncHandler(async (req, res, next) => {
   const { userReceivedId, notificationType, title, description } = req.body;
@@ -39,7 +39,7 @@ exports.getAllNotifications = asyncHandler(async (req, res, next) => {
   const loggedInUserId = req.user.id;
   const notifications = await Notification.find({
     userId: loggedInUserId,
-  }).sort("createdAt");
+  }).sort('-createdAt');
   res.status(200).json(notifications);
 });
 exports.getUnreadNotifications = asyncHandler(async (req, res, next) => {
@@ -51,6 +51,30 @@ exports.getUnreadNotifications = asyncHandler(async (req, res, next) => {
   const notifications = await Notification.find({
     userId: loggedInUserId,
     read: false,
-  }).sort("createdAt");
+  }).sort('-createdAt');
   res.status(200).json(notifications);
+});
+
+exports.markNotificationsBatchAsRead = asyncHandler(async (req, res, next) => {
+  const { notificationsIds } = req.body;
+  const loggedInUserId = req.user.id;
+  const user = await User.findById(loggedInUserId);
+  if (!user) {
+    return res.sendStatus(404);
+  }
+
+  const notificationMarkedAsSeen = await Notification.updateMany(
+    {
+      _id: {
+        $in: notificationsIds,
+      },
+      read: false,
+      userId: loggedInUserId,
+    },
+    {
+      read: true,
+    },
+  );
+
+  return res.sendStatus(200);
 });

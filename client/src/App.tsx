@@ -15,8 +15,8 @@ import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 
 import './App.css';
-import ChatScreen from './pages/ChatScreen/ChatScreen';
-
+import NavBar from './components/NavBar/NavBar';
+import AllNotifications from './pages/AllNotifiactions/AllNotifications';
 function App(): JSX.Element {
   return (
     <MuiThemeProvider theme={theme}>
@@ -25,19 +25,23 @@ function App(): JSX.Element {
           <SnackBarProvider>
             <AuthProvider>
               <SocketProvider>
+                <NavBar />
                 <Switch>
                   <Route exact path="/settings/profile/">
                     <Profile />
                   </Route>
-                  <Route exact path="/login" component={ChatScreen} />
+                  <Route exact path="/login" component={Login} />
                   <Route exact path="/signup" component={Signup} />
                   <Route exact path="/settings/editProfile" component={EditProfile} />
                   <Route exact path="/dashboard">
                     <Dashboard />
                   </Route>
-                  {/* <Route path="*">
+                  <Route exact path="/notifications">
+                    <AllNotifications />
+                  </Route>
+                  <Route path="*">
                     <Redirect to="/login" />
-                  </Route> */}
+                  </Route>
                   <Route exact path="/my-sitters" component={MySitters} />
                 </Switch>
               </SocketProvider>
