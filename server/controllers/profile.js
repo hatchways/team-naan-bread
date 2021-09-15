@@ -124,6 +124,7 @@ const deletePhoto = async (user) => {
 
 exports.uploadProfilePhoto = asyncHandler(async (req, res, next) => {
   const image = req.file;
+  console.log(image)
   const user = await Profile.findById(req.user.id);
   if (!user) {
     return res.sendStatus(404);

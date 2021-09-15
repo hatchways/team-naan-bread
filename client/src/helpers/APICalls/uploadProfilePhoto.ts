@@ -9,8 +9,12 @@ const uploadProfilePhoto = async (image: File): Promise<AuthApiData> => {
     body: formData,
     credentials: 'include',
   };
+  console.log(formData);
   return await fetch(`/profile/upload/profile-photo`, fetchOptions)
-    .then((res) => res.json())
+    .then((res) => {
+      console.log(res);
+      return res.json();
+    })
     .catch(() => ({
       error: { message: 'Unable to connect to server. Please try again' },
     }));
