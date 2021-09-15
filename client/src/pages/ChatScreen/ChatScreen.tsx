@@ -34,7 +34,7 @@ export default function ChatScreen(): JSX.Element {
       <Grid container component="main" className={classes.root}>
         <CssBaseline />
         <SideBarContainer />
-        <ActiveChat />
+        {true && <ActiveChat />}
       </Grid>
     </>
   );

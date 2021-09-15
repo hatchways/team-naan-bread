@@ -16,9 +16,9 @@ const useStyles = makeStyles((theme) => ({
   },
   sideBarContainer: {
     display: 'flex',
-    backgroundColor: theme.palette.secondary.main,
     flexGrow: 1,
     flexDirection: 'column',
+    height: '100%',
   },
   sideBarChatList: {
     flexGrow: 1,
@@ -32,9 +32,9 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
   },
   activeChatContainer: {
-    backgroundColor: theme.palette.secondary.main,
     display: 'flex',
     flexDirection: 'column',
+    height: '100%',
   },
   chatHeader: {
     height: 100,
@@ -122,7 +122,8 @@ const useStyles = makeStyles((theme) => ({
   },
   conversation: {
     flexGrow: 1,
-    backgroundColor: theme.palette.secondary.main,
+    height: '87%',
+    overflow: 'auto',
   },
 }));
 
