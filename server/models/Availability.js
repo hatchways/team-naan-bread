@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const bcrypt = require("bcryptjs");
 
 const timeParams = mongoose.Schema({
     to: {
@@ -8,19 +7,25 @@ const timeParams = mongoose.Schema({
     from: {
         type: String
     }
+},{
+    _id: false
 })
 
 const availabilitySchema = new mongoose.Schema({
-    Monday: timeParams,
-    Tuesday: timeParams,
-    Wednesday: timeParams,
-    Thursday: timeParams,
-    Friday: timeParams,
-    Saturday: timeParams,
-    Sunday: timeParams,
+    _id: mongoose.Schema.Types.ObjectId,
+    availability: {
+        Monday: timeParams,
+        Tuesday: timeParams,
+        Wednesday: timeParams,
+        Thursday: timeParams,
+        Friday: timeParams,
+        Saturday: timeParams,
+        Sunday: timeParams,
+    }
   },
   {
-      timestamps: true
+      timestamps: true,
+      _id: false
   });
 
   module.exports = Availability = mongoose.model("availability", availabilitySchema);
