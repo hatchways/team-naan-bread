@@ -25,23 +25,25 @@ function App(): JSX.Element {
           <SnackBarProvider>
             <AuthProvider>
               <SocketProvider>
-                <NavBar />
+                <Route path="/">
+                  <NavBar />
+                </Route>
                 <Switch>
-                  <Route exact path="/settings/profile/">
+                  {/* <Route exact path="/settings/profile/">
                     <Profile />
-                  </Route>
+                  </Route> */}
                   <Route exact path="/login" component={Login} />
                   <Route exact path="/signup" component={Signup} />
-                  <Route exact path="/settings/editProfile" component={EditProfile} />
+                  <Route exact path="/settings/profile" component={EditProfile} />
                   <Route exact path="/dashboard">
                     <Dashboard />
                   </Route>
                   <Route exact path="/notifications">
                     <AllNotifications />
                   </Route>
-                  <Route path="*">
+                  {/* <Route path="*">
                     <Redirect to="/login" />
-                  </Route>
+                  </Route> */}
                   <Route exact path="/my-sitters" component={MySitters} />
                 </Switch>
               </SocketProvider>
