@@ -52,6 +52,20 @@ const useStyles = makeStyles((theme) => ({
     paddingRight: '1rem',
     backgroundColor: theme.palette.secondary.main,
   },
+  profilePic: {
+    height: 44,
+    width: 44,
+  },
+  badge: {
+    height: 10,
+    width: 10,
+    borderRadius: '50%',
+    border: '2px solid white',
+    backgroundColor: '#D0DAE9',
+  },
+  online: {
+    backgroundColor: '#1CED84',
+  },
 }));
 
 export default useStyles;

@@ -1,9 +1,9 @@
-import Button from '@material-ui/core/Button';
-import { Badge, Avatar, Typography, Grid } from '@material-ui/core/';
+import { Badge, Grid, Typography } from '@material-ui/core/';
 import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
-import useStyles from './useStyles';
 import ChatHeaderButton from './ChatHeaderButton';
+import useStyles from './useStyles';
 interface Props {
   linkTo: string;
   linkText?: string;
