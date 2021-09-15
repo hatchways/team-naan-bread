@@ -93,7 +93,9 @@ exports.payPetSitter = asyncHandler(async (req, res, next) => {
     name, 
     serviceId, 
     hourlyRate, 
-    hours
+    hours,
+    successUrl,
+    cancelUrl
   } = req.body;
 
   const orderId = req.params.id;
@@ -131,8 +133,8 @@ exports.payPetSitter = asyncHandler(async (req, res, next) => {
           quantity: hours,
         },
       ],
-      success_url: "http://localhost/3000",
-      cancel_url: "http://localhost/3000",
+      success_url: successUrl,
+      cancel_url: cancelUrl,
     });
     
     res.redirect(303, session.url);
