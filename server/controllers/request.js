@@ -2,6 +2,7 @@ require("dotenv").config();
 const Request = require('../models/Request');
 const User = require('../models/User');
 const Profile = require('../models/Profile');
+const Notification = require('../models/Notification');
 const asyncHandler = require('express-async-handler');
 const stripe = require('stripe')(process.env.STRIPE);
 
@@ -51,8 +52,25 @@ exports.postRequest = asyncHandler(async (req, res, next) => {
   });
 
   // update profiles of user and sitter
-  await Profile.updateOne({ _id: userId }, { $push: { requestsSubmitted: request._id } });
+  const updatedUserProfile = await Profile.findOneAndUpdate(
+    { _id: userId },
+    { $push: { requestsSubmitted: request._id } },
+  );
   await Profile.updateOne({ _id: sitterId }, { $push: { requestsReceived: request._id } });
+  const currentUser = await User.findById(userId);
+
+  const requestDurationInHours = parseInt((request.end - request.start) / 36e5);
+  const requesterFirstNameOrSomeone =
+    updatedUserProfile && updatedUserProfile.firstName ? updatedUserProfile.firstName : 'someone';
+
+  const newNotification = await Notification.create({
+    userId: sitterId,
+    notificationType: 'dog sitting',
+    title: `${requesterFirstNameOrSomeone} has requested your service for ${requestDurationInHours} hours`,
+    context: {
+      profilePhotoURL: currentUser.profilePhoto.url,
+    },
+  });
 
   res.send(request);
 });

@@ -8,10 +8,12 @@ const {
   markNotificationAsRead,
   getAllNotifications,
   getUnreadNotifications,
+  markNotificationsBatchAsRead,
 } = require("../controllers/notification");
 
 router.route("/").post(protect, validateCreateNotification, createNotification);
-router.route("/seen/:id").put(protect, markNotificationAsRead);
+router.route("/seen/:id").post(protect, markNotificationAsRead);
+router.route("/seen-batch").post(protect, markNotificationsBatchAsRead);
 router.route("/all").get(protect, getAllNotifications);
 router.route("/all-unread").get(protect, getUnreadNotifications);
 

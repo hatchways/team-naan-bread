@@ -81,6 +81,24 @@ export default function MySitters(): JSX.Element {
     return `${day}, ${month} ${year}, ${timeStart}-${timeEnd} HS.`
   }
 
+  const dateDisplay = (date: Date): string => {
+    const currentDate = new Date(date)
+    const formatter = new Intl.DateTimeFormat('en-US', {
+      year: "numeric", 
+      month: "long", 
+      day: "numeric",
+      hour: "numeric",
+      hour12: true
+    });
+ 
+    const dateString: string = formatter.formatToParts(currentDate).map(({type, value}) => {
+      console.log(type, value)
+      return value;
+    }).join("");
+    
+    return dateString;
+  }
+
   // display card action
   const displayCardActions = (booking: RequestData): void => {
     if (!booking.accepted && !booking.declined) {
