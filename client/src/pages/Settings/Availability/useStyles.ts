@@ -55,10 +55,14 @@ const useStyles = makeStyles((theme) => ({
     marginTop: '2%',
     display: 'flex',
     width: '100%',
+    height: '50px',
     justifyContent: 'center',
   },
   button: {
     width: '16%',
+  },
+  divider: {
+    margin: 10,
   },
 }));
 

@@ -22,34 +22,44 @@ interface Props {
 }
 
 const times = [
-  '12 am',
-  '1 am',
-  '2 am',
-  '3 am',
-  '4 am',
-  '5 am',
-  '6 am',
-  '7 am',
-  '8 am',
-  '9 am',
-  '10 am',
-  '11 am',
-  '12 pm',
-  '1 pm',
-  '2 pm',
-  '3 pm',
-  '4 pm',
-  '5 pm',
-  '6 pm',
-  '7 pm',
-  '8 pm',
-  '9 pm',
-  '10 pm',
-  '11 pm',
+  '',
+  '00:00',
+  '01:00',
+  '02:00',
+  '03:00',
+  '04:00',
+  '05:00',
+  '06:00',
+  '07:00',
+  '08:00',
+  '09:00',
+  '10:00',
+  '11:00',
+  '12:00',
+  '13:00',
+  '14:00',
+  '15:00',
+  '16:00',
+  '17:00',
+  '18:00',
+  '19:00',
+  '20:00',
+  '21:00',
+  '22:00',
+  '23:00',
 ];
+
+const getDisabled = (val: string) => {
+  if (val === '')
+    return {
+      disabled: true,
+    };
+  return {};
+};
 
 export default function DateForm({ date, availability, handleTimeFrom, handleTimeTo }: Props): JSX.Element {
   const classes = useStyles();
+
   return (
     <Box className={classes.weekday}>
       <Box className={classes.date}>
@@ -84,20 +94,24 @@ export default function DateForm({ date, availability, handleTimeFrom, handleTim
             To
           </InputLabel>
           <Select
+            variant="outlined"
+            {...getDisabled(availability[date].from)}
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            variant="outlined"
             value={availability[date].to}
             className={classes.selectBox}
             onChange={(e) => {
               handleTimeTo(e, date);
             }}
           >
-            {times.map((time) => (
-              <MenuItem key={'To' + time} value={time}>
-                {time}
-              </MenuItem>
-            ))}
+            {times.map(
+              (time) =>
+                time > availability[date].from && (
+                  <MenuItem key={'To' + time} value={time}>
+                    {time}
+                  </MenuItem>
+                ),
+            )}
           </Select>
         </Box>
       </Box>

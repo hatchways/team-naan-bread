@@ -38,7 +38,37 @@ exports.registerUser = asyncHandler(async (req, res, next) => {
 
   //creating the availability schema with the same id
   const availability = await Availability.create({
-    _id: user._id
+    _id: user._id,
+    availability: {
+      Monday: {
+        to: '',
+        from: '',
+      },
+      Tuesday: {
+        to: '',
+        from: '',
+      },
+      Wednesday: {
+        to: '',
+        from: '',
+      },
+      Thursday: {
+        to: '',
+        from: '',
+      },
+      Friday: {
+        to: '',
+        from: '',
+      },
+      Saturday: {
+        to: '',
+        from: '',
+      },
+      Sunday: {
+        to: '',
+        from: '',
+      },
+    }
   })
 
   if(profile){

@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent } from 'react';
+import React, { useState, useEffect } from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
@@ -17,16 +17,14 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import DateForm from './DateForm/DateForm';
 import { Divider } from '@material-ui/core';
-
-interface date {
-  to: string;
-  from: string;
-}
-interface Availability {
-  [key: string]: date;
-}
+import getAvailability from '../../../helpers/APICalls/getAvailability';
+import updateAvailability from '../../../helpers/APICalls/updateAvailability';
+import { Availability, date } from '../../../interface/Availability';
+import { useSnackBar } from '../../../context/useSnackbarContext';
 
 export default function Availiability(): JSX.Element {
+  const [loading, setLoading] = useState(false);
+  const { updateSnackBarMessage } = useSnackBar();
   const [availability, setAvailability] = React.useState<Availability>({
     Monday: {
       to: '',
@@ -61,6 +59,33 @@ export default function Availiability(): JSX.Element {
   const { loggedInUser } = useAuth();
   const classes = useStyles();
 
+  //this will get the User's availabilityData using the getAvailability API
+  useEffect(() => {
+    setLoading(true);
+    if (loggedInUser) {
+      getAvailability(loggedInUser.id).then((data: Availability) => {
+        setAvailability(data);
+        setLoading(false);
+      });
+    }
+  }, [loggedInUser]);
+
+  const submitAvailability = () => {
+    if (loggedInUser) {
+      Object.keys(availability).forEach((date: string) => {
+        console.log(availability[date]);
+        if (availability[date].from === '' && availability[date].to != '') {
+          const tempObj = Object.assign({}, availability);
+          tempObj[date].to = '';
+          setAvailability(tempObj);
+        }
+      });
+      updateAvailability({ _id: loggedInUser.id, availability: availability }).then((data: Availability) => {
+        updateSnackBarMessage('Updated Availability!');
+      });
+    }
+  };
+
   const handleTimeFrom = (event: React.ChangeEvent<{ value: any }>, date: string) => {
     const tempObj = Object.assign({}, availability);
     tempObj[date].from = event.target.value;
@@ -74,6 +99,7 @@ export default function Availiability(): JSX.Element {
   };
 
   if (loggedInUser === undefined) return <CircularProgress />;
+  if (loading) return <></>;
 
   return (
     <Grid container component="main" className={classes.root}>
@@ -118,12 +144,12 @@ export default function Availiability(): JSX.Element {
                   handleTimeFrom={handleTimeFrom}
                   handleTimeTo={handleTimeTo}
                 />
-                <Divider />
+                <Divider className={classes.divider} />
               </>
             ))}
           </Box>
           <Box className={classes.buttonContainer}>
-            <Button className={classes.button} variant="contained" color="primary">
+            <Button className={classes.button} variant="contained" color="primary" onClick={submitAvailability}>
               Submit
             </Button>
           </Box>
