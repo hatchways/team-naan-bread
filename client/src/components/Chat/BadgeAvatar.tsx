@@ -5,7 +5,6 @@ import useStyles from './useStyles';
 
 const BadgeAvatar = () => {
   const classes = useStyles();
-  //   const { sidebar, username, photoUrl, online } = props;
 
   return (
     <Box>

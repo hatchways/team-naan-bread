@@ -10,7 +10,7 @@ export default function SenderBubble(): JSX.Element {
       <Box className={classes.bubble}>
         <Typography className={classes.text}>{'text'}</Typography>
       </Box>
-      {true ? <Avatar alt={'otherUser.username'} src={image} className={classes.avatar}></Avatar> : null}
+      <Avatar alt={'otherUser.username'} src={image} className={classes.avatar} />
     </Box>
   );
 }

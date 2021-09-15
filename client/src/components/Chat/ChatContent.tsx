@@ -14,7 +14,9 @@ const ChatContent = () => {
           <Typography className={classes.previewTextSecondary}>{'latestMessageText'}</Typography>
         )}
       </Box>
-      <Box>{true ? <Typography variant="body2">{'10:22AM'}</Typography> : null}</Box>
+      <Box>
+        <Typography variant="body2">{'10:22AM'}</Typography>{' '}
+      </Box>
     </Box>
   );
 };

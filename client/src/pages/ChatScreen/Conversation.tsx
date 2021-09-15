@@ -9,8 +9,7 @@ export default function Conversation(): JSX.Element {
   return (
     <Box className={classes.conversation}>
       {['Hello', 'yes o', 'hey', 'hi', 'hi', 'hi', 'hi', 'hi'].map((message, i) => {
-        // const time = moment(message.createdAt).format("h:mm");
-        return i % 2 == 0 ? <SenderBubble key={'SenderBubble' + i} /> : <ReceiverBubble key={'OtherUserBubble' + i} />;
+        return i % 2 === 0 ? <SenderBubble key={'SenderBubble' + i} /> : <ReceiverBubble key={'OtherUserBubble' + i} />;
       })}
     </Box>
   );
