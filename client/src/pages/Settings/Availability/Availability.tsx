@@ -7,9 +7,6 @@ import useStyles from './useStyles';
 import Typography from '@material-ui/core/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { useAuth } from '../../../context/useAuthContext';
-import Select from '@material-ui/core/Select';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
@@ -73,7 +70,6 @@ export default function Availiability(): JSX.Element {
   const submitAvailability = () => {
     if (loggedInUser) {
       Object.keys(availability).forEach((date: string) => {
-        console.log(availability[date]);
         if (availability[date].from === '' && availability[date].to != '') {
           const tempObj = Object.assign({}, availability);
           tempObj[date].to = '';
