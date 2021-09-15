@@ -1,8 +1,9 @@
 const Profile = require("../models/Profile");
 const User = require("../models/User");
 const asyncHandler = require("express-async-handler");
-//the Profile is also created on in controllers/auth when the user creates a new account. However- only the email and id fields will be filled
+const { cloudinary } = require("../utils/cloudinary");
 
+//the Profile is also created on in controllers/auth when the user creates a new account. However- only the email and id fields will be filled
 exports.createProfile = asyncHandler(async (req, res, next) => {
 
     const profileExists = await Profile.findOne({ _id: req.user.id });
@@ -124,7 +125,6 @@ const deletePhoto = async (user) => {
 
 exports.uploadProfilePhoto = asyncHandler(async (req, res, next) => {
   const image = req.file;
-  console.log(image)
   const user = await Profile.findById(req.user.id);
   if (!user) {
     return res.sendStatus(404);
