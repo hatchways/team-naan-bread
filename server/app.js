@@ -25,7 +25,9 @@ const server = http.createServer(app);
 
 const io = socketio(server, {
   cors: {
-    origin: '*',
+    origin: 'http://localhost:3000',
+    credentials: true,
+    transports: ['websocket'],
   },
 });
 
@@ -74,4 +76,4 @@ process.on('unhandledRejection', (err, promise) => {
   server.close(() => process.exit(1));
 });
 
-module.exports = { app, server };
+module.exports = { app, server, io };
