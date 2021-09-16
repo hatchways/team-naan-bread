@@ -4,6 +4,7 @@ import { Notification } from '../../../interface/Notification';
 import React, { useEffect, useState } from 'react';
 import { getAllUnreadNotifications, markBatchAsRead } from '../../../helpers/APICalls/Notification';
 import NotificationsMenuItems from './NotificationsMenuItems/NotificationsMenuItems';
+import { useSocket } from '../../../context/useSocketContext';
 
 export default function NotificationsMenu(): JSX.Element {
   const { loggedInUser } = useAuth();
@@ -27,6 +28,8 @@ export default function NotificationsMenu(): JSX.Element {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const { socket } = useSocket();
+
   const [notifications, setNotifications] = useState<[Notification]>();
   useEffect(() => {
     async function fetchNotifications() {
@@ -36,7 +39,13 @@ export default function NotificationsMenu(): JSX.Element {
       }
     }
     fetchNotifications();
-  }, [loggedInUser]);
+
+    socket?.on('new-notification', (newNotification: Notification) => {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      setNotifications((oldNotificationsList) => [...oldNotificationsList, newNotification]);
+    });
+  }, [socket, loggedInUser]);
 
   return (
     <Box padding={1} marginLeft={1}>
