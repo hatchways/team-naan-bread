@@ -8,7 +8,7 @@ import NotificationsMenuItems from '../../components/NavBar/NotificationsMenu/No
 export default function AllNotifications(): JSX.Element {
   const { loggedInUser } = useAuth();
 
-  const [notifications, setNotifications] = useState<[Notification]>();
+  const [notifications, setNotifications] = useState<Notification[]>();
   useEffect(() => {
     async function fetchNotifications() {
       if (loggedInUser) {
