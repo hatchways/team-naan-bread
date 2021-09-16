@@ -43,7 +43,7 @@ export default function NotificationsMenu(): JSX.Element {
     socket?.on('new-notification', (newNotification: Notification) => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      setNotifications((oldNotificationsList) => [...oldNotificationsList, newNotification]);
+      setNotifications((oldNotificationsList) => [newNotification, ...oldNotificationsList]);
     });
   }, [socket, loggedInUser]);
 
