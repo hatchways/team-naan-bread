@@ -13,7 +13,6 @@ import { SnackBarProvider } from './context/useSnackbarContext';
 import { ProtectedRoute } from './context/protectedRoute';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
-
 import './App.css';
 import NavBar from './components/NavBar/NavBar';
 import AllNotifications from './pages/AllNotifiactions/AllNotifications';
