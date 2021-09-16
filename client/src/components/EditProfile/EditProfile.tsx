@@ -6,15 +6,15 @@ import { FormikHelpers } from 'formik';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Typography from '@material-ui/core/Typography';
 import useStyles from './useStyles';
-import { useAuth } from '../../../context/useAuthContext';
+import { useAuth } from '../../context/useAuthContext';
 import EditProfileForm from './EditProfileForm/EditProfileForm';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import getProfile from '../../../helpers/APICalls/getProfile';
-import updateProfile from '../../../helpers/APICalls/updateProfile';
-import { ProfileApiData } from '../../../interface/ProfileApiData';
+import getProfile from '../../helpers/APICalls/getProfile';
+import updateProfile from '../../helpers/APICalls/updateProfile';
+import { ProfileApiData } from '../../interface/ProfileApiData';
 
 export default function Profile(): JSX.Element {
   const classes = useStyles();

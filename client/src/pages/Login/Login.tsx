@@ -39,12 +39,6 @@ export default function Login(): JSX.Element {
       <CssBaseline />
       <Grid item xs={12} sm={12} md={12} elevation={6} component={Paper} square>
         <Box className={classes.authWrapper}>
-          {/* <Grid container elevation={6} component={Paper} square>
-            <Box className={classes.header}>
-              <LogoHeader logo={logo} />
-              <AuthHeader linkTo="/signup" btnText="SIGN UP" linkText="BECOME A SITTER" />
-            </Box>
-          </Grid> */}
           <Grid item xs={12} sm={6} md={6} elevation={6} component={Paper} className={classes.formCard}>
             <LoginForm handleSubmit={handleSubmit} />
           </Grid>

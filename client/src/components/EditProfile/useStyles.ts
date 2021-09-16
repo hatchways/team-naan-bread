@@ -6,6 +6,8 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     width: '100vw',
     height: '100vh',
+    paddingLeft: theme.spacing(8),
+    paddingRight: theme.spacing(8),
   },
   mainContainer: {
     height: '90vh',
