@@ -1,5 +1,4 @@
-import Grid from '@material-ui/core/Grid';
-import { Avatar, Box, Button, Paper, Typography } from '@material-ui/core';
+import { Avatar, Box, Button, Typography } from '@material-ui/core';
 import useStyles from './useStyles';
 import { useEffect, useState } from 'react';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -13,7 +12,7 @@ interface Props {
   loggedInUser: User;
 }
 
-export default function ProfilePhoto({ loggedInUser }: Props): JSX.Element {
+export default function ProfilePhotoForm({ loggedInUser }: Props): JSX.Element {
   const [photo, setPhoto] = useState<string | undefined>('');
   const classes = useStyles();
   const { updateSnackBarMessage } = useSnackBar();
@@ -56,44 +55,38 @@ export default function ProfilePhoto({ loggedInUser }: Props): JSX.Element {
   };
 
   return (
-    <Grid item>
-      <Paper>
-        <Box m={10} p={2} flexDirection="column" display="flex" alignItems="center" justifyContent="center">
-          <Typography align="center" variant="h3">
-            Profile photo
+    <Box className={classes.root}>
+      <Box flexDirection="column" display="flex" alignItems="center" justifyContent="center">
+        <Avatar src={photo} className={classes.photo} />
+        <Box mb={10} display="flex" alignItems="center" justifyContent="center">
+          <Typography align="center" variant="overline">
+            be sure to use a photo that clearly shows your face
           </Typography>
-
-          <Avatar src={photo} className={classes.photo} />
-          <Box mb={10} display="flex" alignItems="center" justifyContent="center">
-            <Typography align="center" variant="overline">
-              be sure to use a photo that clearly shows your face
-            </Typography>
-          </Box>
-
-          <Button
-            disabled={loading}
-            size="large"
-            variant="outlined"
-            color="primary"
-            endIcon={loading && <CircularProgress size={18} color="primary" />}
-          >
-            <div {...getRootProps({ className: 'dropzone' })}>
-              <input {...getInputProps()} />
-              <p>Upload a file from your device</p>
-            </div>
-          </Button>
-          <Box m={3}>
-            <Button
-              disabled={loadingDelete}
-              onClick={deletePhoto}
-              startIcon={loadingDelete ? <CircularProgress size={12} /> : <DeleteIcon />}
-              className={classes.delete_button}
-            >
-              delete photo
-            </Button>
-          </Box>
         </Box>
-      </Paper>
-    </Grid>
+
+        <Button
+          disabled={loading}
+          size="large"
+          variant="outlined"
+          color="primary"
+          endIcon={loading && <CircularProgress size={18} color="primary" />}
+        >
+          <div {...getRootProps({ className: 'dropzone' })}>
+            <input {...getInputProps()} />
+            <p>Upload a file from your device</p>
+          </div>
+        </Button>
+        <Box m={3}>
+          <Button
+            disabled={loadingDelete}
+            onClick={deletePhoto}
+            startIcon={loadingDelete ? <CircularProgress size={12} /> : <DeleteIcon />}
+            className={classes.delete_button}
+          >
+            delete photo
+          </Button>
+        </Box>
+      </Box>
+    </Box>
   );
 }

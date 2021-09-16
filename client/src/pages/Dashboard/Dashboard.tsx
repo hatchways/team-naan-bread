@@ -39,10 +39,6 @@ export default function Dashboard(): JSX.Element {
     <Grid container component="main" className={`${classes.root} ${classes.dashboard}`}>
       <CssBaseline />
       <Grid item className={classes.drawerWrapper}>
-        <Link to={'/settings/editProfile'}>
-          <Button variant="contained"> Check Profile</Button>
-        </Link>
-        <Link to="/my-sitters">My Sitters</Link>
         <ChatSideBanner loggedInUser={loggedInUser} />
       </Grid>
     </Grid>

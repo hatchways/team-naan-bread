@@ -24,6 +24,11 @@ export default function NavBar(): JSX.Element {
 
             {loggedInUser && (
               <>
+                <Box padding={1} marginLeft={1}>
+                  <Link component={routerLink} to="/dashboard">
+                    <Button>Dashboard</Button>
+                  </Link>
+                </Box>
                 <NotificationsMenu />
                 <Box padding={1} marginLeft={1}>
                   <Button>My jobs</Button>
@@ -38,7 +43,7 @@ export default function NavBar(): JSX.Element {
                 </Box>
 
                 <Box padding={1} marginLeft={1}>
-                  <IconButton component={routerLink} to="/settings/">
+                  <IconButton component={routerLink} to="/settings">
                     <AvatarDisplay loggedIn user={loggedInUser} />
                   </IconButton>
                 </Box>

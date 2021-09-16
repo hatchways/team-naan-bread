@@ -18,17 +18,6 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 700,
     textAlign: 'center',
   },
-  drawer: {
-    width: 240,
-    flexShrink: 0,
-  },
-  drawerPaper: {
-    width: 240,
-    border: 'none',
-    backgroundColor: '#fafafa',
-    alignItems: 'center',
-    paddingTop: 100,
-  },
 }));
 
 export default useStyles;
