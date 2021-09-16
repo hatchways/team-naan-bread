@@ -3,8 +3,22 @@ import { AppBar, Toolbar, Button, IconButton, Link, Box } from '@material-ui/cor
 import AvatarDisplay from '../AvatarDisplay/AvatarDisplay';
 import { Link as routerLink } from 'react-router-dom';
 import NotificationsMenu from './NotificationsMenu/NotificationsMenu';
+import { useSocket } from '../../context/useSocketContext';
+import { useEffect, useLayoutEffect } from 'react';
 export default function NavBar(): JSX.Element {
   const { loggedInUser } = useAuth();
+
+  const { initSocket, disconnectSocket } = useSocket();
+
+  useEffect(() => {
+    initSocket();
+  }, [initSocket]);
+
+  useLayoutEffect(() => {
+    return () => {
+      disconnectSocket();
+    };
+  }, [disconnectSocket]);
 
   return (
     <Box flexGrow={1}>
