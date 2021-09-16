@@ -9,6 +9,7 @@ import Profile from './pages/Profile/Profile';
 import { AuthProvider } from './context/useAuthContext';
 import { SocketProvider } from './context/useSocketContext';
 import { SnackBarProvider } from './context/useSnackbarContext';
+import { ProtectedRoute } from './context/protectedRoute';
 
 import './App.css';
 
@@ -20,15 +21,11 @@ function App(): JSX.Element {
           <AuthProvider>
             <SocketProvider>
               <Switch>
-                <Route exact path="/settings/profile/">
-                  <Profile />
-                </Route>
-                <Route exact path="/login" component={Login} />
-                <Route exact path="/signup" component={Signup} />
-                <Route exact path="/settings/editProfile" component={EditProfile} />
-                <Route exact path="/dashboard">
-                  <Dashboard />
-                </Route>
+                <ProtectedRoute exact path="/settings/profile/" component={Profile} />
+                <ProtectedRoute exact path="/login" component={Login} />
+                <ProtectedRoute exact path="/signup" component={Signup} />
+                <ProtectedRoute exact path="/settings/editProfile" component={EditProfile} />
+                <ProtectedRoute exact path="/dashboard" component={Dashboard} />
                 <Route path="*">
                   <Redirect to="/login" />
                 </Route>
