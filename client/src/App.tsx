@@ -1,6 +1,6 @@
 import { MuiThemeProvider } from '@material-ui/core';
 import { theme } from './themes/theme';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom';
 import Login from './pages/Login/Login';
 import Signup from './pages/SignUp/SignUp';
 import Dashboard from './pages/Dashboard/Dashboard';
@@ -9,6 +9,7 @@ import MySitters from './pages/MySitters/MySitters';
 import { AuthProvider } from './context/useAuthContext';
 import { SocketProvider } from './context/useSocketContext';
 import { SnackBarProvider } from './context/useSnackbarContext';
+import { ProtectedRoute } from './context/protectedRoute';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 
@@ -26,21 +27,15 @@ function App(): JSX.Element {
               <SocketProvider>
                 <NavBar />
                 <Switch>
-                  <Route exact={false} path="/settings">
-                    <Profile />
-                  </Route>
-                  <Route exact path="/login" component={Login} />
-                  <Route exact path="/signup" component={Signup} />
-                  <Route exact path="/dashboard">
-                    <Dashboard />
-                  </Route>
-                  <Route exact path="/notifications">
-                    <AllNotifications />
-                  </Route>
-                  {/* <Route path="*">
+                  <ProtectedRoute path="/settings" component={Profile} />
+                  <ProtectedRoute exact path="/login" component={Login} />
+                  <ProtectedRoute exact path="/signup" component={Signup} />
+                  <ProtectedRoute exact path="/dashboard" component={Dashboard} />
+                  <ProtectedRoute exact path="/notifications" component={AllNotifications} />
+                  <ProtectedRoute exact path="/my-sitters" component={MySitters} />
+                  <Route path="*">
                     <Redirect to="/login" />
-                  </Route> */}
-                  <Route exact path="/my-sitters" component={MySitters} />
+                  </Route>
                 </Switch>
               </SocketProvider>
             </AuthProvider>

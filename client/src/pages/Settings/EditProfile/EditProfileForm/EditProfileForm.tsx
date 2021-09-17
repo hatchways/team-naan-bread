@@ -12,29 +12,13 @@ import { ProfileApiData } from '../../../../interface/ProfileApiData';
 import { Skeleton } from '@material-ui/lab';
 
 interface Props {
-  handleSubmit: (
-    {
-      _id,
-      email,
-      firstName,
-      lastName,
-      gender,
-      birthDate,
-      phoneNumber,
-      whereYouLive,
-      describeYourself,
-      createdAt,
-      updatedAt,
-      __v,
-    }: ProfileApiData,
-    { setStatus, setSubmitting }: FormikHelpers<ProfileApiData>,
-  ) => void;
+  handleSubmit: ({}: ProfileApiData, { setStatus, setSubmitting }: FormikHelpers<ProfileApiData>) => void;
   userProfile: ProfileApiData;
 }
 
 export default function EditProfileForm({ userProfile, handleSubmit }: Props): JSX.Element {
   const classes = useStyles();
-  if (userProfile._id === '')
+  if (!userProfile._id)
     return (
       <Box>
         {[...Array(4)].map((x, i) => (
