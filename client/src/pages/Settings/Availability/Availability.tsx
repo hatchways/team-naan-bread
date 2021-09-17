@@ -22,11 +22,39 @@ import { useSnackBar } from '../../../context/useSnackbarContext';
 export default function Availiability(): JSX.Element {
   const [loading, setLoading] = useState(false);
   const { updateSnackBarMessage } = useSnackBar();
-  const [availability, setAvailability] = React.useState<Availability>({} as Availability);
+  const [availability, setAvailability] = React.useState<Availability>({
+    Monday: {
+      to: '',
+      from: '',
+    },
+    Tuesday: {
+      to: '',
+      from: '',
+    },
+    Wednesday: {
+      to: '',
+      from: '',
+    },
+    Thursday: {
+      to: '',
+      from: '',
+    },
+    Friday: {
+      to: '',
+      from: '',
+    },
+    Saturday: {
+      to: '',
+      from: '',
+    },
+    Sunday: {
+      to: '',
+      from: '',
+    },
+  });
 
   const { loggedInUser } = useAuth();
   const classes = useStyles();
-
   //this will get the User's availabilityData using the getAvailability API
   useEffect(() => {
     setLoading(true);
@@ -71,21 +99,6 @@ export default function Availiability(): JSX.Element {
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
-      <Drawer
-        className={classes.drawer}
-        variant="permanent"
-        classes={{
-          paper: classes.drawerPaper,
-        }}
-      >
-        <List>
-          {['Edit Profile', 'Profile Photo', 'Availability', 'Payment', 'Security', 'Settings'].map((text) => (
-            <ListItem button key={text}>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
-      </Drawer>
       <Grid
         container
         item
@@ -98,9 +111,6 @@ export default function Availiability(): JSX.Element {
         className={classes.mainContainer}
       >
         <Box className={classes.content}>
-          <Typography className={classes.welcome} component="h1" variant="h5">
-            Availability
-          </Typography>
           <Box className={classes.formBox}>
             {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map((date: string) => (
               <>

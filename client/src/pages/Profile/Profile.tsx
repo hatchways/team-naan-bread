@@ -11,6 +11,7 @@ import getProfile from '../../helpers/APICalls/getProfile';
 import { ProfileApiData } from '../../interface/ProfileApiData';
 import { FormikHelpers } from 'formik';
 import updateProfile from '../../helpers/APICalls/updateProfile';
+import Availability from '../Settings/Availability/Availability';
 
 export default function Profile(): JSX.Element {
   const { loggedInUser } = useAuth();
@@ -19,7 +20,7 @@ export default function Profile(): JSX.Element {
   const profileMenu = [
     { text: 'Edit Profile', path: '/editProfile' },
     { text: 'Profile Photo', path: '/picture' },
-    { text: 'Availability', path: '#' },
+    { text: 'Availability', path: '/availability' },
     { text: 'Payment', path: '#' },
     { text: 'Security', path: '#' },
   ];
@@ -108,6 +109,10 @@ export default function Profile(): JSX.Element {
                 <h3>Edit Profile</h3>
 
                 <EditProfileForm handleSubmit={handleSubmit} userProfile={userProfile} />
+              </Route>
+              <Route path={`${path}/availability`}>
+                <h3>Availability</h3>
+                <Availability />
               </Route>
             </Box>
           </Paper>
