@@ -1,55 +1,73 @@
-const Request = require("../models/Request");
-const User = require("../models/User");
-const asyncHandler = require("express-async-handler");
+const Request = require('../models/Request');
+const User = require('../models/User');
+const Profile = require('../models/Profile');
+const Notification = require('../models/Notification');
+const asyncHandler = require('express-async-handler');
 
 // @route GET /request
 // @desc get requests related to a logged in user or sitter
 // @access Private
-exports.getRequests = asyncHandler( async (req, res, next) => {
+exports.getRequests = asyncHandler(async (req, res, next) => {
   const userId = req.user.id;
 
-  const requests = await Request.find(
-    { $or: [
-      { sitterId: userId },
-      { userId: userId }
-    ]},
-    function(err, docs) {
+  // get request and related users data
+  await Request.find({ $or: [{ sitter: userId }, { user: userId }] })
+    .populate('user')
+    .populate('sitter')
+    .sort({ start: 'asc' })
+    .exec(function (err, docs) {
       if (err) {
-        res.status(400);
-        throw new Error(err);
+        throw new Error('Error getting requests, no results.');
       } else {
-        return docs;
+        res.send(docs);
       }
-    }
-  );
-  
-  res.send(requests);
+    });
 });
 
 // @route POST /request
 // @desc post requests with user id and sitter id
 // @access Private
-exports.postRequest = asyncHandler( async (req, res, next) => {
-  const { userId, sitterId, start, end } = req.body;
-
-  const user = await User.findById(userId);
-  const sitter = await User.findById(sitterId);
+exports.postRequest = asyncHandler(async (req, res, next) => {
+  const { userId, sitterId, start, end, offset } = req.body;
 
   if (!userId || !sitterId) {
     res.status(400);
-    throw new Error("The request must have valid user and sitter.");
+    throw new Error('The request must have valid user and sitter.');
   }
 
   if (!start || !end) {
     res.status(400);
-    throw new Error("Requests must have start and end dates");
+    throw new Error('Requests must have start and end dates');
   }
 
+  // create request
   const request = await Request.create({
-    userId: user._id,
-    sitterId: sitter._id,
+    user: userId,
+    sitter: sitterId,
     start,
-    end
+    end,
+    offset,
+  });
+
+  // update profiles of user and sitter
+  const updatedUserProfile = await Profile.findOneAndUpdate(
+    { _id: userId },
+    { $push: { requestsSubmitted: request._id } },
+  );
+  await Profile.updateOne({ _id: sitterId }, { $push: { requestsReceived: request._id } });
+  const currentUser = await User.findById(userId);
+
+  const requestDurationInHours = parseInt((request.end - request.start) / 36e5);
+  const requesterFirstNameOrSomeone =
+    updatedUserProfile && updatedUserProfile.firstName ? updatedUserProfile.firstName : 'someone';
+
+  const newNotification = await Notification.create({
+    userId: sitterId,
+    notificationType: 'dog sitting',
+    title: `${requesterFirstNameOrSomeone} has requested your service for ${requestDurationInHours} hours`,
+    context: {
+      profilePhotoURL: currentUser.profilePhoto.url,
+    },
   });
 
   res.send(request);
@@ -58,7 +76,7 @@ exports.postRequest = asyncHandler( async (req, res, next) => {
 // @route PUT /request/:id?status=approved or declined
 // @desc update request status finding by id
 // @access Private
-exports.updateRequest = asyncHandler( async (req, res, next) => {
+exports.updateRequest = asyncHandler(async (req, res, next) => {
   const requestState = req.query.state;
   const requestId = { _id: req.params.id };
 
@@ -71,18 +89,13 @@ exports.updateRequest = asyncHandler( async (req, res, next) => {
     res.status(400);
     throw new Error('Request ID is required. Not updated');
   }
-  
-  await Request.findOneAndUpdate(
-    requestId,
-    { [requestState]: true },
-    { new: true },
-    function(err, doc) {
-      if (err) {
-        res.status(400)
-        throw new Error(err);
-      } else {
-        res.send(doc);
-      }
+
+  await Request.findOneAndUpdate(requestId, { [requestState]: true }, { new: true }, function (err, doc) {
+    if (err) {
+      res.status(400);
+      throw new Error(err);
+    } else {
+      res.send(doc);
     }
-  )
+  });
 });
