@@ -16,42 +16,13 @@ import DateForm from './DateForm/DateForm';
 import { Divider } from '@material-ui/core';
 import getAvailability from '../../../helpers/APICalls/getAvailability';
 import updateAvailability from '../../../helpers/APICalls/updateAvailability';
-import { Availability, date } from '../../../interface/Availability';
+import { Availability } from '../../../interface/Availability';
 import { useSnackBar } from '../../../context/useSnackbarContext';
 
 export default function Availiability(): JSX.Element {
   const [loading, setLoading] = useState(false);
   const { updateSnackBarMessage } = useSnackBar();
-  const [availability, setAvailability] = React.useState<Availability>({
-    Monday: {
-      to: '',
-      from: '',
-    },
-    Tuesday: {
-      to: '',
-      from: '',
-    },
-    Wednesday: {
-      to: '',
-      from: '',
-    },
-    Thursday: {
-      to: '',
-      from: '',
-    },
-    Friday: {
-      to: '',
-      from: '',
-    },
-    Saturday: {
-      to: '',
-      from: '',
-    },
-    Sunday: {
-      to: '',
-      from: '',
-    },
-  });
+  const [availability, setAvailability] = React.useState<Availability>({} as Availability);
 
   const { loggedInUser } = useAuth();
   const classes = useStyles();

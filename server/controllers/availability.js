@@ -7,13 +7,20 @@ const mongoose = require('mongoose')
 
   exports.updateAvailability = asyncHandler(async (req, res) => {
 
-     for(let prop in req.body.values.availability) if(!req.body.values.availability[prop]) delete req.body.values.availability[prop];//it will remove fields who are undefined or null
+     for(let prop in req.body.values.availability){
+      if(!req.body.values.availability[prop]){
+        delete req.body.values.availability[prop];
+        //it will remove fields who are undefined or null
+      }
+     }
 
-     availability = await Availability.findOneAndUpdate({_id: mongoose.Types.ObjectId(req.body.values._id)}, {availability: req.body.values.availability}, {new: true, strict: false});
+     availability = await Availability.findOneAndUpdate(
+    {_id: mongoose.Types.ObjectId(req.body.values._id)},
+    {availability: req.body.values.availability},
+    {new: true, strict: false});
 
      //if there is no availability for whatever reason- create it
-     if(!availability) {  
-      console.log('making new availability')
+     if(!availability) {
       availability = await Availability.create({_id: new mongoose.Types.ObjectId(req.body.values._id), availability: req.body.values.availability});
      }
 
@@ -27,9 +34,7 @@ const mongoose = require('mongoose')
      if (!availability) {
         res.status(404).send("No availability found for ID");
       }
-      else{
-        res.status(200).json(availability.availability);
-      }
+    res.status(200).json(availability.availability);
 })
 
   exports.findAllAvailability = asyncHandler(async (req, res) => {
@@ -38,8 +43,5 @@ const mongoose = require('mongoose')
   if (!availabilities) {
       res.status(404).send("No availabilities found");
     }
-
-    else{
-      res.status(200).json({ availabilities});
-    }
+    res.status(200).json({ availabilities});
 })

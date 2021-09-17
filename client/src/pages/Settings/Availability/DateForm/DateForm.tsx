@@ -21,33 +21,15 @@ interface Props {
   handleTimeTo: (event: React.ChangeEvent<{ value: any }>, date: string) => void;
 }
 
-const times = [
-  '',
-  '00:00',
-  '01:00',
-  '02:00',
-  '03:00',
-  '04:00',
-  '05:00',
-  '06:00',
-  '07:00',
-  '08:00',
-  '09:00',
-  '10:00',
-  '11:00',
-  '12:00',
-  '13:00',
-  '14:00',
-  '15:00',
-  '16:00',
-  '17:00',
-  '18:00',
-  '19:00',
-  '20:00',
-  '21:00',
-  '22:00',
-  '23:00',
-];
+const times = [''];
+
+for (let x = 0; x < 24; x++) {
+  if (x > 10) {
+    times.push(x + ':00');
+  } else {
+    times.push('0' + x + ':00');
+  }
+}
 
 const getDisabled = (val: string) => {
   if (val === '')
