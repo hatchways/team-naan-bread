@@ -27,7 +27,7 @@ export default function NotificationsMenu(): JSX.Element {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const [notifications, setNotifications] = useState<[Notification]>();
+  const [notifications, setNotifications] = useState<Notification[]>();
   useEffect(() => {
     async function fetchNotifications() {
       if (loggedInUser) {

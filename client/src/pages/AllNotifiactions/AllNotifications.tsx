@@ -8,15 +8,13 @@ import NotificationsMenuItems from '../../components/NavBar/NotificationsMenu/No
 export default function AllNotifications(): JSX.Element {
   const { loggedInUser } = useAuth();
 
-  const [notifications, setNotifications] = useState<[Notification]>();
+  const [notifications, setNotifications] = useState<Notification[]>();
   const [lastId, setLastId] = useState<string>();
   const [isAllShown, setIsAllShown] = useState<boolean>(false);
   useEffect(() => {
     async function fetchNotifications() {
       if (loggedInUser) {
         const fetchedNotifications = await getAllNotifications();
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        //@ts-ignore
         setNotifications(fetchedNotifications);
         if (fetchedNotifications.length > 1) {
           setLastId(fetchedNotifications[fetchedNotifications.length - 1]._id);
@@ -67,9 +65,7 @@ export default function AllNotifications(): JSX.Element {
               variant="outlined"
               onClick={async () => {
                 const fetchedNotifications = await getAllNotifications(lastId);
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                //@ts-ignore
-                setNotifications((old) => [...old, ...fetchedNotifications]);
+                setNotifications((old) => [...(old as Notification[]), ...(fetchedNotifications as Notification[])]);
 
                 if (fetchedNotifications.length > 1) {
                   setLastId(fetchedNotifications[fetchedNotifications.length - 1]._id);

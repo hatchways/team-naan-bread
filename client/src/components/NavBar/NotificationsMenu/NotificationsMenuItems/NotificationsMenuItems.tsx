@@ -3,7 +3,7 @@ import { Typography, MenuItem, Paper, ListItemText, ListItemAvatar, Avatar, Box 
 import { Notification } from '../../../../interface/Notification';
 
 interface Props {
-  notifications: [Notification];
+  notifications: Notification[];
 }
 
 export default function NotificationsMenuItems({ notifications }: Props): JSX.Element {

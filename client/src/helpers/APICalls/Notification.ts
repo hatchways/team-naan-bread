@@ -10,13 +10,13 @@ const postFetchOptions: FetchOptions = {
   credentials: 'include',
 };
 
-const getAllNotifications = async (lastId?: string): Promise<[Notification]> => {
+const getAllNotifications = async (lastId?: string): Promise<Notification[]> => {
   return await fetch(`/notification/all?id=${lastId}`, fetchOptions)
     .then((res) => res.json())
     .catch(() => ({ error: { message: 'Unable to connect to server. Please try again' } }));
 };
 
-const getAllUnreadNotifications = async (): Promise<[Notification]> => {
+const getAllUnreadNotifications = async (): Promise<Notification[]> => {
   return await fetch(`/notification/all-unread`, fetchOptions)
     .then((res) => res.json())
     .catch(() => ({ error: { message: 'Unable to connect to server. Please try again' } }));
