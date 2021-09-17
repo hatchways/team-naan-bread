@@ -7,7 +7,7 @@ const getRequests = async (): Promise<RequestData[]> => {
     method: 'GET',
     credentials: 'include',
   };
-  return await fetch('http://localhost:3001/request', fetchOptions)
+  return await fetch('/request', fetchOptions)
     .then((res) => res.json())
     .catch(() => ({
       error: { message: 'Unable to connect to server. Please try again' },
