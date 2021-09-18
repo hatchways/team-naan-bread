@@ -9,6 +9,7 @@ import { CircularProgress } from '@material-ui/core';
 import MenuItem from '@material-ui/core/MenuItem';
 import MuiPhoneNumber from 'material-ui-phone-number';
 import { ProfileApiData } from '../../../../interface/ProfileApiData';
+import { Skeleton } from '@material-ui/lab';
 
 interface Props {
   handleSubmit: ({}: ProfileApiData, { setStatus, setSubmitting }: FormikHelpers<ProfileApiData>) => void;
@@ -17,7 +18,16 @@ interface Props {
 
 export default function EditProfileForm({ userProfile, handleSubmit }: Props): JSX.Element {
   const classes = useStyles();
-  if (!userProfile._id) return <>Loading</>;
+  if (!userProfile._id)
+    return (
+      <Box>
+        {[...Array(4)].map((x, i) => (
+          <Typography key={i} variant="h2">
+            <Skeleton />
+          </Typography>
+        ))}
+      </Box>
+    );
   return (
     <Formik
       initialValues={{

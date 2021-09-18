@@ -14,8 +14,8 @@ export default function NotificationsMenuItems({ notifications }: Props): JSX.El
     <Box>
       <Paper>
         {notifications &&
-          notifications.map((notification, index) => (
-            <Box key={index} paddingLeft={'4px'}>
+          notifications.map((notification) => (
+            <Box key={notification._id} paddingLeft={'4px'}>
               <MenuItem>
                 <ListItemAvatar>
                   <Avatar
