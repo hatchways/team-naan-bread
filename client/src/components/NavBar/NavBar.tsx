@@ -30,7 +30,13 @@ export default function NavBar(): JSX.Element {
               </Box>
 
               <Box padding={1} marginLeft={1}>
-                <IconButton component={routerLink} to="/settings/profile">
+                <Button component={routerLink} to="/my-sitters">
+                  My Sitters
+                </Button>
+              </Box>
+
+              <Box padding={1} marginLeft={1}>
+                <IconButton component={routerLink} to="/settings/picture">
                   <AvatarDisplay loggedIn user={loggedInUser} />
                 </IconButton>
               </Box>

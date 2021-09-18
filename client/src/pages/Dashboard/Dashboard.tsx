@@ -42,9 +42,6 @@ export default function Dashboard(): JSX.Element {
         <Link data-tour="step-2" to={'/settings/editProfile'}>
           <Button variant="contained"> Check Profile</Button>
         </Link>
-        <Link data-tour="step-1" to="/my-sitters">
-          My Sitters
-        </Link>
         <ChatSideBanner loggedInUser={loggedInUser} />
       </Grid>
     </Grid>

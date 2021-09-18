@@ -2,7 +2,7 @@ import Grid from '@material-ui/core/Grid';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { useAuth } from '../../context/useAuthContext';
 import { Route, useHistory, useRouteMatch } from 'react-router-dom';
-import { Box, Container, MenuItem, MenuList, Paper } from '@material-ui/core';
+import { Box, Container, Grow, MenuItem, MenuList, Paper } from '@material-ui/core';
 import ProfilePhoto from './ProfilePhoto/ProfilePhoto';
 import { Link as RouterLink } from 'react-router-dom';
 import EditProfileForm from '../Settings/EditProfile/EditProfileForm/EditProfileForm';
@@ -86,28 +86,38 @@ export default function Profile(): JSX.Element {
     <Container>
       <Grid container spacing={2}>
         <Grid item xs={6} sm={3}>
-          <Box paddingTop={10}>
-            <MenuList>
-              {profileMenu.map((item, index) => (
-                <MenuItem button component={RouterLink} to={`${url}${item.path}`} key={index}>
-                  {item.text}
-                </MenuItem>
-              ))}
-            </MenuList>
-          </Box>
+          <Grow in={true}>
+            <Box paddingTop={10}>
+              <MenuList>
+                {profileMenu.map((item, index) => (
+                  <MenuItem button component={RouterLink} to={`${url}${item.path}`} key={index}>
+                    {item.text}
+                  </MenuItem>
+                ))}
+              </MenuList>
+            </Box>
+          </Grow>
         </Grid>
         <Grid item xs={12} sm={8}>
           <Paper>
-            <Box m={5} p={2} flexDirection="column" display="flex" alignItems="center" justifyContent="center">
+            <Box m={5} p={2}>
               <Route path={`${path}/picture`}>
-                <h3>Change Photo</h3>
+                <Grow in={true}>
+                  <Box flexDirection="column" display="flex" alignItems="center" justifyContent="center">
+                    <h3>Change Photo</h3>
 
-                <ProfilePhoto loggedInUser={loggedInUser} />
+                    <ProfilePhoto loggedInUser={loggedInUser} />
+                  </Box>
+                </Grow>
               </Route>
               <Route path={`${path}/editProfile`}>
-                <h3>Edit Profile</h3>
+                <Grow in={true}>
+                  <Box>
+                    <h3>Edit Profile</h3>
 
-                <EditProfileForm handleSubmit={handleSubmit} userProfile={userProfile} />
+                    <EditProfileForm handleSubmit={handleSubmit} userProfile={userProfile} />
+                  </Box>
+                </Grow>
               </Route>
             </Box>
           </Paper>
