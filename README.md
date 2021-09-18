@@ -1,6 +1,6 @@
-## Project Name
+## LovingSitter
 
-This is a little description about your project.
+A Marketplace for Dog Sitters + Dog Owners
 
 **Tech Stack:** MongoDB, Express.js, React.js, Node.js, Typescript
 
