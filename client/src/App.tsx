@@ -13,6 +13,9 @@ import { ProtectedRoute } from './context/protectedRoute';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 
+import { TourProvider } from '@reactour/tour';
+import { steps } from './helpers/Reactour/reactorSteps';
+
 import './App.css';
 import NavBar from './components/NavBar/NavBar';
 import AllNotifications from './pages/AllNotifiactions/AllNotifications';
@@ -25,18 +28,20 @@ function App(): JSX.Element {
           <SnackBarProvider>
             <AuthProvider>
               <SocketProvider>
-                <NavBar />
-                <Switch>
-                  <ProtectedRoute path="/settings" component={Profile} />
-                  <ProtectedRoute exact path="/login" component={Login} />
-                  <ProtectedRoute exact path="/signup" component={Signup} />
-                  <ProtectedRoute exact path="/dashboard" component={Dashboard} />
-                  <ProtectedRoute exact path="/notifications" component={AllNotifications} />
-                  <ProtectedRoute exact path="/my-sitters" component={MySitters} />
-                  <Route path="*">
-                    <Redirect to="/login" />
-                  </Route>
-                </Switch>
+                <TourProvider steps={steps}>
+                  <NavBar />
+                  <Switch>
+                    <ProtectedRoute path="/settings" component={Profile} />
+                    <ProtectedRoute exact path="/login" component={Login} />
+                    <ProtectedRoute exact path="/signup" component={Signup} />
+                    <ProtectedRoute exact path="/dashboard" component={Dashboard} />
+                    <ProtectedRoute exact path="/notifications" component={AllNotifications} />
+                    <ProtectedRoute exact path="/my-sitters" component={MySitters} />
+                    <Route path="*">
+                      <Redirect to="/login" />
+                    </Route>
+                  </Switch>
+                </TourProvider>
               </SocketProvider>
             </AuthProvider>
           </SnackBarProvider>
