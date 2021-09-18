@@ -30,7 +30,7 @@ export default function NavBar(): JSX.Element {
               </Box>
 
               <Box padding={1} marginLeft={1}>
-                <Button component={routerLink} to="/my-sitters">
+                <Button data-tour="step-1" component={routerLink} to="/my-sitters">
                   My Sitters
                 </Button>
               </Box>
