@@ -4,7 +4,7 @@ import AvatarDisplay from '../AvatarDisplay/AvatarDisplay';
 import { Link as routerLink } from 'react-router-dom';
 import NotificationsMenu from './NotificationsMenu/NotificationsMenu';
 import { useSocket } from '../../context/useSocketContext';
-import { useEffect } from 'react';
+import { useEffect, useLayoutEffect } from 'react';
 export default function NavBar(): JSX.Element {
   const { loggedInUser } = useAuth();
 
@@ -12,10 +12,13 @@ export default function NavBar(): JSX.Element {
 
   useEffect(() => {
     initSocket();
+  }, [initSocket]);
+
+  useLayoutEffect(() => {
     return () => {
       disconnectSocket();
     };
-  }, [initSocket, disconnectSocket]);
+  }, [disconnectSocket]);
 
   return (
     <Box flexGrow={1}>
