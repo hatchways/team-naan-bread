@@ -16,6 +16,7 @@ import { getAllUnreadNotifications, markBatchAsRead } from '../../../helpers/API
 import NotificationsMenuItems from './NotificationsMenuItems/NotificationsMenuItems';
 import { Skeleton } from '@material-ui/lab';
 import { Link as routerLink } from 'react-router-dom';
+import { useSocket } from '../../../context/useSocketContext';
 
 export default function NotificationsMenu(): JSX.Element {
   const { loggedInUser } = useAuth();
@@ -39,7 +40,9 @@ export default function NotificationsMenu(): JSX.Element {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const [notifications, setNotifications] = useState<[Notification]>();
+  const { socket } = useSocket();
+
+  const [notifications, setNotifications] = useState<Notification[]>();
   const [isFetching, setIsFetching] = useState<boolean>(false);
   useEffect(() => {
     async function fetchNotifications() {
@@ -51,7 +54,11 @@ export default function NotificationsMenu(): JSX.Element {
       }
     }
     fetchNotifications();
-  }, [loggedInUser]);
+
+    socket?.on('new-notification', (newNotification: Notification) => {
+      setNotifications((oldNotificationsList) => [newNotification, ...(oldNotificationsList as Notification[])]);
+    });
+  }, [socket, loggedInUser]);
 
   return (
     <Box padding={1} marginLeft={1}>
