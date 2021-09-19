@@ -11,21 +11,17 @@ const postFetchOptions: FetchOptions = {
 };
 
 const getAllNotifications = async (): Promise<[Notification]> => {
-  return await fetch(`/notification/all`, fetchOptions)
-    .then((res) => res.json())
-    .catch(() => ({ error: { message: 'Unable to connect to server. Please try again' } }));
+  const res = await fetch(`/notification/all`, fetchOptions);
+  return res.json();
 };
 
 const getAllUnreadNotifications = async (): Promise<[Notification]> => {
-  return await fetch(`/notification/all-unread`, fetchOptions)
-    .then((res) => res.json())
-    .catch(() => ({ error: { message: 'Unable to connect to server. Please try again' } }));
+  const res = await fetch(`/notification/all-unread`, fetchOptions);
+  return res.json();
 };
 
 const markAsRead = async (id: string) => {
-  return await fetch(`/notification/seen/${id}`, postFetchOptions)
-    .then((res) => res.json())
-    .catch(() => ({ error: { message: 'Unable to connect to server. Please try again' } }));
+  return await fetch(`/notification/seen/${id}`, postFetchOptions);
 };
 const markBatchAsRead = async (notificationsIds: string[]) => {
   const fetchOptions: FetchOptions = {

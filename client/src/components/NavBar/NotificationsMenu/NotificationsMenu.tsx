@@ -1,9 +1,21 @@
 import { useAuth } from '../../../context/useAuthContext';
-import { Typography, Button, Badge, Menu, Box } from '@material-ui/core';
+import {
+  Typography,
+  Button,
+  Badge,
+  Menu,
+  Box,
+  MenuItem,
+  ListItemText,
+  ListItemAvatar,
+  Avatar,
+} from '@material-ui/core';
 import { Notification } from '../../../interface/Notification';
 import React, { useEffect, useState } from 'react';
 import { getAllUnreadNotifications, markBatchAsRead } from '../../../helpers/APICalls/Notification';
 import NotificationsMenuItems from './NotificationsMenuItems/NotificationsMenuItems';
+import { Skeleton } from '@material-ui/lab';
+import { Link as routerLink } from 'react-router-dom';
 import { useSocket } from '../../../context/useSocketContext';
 
 export default function NotificationsMenu(): JSX.Element {
@@ -31,11 +43,14 @@ export default function NotificationsMenu(): JSX.Element {
   const { socket } = useSocket();
 
   const [notifications, setNotifications] = useState<Notification[]>();
+  const [isFetching, setIsFetching] = useState<boolean>(false);
   useEffect(() => {
     async function fetchNotifications() {
       if (loggedInUser) {
+        setIsFetching(true);
         const fetchedNotifications = await getAllUnreadNotifications();
         setNotifications(fetchedNotifications);
+        setIsFetching(false);
       }
     }
     fetchNotifications();
@@ -58,41 +73,62 @@ export default function NotificationsMenu(): JSX.Element {
           <Typography variant="button">Notifications</Typography>
         </Badge>
       </Button>
-      {notifications && notifications.length >= 1 && (
-        <Menu
-          elevation={0}
-          getContentAnchorEl={null}
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'center',
-          }}
-          transformOrigin={{
-            vertical: 'top',
-            horizontal: 'center',
-          }}
-          id="notificationsMenu"
-          anchorEl={anchorEl}
-          keepMounted
-          open={Boolean(anchorEl)}
-          onClose={handleClose}
-        >
-          <Box
-            display={{ xs: 'none', sm: 'block' }}
-            height={0}
-            width={0}
-            borderLeft={'5px solid transparent'}
-            borderRight={'5px solid transparent'}
-            borderBottom={'5px solid black'}
-            alignItems={'center'}
-            marginLeft={'50%'}
-            marginRight={'50%'}
-          />
+      <Menu
+        elevation={0}
+        getContentAnchorEl={null}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'center',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'center',
+        }}
+        id="notificationsMenu"
+        anchorEl={anchorEl}
+        keepMounted
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+      >
+        <Box
+          display={{ xs: 'none', sm: 'block' }}
+          height={0}
+          width={0}
+          borderLeft={'5px solid transparent'}
+          borderRight={'5px solid transparent'}
+          borderBottom={'5px solid black'}
+          alignItems={'center'}
+          marginLeft={'50%'}
+          marginRight={'50%'}
+        />
 
-          <Box borderColor={'#000000'} borderTop={5}>
-            <NotificationsMenuItems notifications={notifications} />
-          </Box>
-        </Menu>
-      )}
+        <Box borderColor={'#000000'} borderTop={5}>
+          {isFetching && (
+            <Box width={400}>
+              {[...Array(2)].map((x, i) => (
+                <MenuItem key={i}>
+                  <ListItemAvatar>
+                    <Skeleton>
+                      <Avatar variant="square" />
+                    </Skeleton>
+                  </ListItemAvatar>
+                  <ListItemText>
+                    <Typography variant="h1">
+                      <Skeleton animation="wave" />
+                    </Typography>
+                  </ListItemText>
+                </MenuItem>
+              ))}
+            </Box>
+          )}
+          {notifications && notifications.length >= 1 && <NotificationsMenuItems notifications={notifications} />}
+          <MenuItem component={routerLink} to={'/notifications'}>
+            <Box textAlign="center" width={150}>
+              <ListItemText> show all notifications</ListItemText>
+            </Box>
+          </MenuItem>
+        </Box>
+      </Menu>
     </Box>
   );
 }
