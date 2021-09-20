@@ -2,7 +2,9 @@ const asyncHandler = require('express-async-handler');
 const Profile = require('../models/Profile');
 const Request = require('../models/Request');
 const Review = require('../models/Review');
+const User = require('../models/User');
 const mongoose = require('mongoose');
+const { sendNotification } = require('../services/notifications');
 
 exports.createReview = asyncHandler(async (req, res, next) => {
   const { rating, text, profileReviewedId, requestId } = req.body;
@@ -23,6 +25,23 @@ exports.createReview = asyncHandler(async (req, res, next) => {
   const review = await Review.create({ rating, text, profileReviewedId, reviewerId, requestId });
   await Profile.updateOne({ _id: profileReviewedId }, { $push: { reviewsReceived: review } });
 
+  const reviewerProfile = await Profile.findById(reviewerId);
+
+  const requesterFirstNameOrSomeone =
+    reviewerProfile && reviewerProfile.firstName ? reviewerProfile.firstName : 'someone';
+
+  const notificationTitle = `${requesterFirstNameOrSomeone} gave you a review of ${rating} stars`;
+
+  const currentUser = await User.findById(reviewerId);
+  await sendNotification(req.io, {
+    userId: profileReviewedId,
+    title: notificationTitle,
+    context: {
+      profilePhotoURL: currentUser.profilePhoto.url,
+      rating: rating,
+    },
+    notificationType: 'review',
+  });
   return res.status(201).json(review);
 });
 
