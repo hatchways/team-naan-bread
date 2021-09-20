@@ -12,7 +12,6 @@ export default function Profile(): JSX.Element {
 
   const history = useHistory();
 
-  if (loggedInUser === undefined) return <CircularProgress />;
   if (!loggedInUser) {
     history.push('/login');
     // loading for a split seconds until history.push works
