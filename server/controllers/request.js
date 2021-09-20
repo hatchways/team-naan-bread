@@ -1,7 +1,7 @@
 const Request = require('../models/Request');
 const User = require('../models/User');
 const Profile = require('../models/Profile');
-const Notification = require('../models/Notification');
+const { sendNotification } = require('../services/notifications');
 const asyncHandler = require('express-async-handler');
 
 // @route GET /request
@@ -61,16 +61,15 @@ exports.postRequest = asyncHandler(async (req, res, next) => {
   const requesterFirstNameOrSomeone =
     updatedUserProfile && updatedUserProfile.firstName ? updatedUserProfile.firstName : 'someone';
 
-  const newNotification = await Notification.create({
+  const notificationTitle = `${requesterFirstNameOrSomeone} has requested your service for ${requestDurationInHours} hours`;
+  await sendNotification(req.io, {
     userId: sitterId,
     notificationType: 'dog sitting',
-    title: `${requesterFirstNameOrSomeone} has requested your service for ${requestDurationInHours} hours`,
+    title: notificationTitle,
     context: {
       profilePhotoURL: currentUser.profilePhoto.url,
     },
   });
-
-  req.io.to(sitterId).emit('new-notification', newNotification);
 
   res.send(request);
 });
