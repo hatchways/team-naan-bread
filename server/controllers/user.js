@@ -21,39 +21,6 @@ exports.searchUsers = asyncHandler(async (req, res, next) => {
     throw new Error("No users found in search");
   }
 
-  res.status(200).json({ users: users });
+  res.status(200).json({ users });
 });
 
-// const deletePhoto = async (user) => {
-//   await cloudinary.uploader.destroy(user.profilePhoto.publicId);
-//   user.profilePhoto = null;
-// };
-
-// exports.uploadProfilePhoto = asyncHandler(async (req, res, next) => {
-//   const image = req.file;
-//   const user = await Profile.findById(req.user.id);
-//   if (!user) {
-//     return res.sendStatus(404);
-//   }
-//   if (user.profilePhoto.url) {
-//     await deletePhoto(user);
-//   }
-//   user.profilePhoto = {
-//     url: image.path,
-//     publicId: image.filename,
-//   };
-//   user.save();
-
-//   res.sendStatus(200);
-// });
-// exports.deleteProfilePhoto = asyncHandler(async (req, res, next) => {
-//   const user = await Profile.findById(req.user.id);
-//   if (!user) {
-//     return res.sendStatus(404);
-//   }
-
-//   await deletePhoto(user);
-//   user.save();
-
-//   res.sendStatus(200);
-// });

@@ -119,15 +119,26 @@ exports.findAllProfiles = asyncHandler(async (req, res, next) => {
 })
 
 const deletePhoto = async (user) => {
-  await cloudinary.uploader.destroy(user.profilePhoto.publicId);
-  user.profilePhoto = null;
+  if (user) {
+    await cloudinary.uploader.destroy(user.profilePhoto.publicId);
+    user.profilePhoto = null;
+  } else {
+    res.status(404);
+    throw new Error("No user found");
+  }
 };
 
 exports.uploadProfilePhoto = asyncHandler(async (req, res, next) => {
   const image = req.file;
-  const user = await Profile.findById(req.user.id);
+  if (req.user.id) {
+    const user = await Profile.findById(req.user.id);
+  } else {
+    res.sendStatus(404);
+    throw new Error("No user id provided");
+  }
   if (!user) {
-    return res.sendStatus(404);
+    res.sendStatus(404);
+    throw new Error("No user found");
   }
   if (user.profilePhoto.url) {
     await deletePhoto(user);
