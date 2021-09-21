@@ -43,11 +43,9 @@ const profileSchema = new mongoose.Schema(
     ],
     customerId: {
       type: String,
-      default: "",
     },
     serviceId: {
       type: String,
-      default: "",
     },
     hourlyRate: {
       type: Number,

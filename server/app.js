@@ -15,6 +15,7 @@ const profileRouter = require('./routes/profile');
 const requestRouter = require('./routes/request');
 const setHeaders = require('./middleware/setHeaders');
 const notificationRouter = require('./routes/notification');
+const paymentRouter = require('./routes/payment');
 
 const { json, urlencoded } = express;
 
@@ -51,6 +52,7 @@ app.use('/users', userRouter);
 app.use('/profile', profileRouter);
 app.use('/request', requestRouter);
 app.use('/notification', notificationRouter);
+app.use('/payment', paymentRouter);
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '/client/build')));

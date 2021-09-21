@@ -1,9 +1,7 @@
 require("dotenv").config();
 const Request = require('../models/Request');
-const User = require('../models/User');
 const Profile = require('../models/Profile');
 const asyncHandler = require('express-async-handler');
-const stripe = require('stripe')(process.env.STRIPE);
 
 // @route GET /request
 // @desc get requests related to a logged in user or sitter
