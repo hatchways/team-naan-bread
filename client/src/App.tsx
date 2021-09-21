@@ -34,12 +34,16 @@ function App(): JSX.Element {
                   <Route exact path="/dashboard">
                     <Dashboard />
                   </Route>
+<<<<<<< HEAD
+                  {/* <Route path="*">
+=======
                   <Route exact path="/notifications">
                     <AllNotifications />
                   </Route>
                   <Route path="*">
+>>>>>>> 40f8899b37730d677da022dde3a6a4526463740f
                     <Redirect to="/login" />
-                  </Route>
+                  </Route> */}
                   <Route exact path="/my-sitters" component={MySitters} />
                 </Switch>
               </SocketProvider>
