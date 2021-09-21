@@ -1,8 +1,9 @@
 const express = require('express');
-const { paySitter } = require('../controllers/payment');
 const router = express.Router();
-const { payPetSitter } = require('../controllers/payment');
+const { payPetSitter, getStripePk } = require('../controllers/payment');
+const protect = require('../middleware/auth');
 
 router.route('/:id/pay').post(payPetSitter);
+router.route('/getStripePk/:id').get(protect, getStripePk);
 
 module.exports = router;
