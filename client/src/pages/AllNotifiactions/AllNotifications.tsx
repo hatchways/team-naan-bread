@@ -15,6 +15,7 @@ import { getAllNotifications, markBatchAsRead } from '../../helpers/APICalls/Not
 import { Notification } from '../../interface/Notification';
 import NotificationsMenuItems from '../../components/NavBar/NotificationsMenu/NotificationsMenuItems/NotificationsMenuItems';
 import { Skeleton } from '@material-ui/lab';
+import { useSocket } from '../../context/useSocketContext';
 
 export default function AllNotifications(): JSX.Element {
   const { loggedInUser } = useAuth();
@@ -22,6 +23,8 @@ export default function AllNotifications(): JSX.Element {
   const [notifications, setNotifications] = useState<Notification[]>();
   const [lastId, setLastId] = useState<string>();
   const [isAllShown, setIsAllShown] = useState<boolean>(false);
+  const { socket } = useSocket();
+
   useEffect(() => {
     async function fetchNotifications() {
       if (loggedInUser) {
@@ -32,9 +35,12 @@ export default function AllNotifications(): JSX.Element {
         }
       }
     }
-
     fetchNotifications();
-  }, [loggedInUser]);
+
+    socket?.on('new-notification', (newNotification: Notification) => {
+      setNotifications((oldNotificationsList) => [newNotification, ...(oldNotificationsList as Notification[])]);
+    });
+  }, [socket, loggedInUser]);
 
   useEffect(() => {
     async function markAllNotificationsAsRead() {
