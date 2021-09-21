@@ -86,7 +86,6 @@ exports.getStripePk = asyncHandler(async (req, res) => {
   const user = await Profile.findById(req.params.id);
   try {
     if (user) {
-      console.log(process.env.STRIPEPK)
       res.send(process.env.STRIPEPK);
     }
   } catch (err) {
