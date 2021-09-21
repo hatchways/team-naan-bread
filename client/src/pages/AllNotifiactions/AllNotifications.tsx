@@ -1,5 +1,15 @@
 import { useAuth } from '../../context/useAuthContext';
-import { Typography, Paper, ListItemText, Box, MenuList, ListItemAvatar, Avatar, MenuItem, Button } from '@material-ui/core';
+import {
+  Typography,
+  Paper,
+  ListItemText,
+  Box,
+  MenuList,
+  ListItemAvatar,
+  Avatar,
+  MenuItem,
+  Button,
+} from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { getAllNotifications, markBatchAsRead } from '../../helpers/APICalls/Notification';
 import { Notification } from '../../interface/Notification';
@@ -24,7 +34,9 @@ export default function AllNotifications(): JSX.Element {
     }
 
     fetchNotifications();
+  }, [loggedInUser]);
 
+  useEffect(() => {
     async function markAllNotificationsAsRead() {
       const notificationIds: string[] = [];
       notifications?.forEach((notification) => {
@@ -37,7 +49,7 @@ export default function AllNotifications(): JSX.Element {
       }
     }
     markAllNotificationsAsRead();
-  }, [notifications, loggedInUser]);
+  }, [notifications]);
 
   return (
     <Box marginBottom={'11%'} marginTop={'10%'} alignItems={'center'} marginLeft={'10%'} marginRight={'10%'}>

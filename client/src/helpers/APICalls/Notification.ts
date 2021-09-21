@@ -11,7 +11,7 @@ const postFetchOptions: FetchOptions = {
 };
 
 const getAllNotifications = async (lastId?: string): Promise<Notification[]> => {
-  const res = await (`/notification/all?id=${lastId}`, fetchOptions)
+  const res = await fetch(`/notification/all?id=${lastId}`, fetchOptions);
   return res.json();
 };
 
