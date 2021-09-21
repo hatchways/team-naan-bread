@@ -45,6 +45,15 @@ const profileSchema = new mongoose.Schema(
         ref: 'review',
       },
     ],
+    customerId: {
+      type: String,
+    },
+    serviceId: {
+      type: String,
+    },
+    hourlyRate: {
+      type: Number,
+    },
   },
   {
     timestamps: true,
