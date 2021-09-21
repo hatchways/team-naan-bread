@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
 
 const profileSchema = new mongoose.Schema(
   {
@@ -10,7 +9,6 @@ const profileSchema = new mongoose.Schema(
       type: String,
     },
     gender: {
-      type: String,
       type: String,
     },
     birthDate: {
@@ -50,6 +48,12 @@ const profileSchema = new mongoose.Schema(
     hourlyRate: {
       type: Number,
     },
+    reviewsReceived: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'review',
+      },
+    ],
   },
   {
     timestamps: true,

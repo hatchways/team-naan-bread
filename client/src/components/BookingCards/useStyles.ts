@@ -26,7 +26,6 @@ const useStyles = makeStyles((theme) => ({
   cardBookingHeaderTitle: {
     textTransform: "uppercase",
     fontWeight: "bold",
-    fontSize: "0.8em"
   },
   cardsBookingHeaderTitle: {
     fontSize: "1em",
@@ -77,6 +76,11 @@ const useStyles = makeStyles((theme) => ({
         display: "block"
       }
     }
+  },
+  dropDateTitle: {
+    color: "rgba(0,0,0,0.4)",
+    textTransform: "uppercase",
+    fontSize: "0.8em"
   }
 }));
 
