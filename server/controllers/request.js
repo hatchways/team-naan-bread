@@ -70,6 +70,8 @@ exports.postRequest = asyncHandler(async (req, res, next) => {
     },
   });
 
+  req.io.to(sitterId).emit('new-notification', newNotification);
+
   res.send(request);
 });
 

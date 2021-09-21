@@ -1,9 +1,10 @@
 import { useAuth } from '../../context/useAuthContext';
-import { Typography, Paper, ListItemText, Box, MenuList, Button } from '@material-ui/core';
-import React, { useEffect, useLayoutEffect, useState } from 'react';
+import { Typography, Paper, ListItemText, Box, MenuList, ListItemAvatar, Avatar, MenuItem, Button } from '@material-ui/core';
+import React, { useEffect, useState } from 'react';
 import { getAllNotifications, markBatchAsRead } from '../../helpers/APICalls/Notification';
 import { Notification } from '../../interface/Notification';
 import NotificationsMenuItems from '../../components/NavBar/NotificationsMenu/NotificationsMenuItems/NotificationsMenuItems';
+import { Skeleton } from '@material-ui/lab';
 
 export default function AllNotifications(): JSX.Element {
   const { loggedInUser } = useAuth();
@@ -23,9 +24,7 @@ export default function AllNotifications(): JSX.Element {
     }
 
     fetchNotifications();
-  }, [loggedInUser]);
 
-  useLayoutEffect(() => {
     async function markAllNotificationsAsRead() {
       const notificationIds: string[] = [];
       notifications?.forEach((notification) => {
@@ -37,9 +36,8 @@ export default function AllNotifications(): JSX.Element {
         await markBatchAsRead(notificationIds);
       }
     }
-
     markAllNotificationsAsRead();
-  }, [notifications]);
+  }, [notifications, loggedInUser]);
 
   return (
     <Box marginBottom={'11%'} marginTop={'10%'} alignItems={'center'} marginLeft={'10%'} marginRight={'10%'}>
@@ -48,13 +46,32 @@ export default function AllNotifications(): JSX.Element {
           <ListItemText
             primary={
               <Typography>
-                <Box marginLeft={'30%'} marginRight={'30%'} fontSize={12} fontWeight={600} color="#000000">
+                <Box textAlign="center" fontSize={12} fontWeight={600} color="#000000">
                   all your notifications
                 </Box>
               </Typography>
             }
           />
-          {notifications && <NotificationsMenuItems notifications={notifications} />}
+          {notifications ? (
+            <NotificationsMenuItems notifications={notifications} />
+          ) : (
+            <Box>
+              {[...Array(4)].map((x, i) => (
+                <MenuItem key={i}>
+                  <ListItemAvatar>
+                    <Skeleton>
+                      <Avatar variant="square" />
+                    </Skeleton>
+                  </ListItemAvatar>
+                  <ListItemText>
+                    <Typography variant="h1">
+                      <Skeleton animation="wave" />
+                    </Typography>
+                  </ListItemText>
+                </MenuItem>
+              ))}
+            </Box>
+          )}
         </MenuList>
         <Box marginLeft={'30%'} textAlign="center" marginRight={'30%'} fontSize={12} fontWeight={600} color="#000000">
           {isAllShown ? (

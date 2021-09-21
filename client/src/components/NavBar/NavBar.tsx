@@ -3,8 +3,21 @@ import { AppBar, Toolbar, Button, IconButton, Link, Box } from '@material-ui/cor
 import AvatarDisplay from '../AvatarDisplay/AvatarDisplay';
 import { Link as routerLink } from 'react-router-dom';
 import NotificationsMenu from './NotificationsMenu/NotificationsMenu';
+import { useSocket } from '../../context/useSocketContext';
+import { useEffect } from 'react';
 export default function NavBar(): JSX.Element {
   const { loggedInUser } = useAuth();
+  const { initSocket, disconnectSocket } = useSocket();
+
+  useEffect(() => {
+    initSocket();
+  }, [initSocket]);
+
+  useEffect(() => {
+    return () => {
+      disconnectSocket();
+    };
+  }, [disconnectSocket]);
 
   return (
     <Box flexGrow={1}>
@@ -30,7 +43,13 @@ export default function NavBar(): JSX.Element {
               </Box>
 
               <Box padding={1} marginLeft={1}>
-                <IconButton component={routerLink} to="/settings/profile">
+                <Button data-tour="step-1" component={routerLink} to="/my-sitters">
+                  My Sitters
+                </Button>
+              </Box>
+
+              <Box padding={1} marginLeft={1}>
+                <IconButton component={routerLink} to="/settings/picture">
                   <AvatarDisplay loggedIn user={loggedInUser} />
                 </IconButton>
               </Box>

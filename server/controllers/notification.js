@@ -16,6 +16,8 @@ exports.createNotification = asyncHandler(async (req, res, next) => {
     description: description,
   });
   res.status(201).json(newNotification);
+
+  req.io.to(userReceivedId).emit('new-notification', newNotification);
 });
 exports.markNotificationAsRead = asyncHandler(async (req, res, next) => {
   const { id } = req.params;
