@@ -1,6 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const Notification = require("../models/Notification");
 const User = require("../models/User");
+const mongoose = require("mongoose");
 
 exports.createNotification = asyncHandler(async (req, res, next) => {
   const { userReceivedId, notificationType, title, description } = req.body;
@@ -38,11 +39,28 @@ exports.markNotificationAsRead = asyncHandler(async (req, res, next) => {
   res.sendStatus(200);
 });
 exports.getAllNotifications = asyncHandler(async (req, res, next) => {
+  const lastId = req.query.id;
   const loggedInUserId = req.user.id;
-  const notifications = await Notification.find({
-    userId: loggedInUserId,
-  }).sort("-createdAt");
-  res.status(200).json(notifications);
+  let notifications;
+  if (lastId === "undefined") {
+    notifications = await Notification.find({
+      userId: loggedInUserId,
+    })
+      .sort("-createdAt")
+      .limit(8);
+
+    return res.status(200).json(notifications);
+  } else {
+    notifications = await Notification.find({
+      userId: loggedInUserId,
+
+      _id: { $lt: mongoose.Types.ObjectId(lastId) },
+    })
+      .sort("-createdAt")
+      .limit(8);
+
+    return res.status(200).json(notifications);
+  }
 });
 exports.getUnreadNotifications = asyncHandler(async (req, res, next) => {
   const loggedInUserId = req.user.id;

@@ -123,9 +123,9 @@ export default function NotificationsMenu(): JSX.Element {
           )}
           {notifications && notifications.length >= 1 && <NotificationsMenuItems notifications={notifications} />}
           <MenuItem component={routerLink} to={'/notifications'}>
-            <Box textAlign="center" width={150}>
-              <ListItemText> show all notifications</ListItemText>
-            </Box>
+            <ListItemText>
+              <Box textAlign="center">show all notifications</Box>
+            </ListItemText>
           </MenuItem>
         </Box>
       </Menu>

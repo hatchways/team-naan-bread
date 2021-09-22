@@ -10,12 +10,12 @@ const postFetchOptions: FetchOptions = {
   credentials: 'include',
 };
 
-const getAllNotifications = async (): Promise<[Notification]> => {
-  const res = await fetch(`/notification/all`, fetchOptions);
+const getAllNotifications = async (lastId?: string): Promise<Notification[]> => {
+  const res = await fetch(`/notification/all?id=${lastId}`, fetchOptions);
   return res.json();
 };
 
-const getAllUnreadNotifications = async (): Promise<[Notification]> => {
+const getAllUnreadNotifications = async (): Promise<Notification[]> => {
   const res = await fetch(`/notification/all-unread`, fetchOptions);
   return res.json();
 };
