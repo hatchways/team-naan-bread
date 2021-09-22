@@ -13,10 +13,8 @@ import { SnackBarProvider } from './context/useSnackbarContext';
 import { ProtectedRoute } from './context/protectedRoute';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
-import getStripePK from './helpers/APICalls/getStripePk';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
-import { StripePK } from './interface/Stripe';
 
 import { TourProvider } from '@reactour/tour';
 import { steps } from './helpers/Reactour/reactorSteps';
@@ -25,19 +23,11 @@ import './App.css';
 import NavBar from './components/NavBar/NavBar';
 import AllNotifications from './pages/AllNotifiactions/AllNotifications';
 
+const stripePromise = loadStripe(
+  'pk_test_51JYBH4HXzYVsCZt0Mls8k6b8UIXWlzgUTCinfBuNzmrqYLlUeUQuV4gcj7sePE1cDlUP2sRkFWJmAMgqovjZOEMd006aTSQqIg',
+);
+
 function App(): JSX.Element {
-  const [stripePK, setStripePK] = useState('');
-
-  const stripePromise = loadStripe(stripePK);
-
-  useEffect(() => {
-    const fetchStripePK = async () => {
-      const stripePK: StripePK = await getStripePK();
-      setStripePK(stripePK.stripePK);
-    };
-    fetchStripePK();
-  }, []);
-
   return (
     <MuiThemeProvider theme={theme}>
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
