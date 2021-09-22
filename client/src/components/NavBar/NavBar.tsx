@@ -3,13 +3,10 @@ import { AppBar, Toolbar, Button, IconButton, Link, Box } from '@material-ui/cor
 import AvatarDisplay from '../AvatarDisplay/AvatarDisplay';
 import { Link as routerLink } from 'react-router-dom';
 import NotificationsMenu from './NotificationsMenu/NotificationsMenu';
-<<<<<<< HEAD
 import { useSocket } from '../../context/useSocketContext';
 import { useEffect } from 'react';
-=======
 import AuthHeader from '../../components/AuthHeader/AuthHeader';
 
->>>>>>> IN-Profile-Pages-35
 export default function NavBar(): JSX.Element {
   const { loggedInUser } = useAuth();
   const { initSocket, disconnectSocket } = useSocket();
@@ -58,23 +55,6 @@ export default function NavBar(): JSX.Element {
                   </Link>
                 </Box>
 
-<<<<<<< HEAD
-              <Box padding={1} marginLeft={1}>
-                <Button data-tour="step-1" component={routerLink} to="/my-sitters">
-                  My Sitters
-                </Button>
-              </Box>
-
-              <Box padding={1} marginLeft={1}>
-                <IconButton component={routerLink} to="/settings/picture">
-                  <AvatarDisplay loggedIn user={loggedInUser} />
-                </IconButton>
-              </Box>
-            </Toolbar>
-          </Box>
-        </AppBar>
-      )}
-=======
                 <Box padding={1} marginLeft={1}>
                   <IconButton component={routerLink} to="/settings">
                     <AvatarDisplay loggedIn user={loggedInUser} />
@@ -90,7 +70,6 @@ export default function NavBar(): JSX.Element {
           </Toolbar>
         </Box>
       </AppBar>
->>>>>>> IN-Profile-Pages-35
     </Box>
   );
 }
