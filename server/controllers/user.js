@@ -1,12 +1,10 @@
 const User = require("../models/User");
-const Profile = require('../models/Profile');
 const asyncHandler = require("express-async-handler");
-const { cloudinary } = require("../utils/cloudinary");
 
 // @route POST /users
 // @desc Search for users
 // @access Private
-exports.searchUsers = asyncHandler(async (req, res, next) => {
+exports.searchUsers = asyncHandler(async (req, res) => {
   const searchString = req.query.search;
 
   let users;
