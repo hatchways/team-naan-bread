@@ -12,11 +12,13 @@ import { useAuth } from '../../context/useAuthContext';
 import { useSnackBar } from '../../context/useSnackbarContext';
 import { AuthInterface } from '../../interface/AuthInterface';
 import logo from '../../Images/logo.png';
+import { useTour } from '@reactour/tour';
 
 export default function Register(): JSX.Element {
   const classes = useStyles();
   const { updateLoginContext } = useAuth();
   const { updateSnackBarMessage } = useSnackBar();
+  const { setIsOpen } = useTour();
 
   const handleSubmit = (
     { username, email, password }: AuthInterface,
@@ -30,6 +32,7 @@ export default function Register(): JSX.Element {
           updateSnackBarMessage(data.error.message);
         } else if (data.success) {
           updateLoginContext(data.success);
+          setIsOpen(true);
         } else {
           // should not get here from backend but this catch is for an unknown issue
           console.error({ data });
