@@ -55,6 +55,37 @@ export default function ProfilePhotoForm({ loggedInUser }: Props): JSX.Element {
   };
 
   return (
+<<<<<<< HEAD:client/src/pages/Profile/ProfilePhoto/ProfilePhoto.tsx
+    <Box flexDirection="column" display="flex" alignItems="center" justifyContent="center">
+      <Avatar src={photo} className={classes.photo} />
+      <Box mb={10} display="flex" alignItems="center" justifyContent="center">
+        <Typography align="center" variant="overline">
+          be sure to use a photo that clearly shows your face
+        </Typography>
+      </Box>
+
+      <Button
+        disabled={loading}
+        size="large"
+        variant="outlined"
+        color="primary"
+        endIcon={loading && <CircularProgress size={18} color="primary" />}
+      >
+        <div {...getRootProps({ className: 'dropzone' })}>
+          <input {...getInputProps()} />
+          <p>Upload a file from your device</p>
+        </div>
+      </Button>
+      <Box m={3}>
+        <Button
+          disabled={loadingDelete}
+          onClick={deletePhoto}
+          startIcon={loadingDelete ? <CircularProgress size={12} /> : <DeleteIcon />}
+          className={classes.delete_button}
+        >
+          delete photo
+        </Button>
+=======
     <Box className={classes.root}>
       <Box flexDirection="column" display="flex" alignItems="center" justifyContent="center">
         <Avatar src={photo} className={classes.photo} />
@@ -86,6 +117,7 @@ export default function ProfilePhotoForm({ loggedInUser }: Props): JSX.Element {
             delete photo
           </Button>
         </Box>
+>>>>>>> IN-Profile-Pages-35:client/src/components/ProfilePhoto/ProfilePhotoForm/ProfilePhotoForm.tsx
       </Box>
     </Box>
   );

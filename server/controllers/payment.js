@@ -24,7 +24,7 @@ exports.payPetSitter = asyncHandler(async (req, res) => {
       const userProfile = await Profile.findById(userId);
       if (userProfile.customerId) {
         res.status(400);
-        throw new Error('User has already a customer Id');
+        throw new Error("You can't create a new customer Id for an existing customer");
       } else if (email !== userProfile.email) {
         res.status(400);
         throw new Error('Email invalid');

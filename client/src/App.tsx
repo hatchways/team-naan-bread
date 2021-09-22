@@ -10,12 +10,16 @@ import Settings from './pages/Settings/Settings';
 import { AuthProvider } from './context/useAuthContext';
 import { SocketProvider } from './context/useSocketContext';
 import { SnackBarProvider } from './context/useSnackbarContext';
+import { ProtectedRoute } from './context/protectedRoute';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import getStripePK from './helpers/APICalls/getStripePk';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import { StripePK } from './interface/Stripe';
+
+import { TourProvider } from '@reactour/tour';
+import { steps } from './helpers/Reactour/reactorSteps';
 
 import './App.css';
 import NavBar from './components/NavBar/NavBar';
