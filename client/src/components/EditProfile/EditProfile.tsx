@@ -11,7 +11,7 @@ import EditProfileForm from './EditProfileForm/EditProfileForm';
 import getProfile from '../../helpers/APICalls/getProfile';
 import updateProfile from '../../helpers/APICalls/updateProfile';
 import { ProfileApiData } from '../../interface/ProfileApiData';
-import { useSnackBar } from '../../../context/useSnackbarContext';
+import { useSnackBar } from '../../context/useSnackbarContext';
 
 export default function Profile(): JSX.Element {
   const classes = useStyles();
