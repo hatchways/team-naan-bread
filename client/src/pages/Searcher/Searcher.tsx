@@ -98,7 +98,7 @@ export default function Searcher(): JSX.Element {
           })}
         </Box>
       );
-    } else return <div></div>;
+    } else return null;
   }
 
   if (loggedInUser === undefined) return <CircularProgress />;
