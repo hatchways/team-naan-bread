@@ -34,7 +34,8 @@ const authSocket = async (socket, next) => {
   console.log(`token ${JSON.stringify(token)}`);
   const { username } = auth;
   if (!token) {
-    return res.status(401).send('No token, authorization denied');
+    return null
+    // return res.status(401).send('No token, authorization denied');
   }
 
   try {
@@ -45,7 +46,7 @@ const authSocket = async (socket, next) => {
     console.log(`user ${user}`);
     next();
   } catch (err) {
-    res.status(401).send('Token is not valid');
+    // res.status(401).send('Token is not valid');
     next();
   }
   return next();

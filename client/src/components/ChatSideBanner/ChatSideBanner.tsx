@@ -1,4 +1,4 @@
-import { ChangeEvent, useState, useEffect } from 'react';
+import { ChangeEvent, useState } from 'react';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -9,8 +9,6 @@ import Search from '../Search/Search';
 import AuthMenu from '../AuthMenu/AuthMenu';
 import { Link as RouterLink } from 'react-router-dom';
 import { Link } from '@material-ui/core';
-import getProfile from '../../helpers/APICalls/getProfile';
-import { ProfileApiData } from '../../interface/ProfileApiData';
 
 interface Props {
   loggedInUser: User;
@@ -21,15 +19,6 @@ const ChatSideBanner = ({ loggedInUser }: Props): JSX.Element => {
   const [search, setSearch] = useState<string>('test');
   const [newChatUser, setNewChatUser] = useState<User | null>(null);
   const classes = useStyles();
-  const [photo, setPhoto] = useState<string | undefined>('');
-
-  useEffect(() => {
-    if (loggedInUser) {
-      getProfile(loggedInUser.id).then((data: ProfileApiData) => {
-        setPhoto(data.profilePhoto?.url);
-      });
-    }
-  }, [loggedInUser]);
 
   // React.FormEvent<FormControl & FormControlProps>)
   const handleChange = (e: ChangeEvent<HTMLInputElement>, newInputValue: string) => {
@@ -41,9 +30,9 @@ const ChatSideBanner = ({ loggedInUser }: Props): JSX.Element => {
 
   return (
     <Grid className={classes.chatSideBanner}>
-      <Box className={classes.userPanel}>
+      <Box data-tour="step-3" className={classes.userPanel}>
         <Link component={RouterLink} to="settings/profile">
-          <AvatarDisplay loggedIn photo={photo} />
+          <AvatarDisplay loggedIn user={loggedInUser} />
         </Link>
         <Typography className={classes.userText} variant="h5">
           {loggedInUser.username}

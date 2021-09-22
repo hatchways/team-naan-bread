@@ -7,8 +7,6 @@ import { useSocket } from '../../context/useSocketContext';
 import { useHistory } from 'react-router-dom';
 import ChatSideBanner from '../../components/ChatSideBanner/ChatSideBanner';
 import { useEffect, useLayoutEffect } from 'react';
-import { Link } from 'react-router-dom';
-import Button from '@material-ui/core/Button';
 
 export default function Dashboard(): JSX.Element {
   const classes = useStyles();
@@ -40,10 +38,6 @@ export default function Dashboard(): JSX.Element {
       <CssBaseline />
       {/* <Header /> */}
       <Grid item className={classes.drawerWrapper}>
-        <Link to={'/settings/editProfile'}>
-          <Button variant="contained"> Check Profile</Button>
-        </Link>
-        <Link to="/my-sitters">My Sitters</Link>
         <ChatSideBanner loggedInUser={loggedInUser} />
       </Grid>
     </Grid>

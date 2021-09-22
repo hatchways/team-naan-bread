@@ -6,7 +6,6 @@ import Grid from '@material-ui/core/Grid';
 import useStyles from './useStyles';
 import ProfileSearch from '../../components/ProfileSearch/ProfileSearch';
 import ProfileListing from '../../components/ProfileListing/ProfileListing';
-import Header from '../../components/Header/Header';
 import Typography from '@material-ui/core/Typography';
 import { searchProfiles } from '../../helpers/APICalls/searchProfiles';
 import { SearchProfilesApiData } from '../../interface/ProfileApiData';
@@ -106,8 +105,6 @@ export default function Searcher(): JSX.Element {
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
-      <Header />
-
       <Grid item xs={12} sm={12} md={12} elevation={6} component={Paper} square>
         <Box className={classes.authWrapper}>
           <Grid item xs={12} sm={6} md={6} elevation={6} component={Paper} className={classes.formCard}>
