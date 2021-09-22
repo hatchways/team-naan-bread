@@ -22,7 +22,7 @@ function SettingsMenu(props: Props): JSX.Element {
           <Link to="">Availability</Link>
         </MenuItem>
         <MenuItem>
-          <Link to="">Payment</Link>
+          <Link to={`${props.url}/payment`}>Payment</Link>
         </MenuItem>
         <MenuItem>
           <Link to="">Security</Link>

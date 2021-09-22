@@ -82,14 +82,11 @@ exports.payPetSitter = asyncHandler(async (req, res) => {
 
 });
 
-exports.getStripePk = asyncHandler(async (req, res) => {
-  const user = await Profile.findById(req.params.id);
+exports.getStripePK = (req, res) => {
   try {
-    if (user) {
-      res.send(process.env.STRIPEPK);
-    }
+    res.send(process.env.STRIPEPK);
   } catch (err) {
     res.status(400);
-    throw new Error(err, "Error. Invalid user");
+    throw new Error(err, "Error. Not authorized");
   }
-});
+};
