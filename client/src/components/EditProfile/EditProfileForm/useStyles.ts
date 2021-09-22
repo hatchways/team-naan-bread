@@ -1,9 +1,14 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+  },
   form: {
     width: '90%',
-    marginTop: theme.spacing(1),
+    margin: theme.spacing(1),
   },
   label: {
     fontSize: 19,

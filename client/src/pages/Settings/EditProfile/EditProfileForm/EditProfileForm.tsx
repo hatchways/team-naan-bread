@@ -8,73 +8,26 @@ import TextField from '@material-ui/core/TextField';
 import { CircularProgress } from '@material-ui/core';
 import MenuItem from '@material-ui/core/MenuItem';
 import MuiPhoneNumber from 'material-ui-phone-number';
+import { ProfileApiData } from '../../../../interface/ProfileApiData';
+import { Skeleton } from '@material-ui/lab';
 
 interface Props {
-  handleSubmit: (
-    {
-      _id,
-      email,
-      firstName,
-      lastName,
-      gender,
-      birthDate,
-      phoneNumber,
-      whereYouLive,
-      describeYourself,
-      createdAt,
-      updatedAt,
-      __v,
-    }: {
-      _id: string;
-      email: string;
-      firstName: string;
-      lastName: string;
-      gender: string;
-      birthDate: string;
-      phoneNumber: string;
-      whereYouLive: string;
-      describeYourself: string;
-      createdAt: string;
-      updatedAt: string;
-      __v: string;
-    },
-    {
-      setStatus,
-      setSubmitting,
-    }: FormikHelpers<{
-      _id: string;
-      email: string;
-      firstName: string;
-      lastName: string;
-      gender: string;
-      birthDate: string;
-      phoneNumber: string;
-      whereYouLive: string;
-      describeYourself: string;
-      createdAt: string;
-      updatedAt: string;
-      __v: string;
-    }>,
-  ) => void;
-  userProfile: {
-    _id: string;
-    email: string;
-    firstName: string;
-    lastName: string;
-    gender: string;
-    birthDate: string;
-    phoneNumber: string;
-    whereYouLive: string;
-    describeYourself: string;
-    createdAt: string;
-    updatedAt: string;
-    __v: string;
-  };
+  handleSubmit: ({}: ProfileApiData, { setStatus, setSubmitting }: FormikHelpers<ProfileApiData>) => void;
+  userProfile: ProfileApiData;
 }
 
 export default function EditProfileForm({ userProfile, handleSubmit }: Props): JSX.Element {
   const classes = useStyles();
-  if (userProfile._id === '') return <>Loading</>;
+  if (!userProfile._id)
+    return (
+      <Box>
+        {[...Array(4)].map((x, i) => (
+          <Typography key={i} variant="h2">
+            <Skeleton />
+          </Typography>
+        ))}
+      </Box>
+    );
   return (
     <Formik
       initialValues={{

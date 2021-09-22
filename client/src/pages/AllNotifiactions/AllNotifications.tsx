@@ -1,14 +1,15 @@
 import { useAuth } from '../../context/useAuthContext';
-import { Typography, Paper, ListItemText, Box, MenuList } from '@material-ui/core';
+import { Typography, Paper, ListItemText, Box, MenuList, ListItemAvatar, Avatar, MenuItem } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { getAllNotifications, markBatchAsRead } from '../../helpers/APICalls/Notification';
 import { Notification } from '../../interface/Notification';
 import NotificationsMenuItems from '../../components/NavBar/NotificationsMenu/NotificationsMenuItems/NotificationsMenuItems';
+import { Skeleton } from '@material-ui/lab';
 
 export default function AllNotifications(): JSX.Element {
   const { loggedInUser } = useAuth();
 
-  const [notifications, setNotifications] = useState<[Notification]>();
+  const [notifications, setNotifications] = useState<Notification[]>();
   useEffect(() => {
     async function fetchNotifications() {
       if (loggedInUser) {
@@ -39,13 +40,32 @@ export default function AllNotifications(): JSX.Element {
           <ListItemText
             primary={
               <Typography>
-                <Box marginLeft={'30%'} marginRight={'30%'} fontSize={12} fontWeight={600} color="#000000">
+                <Box textAlign="center" fontSize={12} fontWeight={600} color="#000000">
                   all your notifications
                 </Box>
               </Typography>
             }
           />
-          {notifications && <NotificationsMenuItems notifications={notifications} />}
+          {notifications ? (
+            <NotificationsMenuItems notifications={notifications} />
+          ) : (
+            <Box>
+              {[...Array(4)].map((x, i) => (
+                <MenuItem key={i}>
+                  <ListItemAvatar>
+                    <Skeleton>
+                      <Avatar variant="square" />
+                    </Skeleton>
+                  </ListItemAvatar>
+                  <ListItemText>
+                    <Typography variant="h1">
+                      <Skeleton animation="wave" />
+                    </Typography>
+                  </ListItemText>
+                </MenuItem>
+              ))}
+            </Box>
+          )}
         </MenuList>
       </Paper>
     </Box>
