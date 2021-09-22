@@ -26,9 +26,12 @@ export default function Dashboard(): JSX.Element {
     <Grid container component="main" className={`${classes.root} ${classes.dashboard}`}>
       <CssBaseline />
       <Grid item className={classes.drawerWrapper}>
+<<<<<<< HEAD
         <Link data-tour="step-2" to={'/settings/editProfile'}>
           <Button variant="contained"> Check Profile</Button>
         </Link>
+=======
+>>>>>>> IN-Profile-Pages-35
         <ChatSideBanner loggedInUser={loggedInUser} />
       </Grid>
     </Grid>
