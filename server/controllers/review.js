@@ -27,10 +27,10 @@ exports.createReview = asyncHandler(async (req, res, next) => {
 
   const reviewerProfile = await Profile.findById(reviewerId);
 
-  const requesterFirstNameOrSomeone =
-    reviewerProfile && reviewerProfile.firstName ? reviewerProfile.firstName : 'someone';
+  const reviewerFirstNameOrAnonymous =
+    reviewerProfile && reviewerProfile.firstName ? reviewerProfile.firstName : 'Anonymous';
 
-  const notificationTitle = `${requesterFirstNameOrSomeone} gave you a review of ${rating} stars`;
+  const notificationTitle = `${reviewerFirstNameOrAnonymous} gave you a review of ${rating} stars`;
 
   const currentUser = await User.findById(reviewerId);
   await sendNotification(req.io, {

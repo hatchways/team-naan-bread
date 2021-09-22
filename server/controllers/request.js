@@ -58,10 +58,10 @@ exports.postRequest = asyncHandler(async (req, res, next) => {
   const currentUser = await User.findById(userId);
 
   const requestDurationInHours = parseInt((request.end - request.start) / 36e5);
-  const requesterFirstNameOrSomeone =
-    updatedUserProfile && updatedUserProfile.firstName ? updatedUserProfile.firstName : 'someone';
+  const requesterFirstNameOrAnonymous =
+    updatedUserProfile && updatedUserProfile.firstName ? updatedUserProfile.firstName : 'Anonymous';
 
-  const notificationTitle = `${requesterFirstNameOrSomeone} has requested your service for ${requestDurationInHours} hours`;
+  const notificationTitle = `${requesterFirstNameOrAnonymous} has requested your service for ${requestDurationInHours} hours`;
   await sendNotification(req.io, {
     userId: sitterId,
     notificationType: 'dog sitting',
