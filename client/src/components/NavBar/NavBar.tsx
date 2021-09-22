@@ -3,6 +3,8 @@ import { AppBar, Toolbar, Button, IconButton, Link, Box } from '@material-ui/cor
 import AvatarDisplay from '../AvatarDisplay/AvatarDisplay';
 import { Link as routerLink } from 'react-router-dom';
 import NotificationsMenu from './NotificationsMenu/NotificationsMenu';
+import { useSocket } from '../../context/useSocketContext';
+import { useEffect } from 'react';
 import AuthHeader from '../../components/AuthHeader/AuthHeader';
 
 export default function NavBar(): JSX.Element {
