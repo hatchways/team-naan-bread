@@ -7,12 +7,16 @@ import Dashboard from './pages/Dashboard/Dashboard';
 import Profile from './pages/Profile/Profile';
 import Searcher from './pages/Searcher/Searcher';
 import MySitters from './pages/MySitters/MySitters';
+import Settings from './pages/Settings/Settings';
 import { AuthProvider } from './context/useAuthContext';
 import { SocketProvider } from './context/useSocketContext';
 import { SnackBarProvider } from './context/useSnackbarContext';
 import { ProtectedRoute } from './context/protectedRoute';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
+
+import { TourProvider } from '@reactour/tour';
+import { steps } from './helpers/Reactour/reactorSteps';
 
 import './App.css';
 import NavBar from './components/NavBar/NavBar';
@@ -26,7 +30,9 @@ function App(): JSX.Element {
           <SnackBarProvider>
             <AuthProvider>
               <SocketProvider>
-                <NavBar />
+                <Route path="/">
+                  <NavBar />
+                </Route>
                 <Switch>
                   <ProtectedRoute exact path="/search" component={Searcher} />
                   <ProtectedRoute path="/settings" component={Profile} />
@@ -38,6 +44,7 @@ function App(): JSX.Element {
                   <Route path="*">
                     <Redirect to="/login" />
                   </Route>
+                  <Route exact path="/my-sitters" component={MySitters} />
                 </Switch>
               </SocketProvider>
             </AuthProvider>

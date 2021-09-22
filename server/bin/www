@@ -25,34 +25,26 @@ app.set('port', port);
 
 var server = require('../app').server;
 
-const io = require('socket.io')(server);
+const io = require("../app").io
 
 //Middleware to authenticate socket
 const authSocket = async (socket, next) => {
   const auth = socket.handshake.auth;
   const token = socket.handshake.headers.cookie.split('=')[1];
-  console.log(`token ${JSON.stringify(token)}`);
-  const { username } = auth;
   if (!token) {
-    return null
-    // return res.status(401).send('No token, authorization denied');
+    next(new Error('No token, authorization denied'));
   }
-
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     socket.user = auth.username;
     socket.id = decoded.id;
     const user = await User.findById(socket.id);
-    console.log(`user ${user}`);
-    next();
+    return next();
   } catch (err) {
-    // res.status(401).send('Token is not valid');
-    next();
+    return next(new Error('Token is not valid'));
   }
   return next();
 };
-
-io.use(authSocket);
 
 io.on('connection', (socket) => {
   socket.send('Hello!');
@@ -62,7 +54,6 @@ io.on('connection', (socket) => {
     }
     // send the user who just went online to everyone else who is already online
     socket.broadcast.emit('add-online-user', id);
-    console.log(`Online user ${JSON.stringify(socket.user)}`);
   });
 });
 

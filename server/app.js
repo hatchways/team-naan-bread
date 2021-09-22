@@ -16,6 +16,7 @@ const requestRouter = require('./routes/request');
 const reviewRouter = require('./routes/review');
 const setHeaders = require('./middleware/setHeaders');
 const notificationRouter = require('./routes/notification');
+const paymentRouter = require('./routes/payment');
 
 const { json, urlencoded } = express;
 
@@ -53,6 +54,7 @@ app.use('/profile', profileRouter);
 app.use('/request', requestRouter);
 app.use('/review', reviewRouter);
 app.use('/notification', notificationRouter);
+app.use('/payment', paymentRouter);
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '/client/build')));
@@ -74,4 +76,4 @@ process.on('unhandledRejection', (err, promise) => {
   server.close(() => process.exit(1));
 });
 
-module.exports = { app, server };
+module.exports = { app, server, io };
