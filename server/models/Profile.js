@@ -39,6 +39,15 @@ const profileSchema = new mongoose.Schema(
         ref: 'request',
       },
     ],
+    customerId: {
+      type: String,
+    },
+    serviceId: {
+      type: String,
+    },
+    hourlyRate: {
+      type: Number,
+    },
     reviewsReceived: [
       {
         type: mongoose.Schema.Types.ObjectId,

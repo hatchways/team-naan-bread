@@ -5,8 +5,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     minHeight: "100vh",
     justifyContent: "center",
-    paddingLeft: theme.spacing(8),
-    paddingRight: theme.spacing(8)
+    padding: theme.spacing(8),
   },
   mySittersContent: {
     display: 'flex',

@@ -30,7 +30,7 @@ const ChatSideBanner = ({ loggedInUser }: Props): JSX.Element => {
 
   return (
     <Grid className={classes.chatSideBanner}>
-      <Box className={classes.userPanel}>
+      <Box data-tour="step-3" className={classes.userPanel}>
         <Link component={RouterLink} to="settings/profile">
           <AvatarDisplay loggedIn user={loggedInUser} />
         </Link>
