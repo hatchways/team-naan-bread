@@ -1,11 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { Container, Grid, Typography, Paper, Button } from '@material-ui/core';
+import React from 'react';
+import { Grid, Typography, Paper, Button } from '@material-ui/core';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import useStyles from './useStyles';
-
-interface PaymentMethod {
-  id: string;
-}
 
 function Payment(): JSX.Element {
   const classes = useStyles();
@@ -31,11 +27,6 @@ function Payment(): JSX.Element {
           name: 'user name',
         },
       });
-      if (error) {
-        console.log('[error]', error);
-      } else {
-        console.log('[PaymentMethod]', paymentMethod);
-      }
     }
   };
 
