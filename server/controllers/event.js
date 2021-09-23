@@ -24,3 +24,22 @@ exports.editEvent = asyncHandler(async (req, res, next) => {
 
   return res.status(201).json(editedEvent);
 });
+
+exports.attendEvent = asyncHandler(async (req, res, next) => {
+  const attendeeId = req.user.id;
+  const eventId = req.params.id;
+  if (!eventId || !attendeeId) {
+    return res.sendStatus(400);
+  }
+  const attendedEvent = await Event.findById(eventId);
+  if (!attendedEvent) {
+    res.status(404);
+    throw new Error('event not found');
+  }
+  if (attendedEvent.attendees.includes(attendeeId)) {
+    res.status(400);
+    throw new Error('attendee already scheduled to attend this event');
+  }
+  await Event.updateOne({ _id: eventId }, { $push: { attendees: attendeeId } });
+  return res.status(200).json(attendedEvent);
+});
