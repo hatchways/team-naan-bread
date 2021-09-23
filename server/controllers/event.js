@@ -64,3 +64,15 @@ exports.cancelAttendanceToEvent = asyncHandler(async (req, res, next) => {
   await Event.updateOne({ _id: eventId }, { $pull: { attendees: canceledAttendeeId } });
   return res.status(200).json(petEvent);
 });
+
+exports.getOneEvent = asyncHandler(async (req, res, next) => {
+  const eventId = req.params.id;
+  if (!eventId) {
+    return res.sendStatus(400);
+  }
+  const petEvent = await Event.findById(eventId)
+    .populate('attendees', 'firstName lastName email')
+    .populate('host', 'firstName lastName email');
+
+  return res.status(200).json(petEvent);
+});
