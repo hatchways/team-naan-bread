@@ -30,7 +30,6 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: 100,
   },
   submit: {
-    marginTop: theme.spacing(4),
     padding: theme.spacing(2, 4),
     height: 56,
     borderRadius: theme.shape.borderRadius,
@@ -40,6 +39,7 @@ const useStyles = makeStyles((theme) => ({
   },
   creditCard: {
     fontSize: 16,
+    margin: theme.spacing(4, 0),
   },
 }));
 
