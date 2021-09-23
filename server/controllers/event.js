@@ -76,3 +76,23 @@ exports.getOneEvent = asyncHandler(async (req, res, next) => {
 
   return res.status(200).json(petEvent);
 });
+
+exports.removeEvent = asyncHandler(async (req, res, next) => {
+  const userId = req.user.id;
+  const eventId = req.params.id;
+  if (!eventId) {
+    return res.sendStatus(400);
+  }
+  const petEvent = await Event.findById(eventId);
+  if (!petEvent) {
+    res.status(404);
+    throw new Error('event not found');
+  }
+
+  if (!petEvent.host.equals(userId)) {
+    res.status(401);
+    throw new Error('you are not authorized to delete this event');
+  }
+  const deletedEvent = await Event.findByIdAndDelete(eventId);
+  return res.status(200).json(deletedEvent);
+});
