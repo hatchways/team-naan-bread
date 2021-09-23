@@ -59,6 +59,7 @@ export default function DateForm({ date, availability, handleTimeFrom, handleTim
             id="demo-simple-select"
             className={classes.selectBox}
             variant="outlined"
+            defaultValue={''}
             value={availability[date].from}
             onChange={(e) => {
               handleTimeFrom(e, date);
@@ -80,6 +81,7 @@ export default function DateForm({ date, availability, handleTimeFrom, handleTim
             {...getDisabled(availability[date].from)}
             labelId="demo-simple-select-label"
             id="demo-simple-select"
+            defaultValue={''}
             value={availability[date].to}
             className={classes.selectBox}
             onChange={(e) => {
