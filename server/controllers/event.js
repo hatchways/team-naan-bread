@@ -43,3 +43,24 @@ exports.attendEvent = asyncHandler(async (req, res, next) => {
   await Event.updateOne({ _id: eventId }, { $push: { attendees: attendeeId } });
   return res.status(200).json(attendedEvent);
 });
+
+exports.cancelAttendanceToEvent = asyncHandler(async (req, res, next) => {
+  const canceledAttendeeId = req.user.id;
+  const eventId = req.params.id;
+  if (!eventId) {
+    return res.sendStatus(400);
+  }
+  const petEvent = await Event.findById(eventId);
+  if (!petEvent) {
+    res.status(404);
+    throw new Error('event not found');
+  }
+
+  if (!petEvent.attendees.includes(canceledAttendeeId)) {
+    res.status(400);
+    throw new Error('user is not scheduled to attend this event');
+  }
+
+  await Event.updateOne({ _id: eventId }, { $pull: { attendees: canceledAttendeeId } });
+  return res.status(200).json(petEvent);
+});
