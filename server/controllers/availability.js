@@ -5,16 +5,17 @@ const mongoose = require("mongoose");
 //the Profile is also created on in controllers/auth when the user creates a new account. However- only the email and id fields will be filled
 
 exports.updateAvailability = asyncHandler(async (req, res) => {
-  for (let prop in req.body.values.availability) {
-    if (!req.body.values.availability[prop]) {
-      delete req.body.values.availability[prop];
+  const avails = req.body.values.availability
+  for (let prop in avails) {
+    if (!avails[prop]) {
+      delete avails[prop];
       //it will remove fields who are undefined or null
     }
   }
 
   availability = await Availability.findOneAndUpdate(
     { _id: mongoose.Types.ObjectId(req.body.values._id) },
-    { availability: req.body.values.availability },
+    { availability: avails },
     { new: true, strict: false }
   );
 
@@ -22,7 +23,7 @@ exports.updateAvailability = asyncHandler(async (req, res) => {
   if (!availability) {
     availability = await Availability.create({
       _id: new mongoose.Types.ObjectId(req.body.values._id),
-      availability: req.body.values.availability,
+      availability: avails,
     });
   }
 
