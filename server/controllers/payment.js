@@ -3,6 +3,21 @@ const Profile = require('../models/Profile');
 const asyncHandler = require('express-async-handler');
 const stripe = require('stripe')(process.env.STRIPE);
 
+exports.createCustomer = asyncHandler(async (req, res) => {
+  const user = await Profile.findById(req.params.id);
+  const { email } = user;
+
+  try {
+    const customer = await stripe.customers.create({email});
+    res.send(customer);
+  }
+  catch (err) {
+    res.status(400);
+    throw new Error(err, "Error creating customer");
+  }
+
+});
+
 exports.payPetSitter = asyncHandler(async (req, res) => {
   let { 
     userId, 

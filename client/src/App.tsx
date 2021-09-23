@@ -49,9 +49,9 @@ function App(): JSX.Element {
                     <Route exact path="/notifications">
                       <AllNotifications />
                     </Route>
-                    <Route path="*">
+                    {/* <Route path="*">
                       <Redirect to="/login" />
-                    </Route>
+                    </Route> */}
                     <Route exact path="/my-sitters" component={MySitters} />
                   </Switch>
                 </Elements>
