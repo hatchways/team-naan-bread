@@ -12,3 +12,12 @@ export interface ProfileApiData {
   updatedAt: string;
   __v: string;
 }
+
+export interface CustomerProfile {
+  _id: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  requestsSubmitted: string[];
+  customerId: string;
+}
