@@ -50,7 +50,6 @@ function Payment(): JSX.Element {
           ...userProfile,
           customerId: customer.customerId,
         });
-        console.log(customer);
       }
 
       const { error, paymentMethod } = await stripe.createPaymentMethod({
@@ -63,6 +62,9 @@ function Payment(): JSX.Element {
 
       if (error) {
         console.log(error);
+      }
+      if (paymentMethod) {
+        console.log(paymentMethod);
       }
     }
   };

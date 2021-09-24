@@ -14,7 +14,6 @@ exports.createCustomer = asyncHandler(async (req, res) => {
     user.customerId = customer.id;
     user.save();
     
-    console.log(customer)
     res.send(customer);
   }
   catch (err) {
@@ -22,6 +21,21 @@ exports.createCustomer = asyncHandler(async (req, res) => {
     throw new Error(err, "Error creating customer");
   }
 
+});
+
+exports.attachPaymentMethod = asyncHandler(async (req, res) => {
+  try {
+    const paymentMethod = await stripe.paymentMethods.attach(
+      req.body.paymentMethodId,
+      {customer: req.body.customerId}
+    );
+
+    res.send(paymentMethod);
+  }
+  catch (err) {
+    res.status(400);
+    throw new Error(err, 'Error attaching payment method');
+  }
 });
 
 exports.payPetSitter = asyncHandler(async (req, res) => {
