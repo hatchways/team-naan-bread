@@ -4,6 +4,7 @@ import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import useStyles from './useStyles';
 import { useAuth } from '../../context/useAuthContext';
 import getCustomerProfile from '../../helpers/APICalls/getCustomerProfile';
+import createCustomer from '../../helpers/APICalls/createCustomer';
 import { CustomerProfile } from '../../interface/ProfileApiData';
 
 function Payment(): JSX.Element {
@@ -31,8 +32,6 @@ function Payment(): JSX.Element {
     fetchUser();
   }, [loggedInUser]);
 
-  console.log(userProfile.customerId);
-
   const handleSubmit = async (event: React.SyntheticEvent): Promise<void> => {
     event.preventDefault();
 
@@ -45,6 +44,15 @@ function Payment(): JSX.Element {
     const cardElement = elements.getElement(CardElement);
 
     if (cardElement) {
+      if (userProfile._id.length && userProfile.customerId === '') {
+        const customer = await createCustomer(userProfile._id);
+        setUserProfile({
+          ...userProfile,
+          customerId: customer.customerId,
+        });
+        console.log(customer);
+      }
+
       const { error, paymentMethod } = await stripe.createPaymentMethod({
         type: 'card',
         card: cardElement,
@@ -52,6 +60,10 @@ function Payment(): JSX.Element {
           name: 'user name',
         },
       });
+
+      if (error) {
+        console.log(error);
+      }
     }
   };
 

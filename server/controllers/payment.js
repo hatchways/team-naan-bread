@@ -9,6 +9,12 @@ exports.createCustomer = asyncHandler(async (req, res) => {
 
   try {
     const customer = await stripe.customers.create({email});
+    
+    // update user in DB
+    user.customerId = customer.id;
+    user.save();
+    
+    console.log(customer)
     res.send(customer);
   }
   catch (err) {
