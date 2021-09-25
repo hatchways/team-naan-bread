@@ -11,6 +11,7 @@ import { PaymentMethod } from '../../interface/PaymentMethod';
 import PaymentMethodCreate from './PaymentMethodCreate';
 import retrieveCustomer from '../../helpers/APICalls/retrieveCustomer';
 import retrievePaymentMethod from '../../helpers/APICalls/retrievePaymentMethod';
+import PaymentMethodDetails from './PaymentMethodDetails';
 
 function Payment(): JSX.Element {
   const classes = useStyles();
@@ -110,7 +111,11 @@ function Payment(): JSX.Element {
         <Typography component="h2" variant="h5" className={classes.welcome}>
           Payment Methods
         </Typography>
-        {customerPaymentMethod ? <div>Hello</div> : <PaymentMethodCreate handleSubmit={handleSubmit} />}
+        {customerPaymentMethod ? (
+          <PaymentMethodDetails paymentMethod={customerPaymentMethod} />
+        ) : (
+          <PaymentMethodCreate handleSubmit={handleSubmit} />
+        )}
       </Grid>
     </Grid>
   );
