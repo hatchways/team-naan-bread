@@ -20,4 +20,5 @@ export interface CustomerProfile {
   lastName: string;
   requestsSubmitted: string[];
   customerId: string;
+  paymentMethodId: string;
 }

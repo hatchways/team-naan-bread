@@ -20,7 +20,17 @@ exports.createCustomer = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error(err, "Error creating customer");
   }
+});
 
+exports.retrieveCustomer = asyncHandler(async (req, res) => {
+  try {
+    const customer = await stripe.customers.retrieve(req.params.id);
+    res.send(customer);
+  }
+  catch (err) {
+    res.status(400);
+    throw new Error(err, "Error retrieving customer");
+  }
 });
 
 exports.attachPaymentMethod = asyncHandler(async (req, res) => {
@@ -29,7 +39,7 @@ exports.attachPaymentMethod = asyncHandler(async (req, res) => {
       req.body.paymentMethodId,
       {customer: req.body.customerId}
     );
-
+    
     res.send(paymentMethod);
   }
   catch (err) {

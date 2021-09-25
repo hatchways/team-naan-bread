@@ -6,6 +6,9 @@ import { useAuth } from '../../context/useAuthContext';
 import getCustomerProfile from '../../helpers/APICalls/getCustomerProfile';
 import createCustomer from '../../helpers/APICalls/createCustomer';
 import { CustomerProfile } from '../../interface/ProfileApiData';
+import attachPaymentMethod from '../../helpers/APICalls/attachPaymentMethod';
+import { PaymentMethod } from '../../interface/PaymentMethod';
+import PaymentMethodCreate from './PaymentMethodCreate';
 
 function Payment(): JSX.Element {
   const classes = useStyles();
@@ -19,6 +22,15 @@ function Payment(): JSX.Element {
     lastName: '',
     requestsSubmitted: [],
     customerId: '',
+    paymentMethodId: '',
+  });
+  const [customerPaymentMethod, setCustomerPaymentMethod] = useState<PaymentMethod>({
+    id: '',
+    type: '',
+    card: {
+      brand: '',
+      last4: '',
+    },
   });
 
   // Fetch user's profile.
@@ -31,6 +43,11 @@ function Payment(): JSX.Element {
     };
     fetchUser();
   }, [loggedInUser]);
+
+  if (userProfile.customerId.length) {
+    // retrieve customer
+    console.log(userProfile.customerId);
+  }
 
   const handleSubmit = async (event: React.SyntheticEvent): Promise<void> => {
     event.preventDefault();
@@ -64,7 +81,9 @@ function Payment(): JSX.Element {
         console.log(error);
       }
       if (paymentMethod) {
-        console.log(paymentMethod);
+        const newPaymentMethod: PaymentMethod = await attachPaymentMethod(paymentMethod.id, userProfile.customerId);
+        console.log(newPaymentMethod);
+        setCustomerPaymentMethod(newPaymentMethod);
       }
     }
   };
@@ -75,27 +94,7 @@ function Payment(): JSX.Element {
         <Typography component="h2" variant="h5" className={classes.welcome}>
           Payment Methods
         </Typography>
-        <form onSubmit={handleSubmit}>
-          <CardElement
-            className={classes.creditCard}
-            options={{
-              style: {
-                base: {
-                  fontSize: '24px',
-                  '::placeholder': {
-                    color: '#aab7c4',
-                  },
-                },
-                invalid: {
-                  color: '#9e2146',
-                },
-              },
-            }}
-          />
-          <Button type="submit" size="large" variant="contained" color="primary" className={classes.submit}>
-            Add new payment profile
-          </Button>
-        </form>
+        <PaymentMethodCreate handleSubmit={handleSubmit} />
       </Grid>
     </Grid>
   );
