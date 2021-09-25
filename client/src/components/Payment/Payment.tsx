@@ -5,16 +5,19 @@ import useStyles from './useStyles';
 import { useAuth } from '../../context/useAuthContext';
 import getCustomerProfile from '../../helpers/APICalls/getCustomerProfile';
 import createCustomer from '../../helpers/APICalls/createCustomer';
-import { CustomerProfile } from '../../interface/ProfileApiData';
+import { CustomerProfile, Customer } from '../../interface/ProfileApiData';
 import attachPaymentMethod from '../../helpers/APICalls/attachPaymentMethod';
 import { PaymentMethod } from '../../interface/PaymentMethod';
 import PaymentMethodCreate from './PaymentMethodCreate';
+import retrieveCustomer from '../../helpers/APICalls/retrieveCustomer';
+import retrievePaymentMethod from '../../helpers/APICalls/retrievePaymentMethod';
 
 function Payment(): JSX.Element {
   const classes = useStyles();
   const stripe = useStripe();
   const elements = useElements();
   const { loggedInUser } = useAuth();
+
   const [userProfile, setUserProfile] = useState<CustomerProfile>({
     _id: '',
     email: '',
@@ -22,8 +25,16 @@ function Payment(): JSX.Element {
     lastName: '',
     requestsSubmitted: [],
     customerId: '',
-    paymentMethodId: '',
   });
+
+  const [customer, setCustomer] = useState<Customer>({
+    id: '',
+    email: '',
+    invoice_settings: {
+      default_payment_method: '',
+    },
+  });
+
   const [customerPaymentMethod, setCustomerPaymentMethod] = useState<PaymentMethod>({
     id: '',
     type: '',
@@ -39,15 +50,15 @@ function Payment(): JSX.Element {
       if (loggedInUser) {
         const data: CustomerProfile = await getCustomerProfile(loggedInUser.id);
         setUserProfile(data);
+        const customer: Customer = await retrieveCustomer(data.customerId);
+        setCustomer(customer);
+        const paymentMethodId = customer.invoice_settings.default_payment_method;
+        const paymentMethod: PaymentMethod = await retrievePaymentMethod(paymentMethodId);
+        setCustomerPaymentMethod(paymentMethod);
       }
     };
     fetchUser();
   }, [loggedInUser]);
-
-  if (userProfile.customerId.length) {
-    // retrieve customer
-    console.log(userProfile.customerId);
-  }
 
   const handleSubmit = async (event: React.SyntheticEvent): Promise<void> => {
     event.preventDefault();
@@ -84,9 +95,14 @@ function Payment(): JSX.Element {
         const newPaymentMethod: PaymentMethod = await attachPaymentMethod(paymentMethod.id, userProfile.customerId);
         console.log(newPaymentMethod);
         setCustomerPaymentMethod(newPaymentMethod);
+
+        const customer: Customer = await retrieveCustomer(userProfile.customerId);
+        setCustomer(customer);
       }
     }
   };
+
+  console.log(customerPaymentMethod);
 
   return (
     <Grid container component="section">
@@ -94,7 +110,7 @@ function Payment(): JSX.Element {
         <Typography component="h2" variant="h5" className={classes.welcome}>
           Payment Methods
         </Typography>
-        <PaymentMethodCreate handleSubmit={handleSubmit} />
+        {customerPaymentMethod ? <div>Hello</div> : <PaymentMethodCreate handleSubmit={handleSubmit} />}
       </Grid>
     </Grid>
   );

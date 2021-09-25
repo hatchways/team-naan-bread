@@ -20,5 +20,12 @@ export interface CustomerProfile {
   lastName: string;
   requestsSubmitted: string[];
   customerId: string;
-  paymentMethodId: string;
+}
+
+export interface Customer {
+  id: string;
+  email: string;
+  invoice_settings: {
+    default_payment_method: string;
+  };
 }

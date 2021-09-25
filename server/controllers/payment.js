@@ -39,12 +39,32 @@ exports.attachPaymentMethod = asyncHandler(async (req, res) => {
       req.body.paymentMethodId,
       {customer: req.body.customerId}
     );
+
+    const customer = await stripe.customers.update(
+      req.body.customerId,
+      {
+        invoice_settings: {
+          default_payment_method: req.body.paymentMethodId,
+        }
+      }
+    );
     
     res.send(paymentMethod);
   }
   catch (err) {
     res.status(400);
     throw new Error(err, 'Error attaching payment method');
+  }
+});
+
+exports.retrievePaymentMethod = asyncHandler(async (req, res) => {
+  try {
+    const paymentMethod = await stripe.paymentMethods.retrieve(req.params.id);
+    res.send(paymentMethod);
+  }
+  catch (err) {
+    res.status(400);
+    throw new Error(err, 'Error retrieving payment method');
   }
 });
 
