@@ -1,7 +1,7 @@
-import { CustomerProfile } from '../../interface/ProfileApiData';
+import { Customer } from '../../interface/ProfileApiData';
 import { FetchOptions } from '../../interface/FetchOptions';
 
-const createCustomer = async (id: string): Promise<CustomerProfile> => {
+const createCustomer = async (id: string): Promise<Customer> => {
   const fetchOptions: FetchOptions = {
     method: 'POST',
     credentials: 'include',

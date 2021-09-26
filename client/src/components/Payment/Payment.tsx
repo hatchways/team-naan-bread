@@ -42,7 +42,10 @@ function Payment(): JSX.Element {
     card: {
       brand: '',
       last4: '',
+      exp_month: '',
+      exp_year: '',
     },
+    attached: false,
   });
 
   // Fetch user's profile.
@@ -51,15 +54,38 @@ function Payment(): JSX.Element {
       if (loggedInUser) {
         const data: CustomerProfile = await getCustomerProfile(loggedInUser.id);
         setUserProfile(data);
-        const customer: Customer = await retrieveCustomer(data.customerId);
-        setCustomer(customer);
-        const paymentMethodId = customer.invoice_settings.default_payment_method;
-        const paymentMethod: PaymentMethod = await retrievePaymentMethod(paymentMethodId);
-        setCustomerPaymentMethod(paymentMethod);
+        if (data.customerId.length) {
+          console.log('data customer id existe ' + data.customerId);
+          const customer: Customer = await retrieveCustomer(data.customerId);
+          setCustomer(customer);
+          const paymentMethodId = customer?.invoice_settings?.default_payment_method;
+          if (paymentMethodId) {
+            const paymentMethod: PaymentMethod = await retrievePaymentMethod(paymentMethodId);
+            setCustomerPaymentMethod({
+              ...paymentMethod,
+              attached: true,
+            });
+          }
+        } else {
+          const customer: Customer = await createCustomer(data._id);
+          console.log('data customer se creo');
+          setCustomer(customer);
+          console.log('data customer se creo ' + customer.id);
+        }
       }
     };
     fetchUser();
   }, [loggedInUser]);
+
+  useEffect(() => {
+    if (customerPaymentMethod.id && customerPaymentMethod.attached === false) {
+      const attachNewPaymentMethod = async () => {
+        const attachedPaymentMethod = await attachPaymentMethod(customerPaymentMethod.id, customer.id);
+        console.log(attachedPaymentMethod);
+      };
+      attachNewPaymentMethod();
+    }
+  }, [customerPaymentMethod, customer.id]);
 
   const handleSubmit = async (event: React.SyntheticEvent): Promise<void> => {
     event.preventDefault();
@@ -73,14 +99,6 @@ function Payment(): JSX.Element {
     const cardElement = elements.getElement(CardElement);
 
     if (cardElement) {
-      if (userProfile._id.length && userProfile.customerId === '') {
-        const customer = await createCustomer(userProfile._id);
-        setUserProfile({
-          ...userProfile,
-          customerId: customer.customerId,
-        });
-      }
-
       const { error, paymentMethod } = await stripe.createPaymentMethod({
         type: 'card',
         card: cardElement,
@@ -93,17 +111,18 @@ function Payment(): JSX.Element {
         console.log(error);
       }
       if (paymentMethod) {
-        const newPaymentMethod: PaymentMethod = await attachPaymentMethod(paymentMethod.id, userProfile.customerId);
-        console.log(newPaymentMethod);
+        const newPaymentMethod: PaymentMethod = await retrievePaymentMethod(paymentMethod?.id);
         setCustomerPaymentMethod(newPaymentMethod);
-
-        const customer: Customer = await retrieveCustomer(userProfile.customerId);
-        setCustomer(customer);
       }
     }
   };
 
-  console.log(customerPaymentMethod);
+  const resetPaymentMethod = () => {
+    setCustomerPaymentMethod({
+      ...customerPaymentMethod,
+      id: '',
+    });
+  };
 
   return (
     <Grid container component="section">
@@ -111,8 +130,12 @@ function Payment(): JSX.Element {
         <Typography component="h2" variant="h5" className={classes.welcome}>
           Payment Methods
         </Typography>
-        {customerPaymentMethod ? (
-          <PaymentMethodDetails paymentMethod={customerPaymentMethod} />
+        {customerPaymentMethod.id ? (
+          <PaymentMethodDetails
+            paymentMethod={customerPaymentMethod}
+            user={userProfile}
+            resetPaymentMethod={resetPaymentMethod}
+          />
         ) : (
           <PaymentMethodCreate handleSubmit={handleSubmit} />
         )}
