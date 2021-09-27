@@ -3,7 +3,7 @@ const router = express.Router();
 const {
 createPetProfile,
 updatePetProfile,
-findPetProfileById,
+findPetProfilesByOwnerId,
 findAllPetProfiles,
 } = require('../controllers/petProfile');
 
@@ -11,7 +11,7 @@ router.route('/createPetProfile').post(createPetProfile);
 
 router.route('/updatePetProfile').post(updatePetProfile);
 
-router.route('/findPetProfileById').post(findPetProfileById);
+router.route('/findPetProfilesByOwnerId').post(findPetProfilesByOwnerId);
 
 router.route('/findAllPetProfiles').get(findAllPetProfiles);
 

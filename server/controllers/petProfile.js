@@ -4,113 +4,60 @@ const asyncHandler = require("express-async-handler");
 
 exports.createPetProfile= asyncHandler(async (req, res, next) => {
 
-    const profileExists = await PetProfile.findOne({ _id: req.user.id });
-
-    if (profileExists) {
-        res.status(400);
-        throw new Error("A profile already exists for that user");
-      }
-
     const { 
-        firstName,
-        lastName,
-        gender,
-        birthDate,
-        availabilityDates,
-        email,
-        phoneNumber,
-        whereYouLive,
-        describeYourself,
+        petName,
+        ownerID,
+        petType,
+        petAge,
+        petStatus,
      } = req.body;
 
-    const profile = await Profile.create({
-        _id: req.user.id,
-        firstName: firstName,
-        lastName: lastName,
-        gender: gender,
-        birthDate: birthDate,
-        availabilityDates: availabilityDates,
-        phoneNumber: phoneNumber,
-        whereYouLive: whereYouLive,
-        describeYourself: describeYourself,
-        email: email,
+    const petProfile = await PetProfile.create({
+        petName,
+        ownerID,
+        petType,
+        petAge,
+        petStatus,
       })
 
-      res.status(200).json({
-        success: {
-          profile: {
-            id: profile._id,
-            firstName: profile.firstName,
-            lastName: profile.lastName,
-            gender: profile.gender,
-            birthDate: profile.birthDate,
-            availabilityDates: profile.availabilityDates,
-            email: profile.email,
-            phoneNumber: profile.phoneNumber,
-            whereYouLive: profile.whereYouLive,
-            describeYourself: profile.describeYourself,
-          }
-        }
-      });
+      res.status(200).json({petProfile});
 })
 
-exports.updateProfile = asyncHandler(async (req, res, next) => {
-    const values = { 
+exports.updatePetProfile = asyncHandler(async (req, res, next) => {
+    const values = {
         _id,
-        firstName,
-        lastName,
-        gender,
-        birthDate,
-        availabilityDates,
-        email,
-        phoneNumber,
-        whereYouLive,
-        describeYourself,
+        petName,
+        ownerID,
+        petType,
+        petAge,
+        petStatus,
      } = req.body;
 
      for(let prop in values) if(!values[prop]) delete values[prop];//it will remove fields who are undefined or null
 
-     const profile = await Profile.findOneAndUpdate({_id: values._id}, values, {new: true, strict: false});
+     const petProfile = await PetProfile.findOneAndUpdate({_id: values._id}, values, {new: true, strict: false});
 
-     //we also have to update the email in the User model
-     const user = await User.findOneAndUpdate({_id: values._id}, {email: values.email}, {new: true});
-
-     res.status(200).json({
-        success: {
-          profile: {
-            id: profile._id,
-            firstName: profile.firstName,
-            lastName: profile.lastName,
-            gender: profile.gender,
-            birthDate: profile.birthDate,
-            availabilityDates: profile.availabilityDates,
-            email: profile.email,
-            phoneNumber: profile.phoneNumber,
-            whereYouLive: profile.whereYouLive,
-            describeYourself: profile.describeYourself,
-          }
-        }
-      });
+     res.status(200).json({petProfile});
 
 })
-exports.findProfileById = asyncHandler(async (req, res, next) => {
+exports.findPetProfilesByOwnerId = asyncHandler(async (req, res, next) => {
 
-     const profile = await Profile.findById(req.body.id);
-     if (!profile) {
+     const petProfile = await petProfile.findById({ownerID: req.body.ownerID});
+     if (!petProfile) {
         res.status(404);
-        throw new Error("No profile found for ID");
+        throw new Error("No pet profile found for ID");
       }
     
-      res.status(200).json(profile);
+      res.status(200).json(petProfile);
 })
 
-exports.findAllProfiles = asyncHandler(async (req, res, next) => {
-    const profiles = await Profile.find({});
+exports.findAllPetProfiles = asyncHandler(async (req, res, next) => {
+    const petProfiles = await PetProfile.find({});
 
-    if (!profiles) {
+    if (!petProfiles) {
         res.status(404);
         throw new Error("No profiles found");
       }
 
-    res.status(200).json({ profiles: profiles });
+    res.status(200).json({ petProfiles });
 })

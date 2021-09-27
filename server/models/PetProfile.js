@@ -14,9 +14,6 @@ const petProfileSchema = new mongoose.Schema(
     petAge: {
         type: Number,
     },
-    petAge: {
-        type: String,
-    },
     petStatus: {
       type: String,
       enum: [ "availabile", "not available", null ],
