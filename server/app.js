@@ -17,6 +17,7 @@ const reviewRouter = require('./routes/review');
 const setHeaders = require('./middleware/setHeaders');
 const notificationRouter = require('./routes/notification');
 const paymentRouter = require('./routes/payment');
+const petProfileRouter = require('./routes/petProfile');
 
 const { json, urlencoded } = express;
 
@@ -55,6 +56,7 @@ app.use('/request', requestRouter);
 app.use('/review', reviewRouter);
 app.use('/notification', notificationRouter);
 app.use('/payment', paymentRouter);
+app.use('/petProfile', petProfileRouter);
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '/client/build')));
