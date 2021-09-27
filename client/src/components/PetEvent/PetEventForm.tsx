@@ -6,26 +6,28 @@ import { DateTimePicker } from '@material-ui/pickers';
 import { createPetEvent } from '../../helpers/APICalls/petEvent';
 import { useSnackBar } from '../../context/useSnackbarContext';
 import { useHistory } from 'react-router-dom';
+import { PetEvent } from '../../interface/PetEvent';
 
 export default function PetEventForm(): JSX.Element {
-  const [coordinates, setCoordinates] = useState<number[]>();
-  const [newDate, setNewDate] = useState<Date | null>(new Date());
   const [search, setSearch] = useState<google.maps.places.SearchBox>();
-  const [name, setName] = useState<string>();
-  const [address, setAddress] = useState<string>();
-  const [description, setDescription] = useState<string>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [newPetMeetupEvent, setNewPetMeetupEvent] = useState<PetEvent>({} as PetEvent);
 
   const { updateSnackBarMessage } = useSnackBar();
   const history = useHistory();
 
   const onPlacesChanged = () => {
-    console.log(search?.getPlaces());
     const newPlace = search?.getPlaces();
-    if (newPlace !== undefined && newPlace[0] && newPlace[0].geometry && newPlace[0].geometry.location) {
-      setCoordinates([newPlace[0].geometry.location.lng(), newPlace[0].geometry.location.lat()]);
-      setAddress(`${newPlace[0].name}, ${newPlace[0].formatted_address}`);
-    }
+    setNewPetMeetupEvent((state: PetEvent) => {
+      if (newPlace !== undefined && newPlace[0] && newPlace[0].geometry && newPlace[0].geometry.location) {
+        state.location = {
+          coordinates: [newPlace[0].geometry.location.lng(), newPlace[0].geometry.location.lat()],
+          type: 'Point',
+        };
+        state.address = `${newPlace[0].name}, ${newPlace[0].formatted_address}`;
+      }
+      return state;
+    });
   };
   const onLoad = (searchInput: google.maps.places.SearchBox) => {
     setSearch(searchInput);
@@ -34,11 +36,10 @@ export default function PetEventForm(): JSX.Element {
   const submitPetEventForm = async (event: ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (name && newDate && coordinates) {
+    if (newPetMeetupEvent) {
       setIsLoading(true);
-      const response = await createPetEvent(name, newDate, coordinates, description, address);
+      const response = await createPetEvent(newPetMeetupEvent);
       setIsLoading(false);
-      // if (postEvent) updateSnackBarMessage('profile photo deleted');
       if (response.ok) {
         updateSnackBarMessage('event created');
         const newPetEvent = await response.json();
@@ -63,7 +64,10 @@ export default function PetEventForm(): JSX.Element {
             <Box m={2}>
               <TextField
                 onChange={(event) => {
-                  setName(event.target.value);
+                  setNewPetMeetupEvent((state: PetEvent) => {
+                    state.name = event.target.value;
+                    return state;
+                  });
                 }}
                 fullWidth
                 required
@@ -97,9 +101,14 @@ export default function PetEventForm(): JSX.Element {
             <Box m={2}>
               <DateTimePicker
                 inputVariant="outlined"
-                value={newDate}
+                value={newPetMeetupEvent.eventDate}
                 onChange={(date) => {
-                  setNewDate(date);
+                  if (date) {
+                    setNewPetMeetupEvent((state: PetEvent) => {
+                      state.eventDate = date;
+                      return state;
+                    });
+                  }
                 }}
                 label="when is the event ?"
                 fullWidth
@@ -109,7 +118,10 @@ export default function PetEventForm(): JSX.Element {
             <Box m={2}>
               <TextField
                 onChange={(event) => {
-                  setDescription(event.target.value);
+                  setNewPetMeetupEvent((state: PetEvent) => {
+                    state.description = event.target.value;
+                    return state;
+                  });
                 }}
                 fullWidth
                 multiline

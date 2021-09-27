@@ -1,22 +1,11 @@
 import { FetchOptions } from '../../interface/FetchOptions';
+import { PetEvent } from '../../interface/PetEvent';
 
-const createPetEvent = async (
-  name: string,
-  eventDate: Date | null,
-  coordinates: number[],
-  description?: string,
-  address?: string,
-) => {
+const createPetEvent = async (bodyData: PetEvent) => {
   const fetchOptions: FetchOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      name,
-      eventDate,
-      location: { type: 'Point', coordinates: coordinates },
-      description,
-      address,
-    }),
+    body: JSON.stringify(bodyData),
     credentials: 'include',
   };
 
