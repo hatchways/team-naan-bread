@@ -1,4 +1,20 @@
 import { PetEvent } from '../../interface/PetEvent';
+import { ProfileApiData } from '../../interface/ProfileApiData';
+
+const mockPetEventPage: PetEvent = {
+  _id: '1',
+  name: 'event name',
+  eventDate: new Date(Date.now()),
+  description: 'description description description description description description description description',
+  location: { lat: 26.8206, lng: 30.8 },
+  attendees: [
+    { _id: '1', email: 'a@sample.com', firstName: 'attendee1' } as ProfileApiData,
+    { _id: '1', email: 'sample@sample.com', firstName: 'attendee2' } as ProfileApiData,
+    { _id: '1', email: 'sample@sample.com', firstName: 'attendee3' } as ProfileApiData,
+  ],
+  address: 'port said, Egypt',
+  host: { _id: '1', email: 'sample@sample.com', firstName: 'hostName' } as ProfileApiData,
+};
 
 const mockEventList: PetEvent[] = [
   {
@@ -31,4 +47,4 @@ const mockEventList: PetEvent[] = [
   },
 ];
 
-export { mockEventList };
+export { mockPetEventPage, mockEventList };
