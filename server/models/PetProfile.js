@@ -5,6 +5,9 @@ const petProfileSchema = new mongoose.Schema(
     petName: {
       type: String,
     },
+    ownerID: {
+      type: String,
+    },
     petType: {
         type: String,
     },
