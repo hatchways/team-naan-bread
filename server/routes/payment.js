@@ -4,6 +4,5 @@ const { payPetSitter, getStripePK } = require('../controllers/payment');
 const protect = require('../middleware/auth');
 
 router.route('/:id/pay').post(payPetSitter);
-router.route('/getStripePK').get(getStripePK);
 
 module.exports = router;
