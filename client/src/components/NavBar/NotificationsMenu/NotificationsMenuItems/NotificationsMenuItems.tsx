@@ -1,5 +1,6 @@
 import useStyles from '../useStyles';
 import { Typography, MenuItem, Paper, ListItemText, ListItemAvatar, Avatar, Box } from '@material-ui/core';
+import Rating from '@material-ui/lab/Rating';
 import { Notification } from '../../../../interface/Notification';
 
 interface Props {
@@ -24,7 +25,6 @@ export default function NotificationsMenuItems({ notifications }: Props): JSX.El
                     className={classes.notificationAvatar}
                   />
                 </ListItemAvatar>
-
                 <ListItemText
                   secondary={
                     <Box>
@@ -45,6 +45,9 @@ export default function NotificationsMenuItems({ notifications }: Props): JSX.El
                     </Box>
                   }
                 />
+                {notification.context && notification.context.rating && (
+                  <Rating name="read-only" value={notification.context.rating} readOnly />
+                )}
               </MenuItem>
             </Box>
           ))}

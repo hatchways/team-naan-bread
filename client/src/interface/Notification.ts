@@ -9,5 +9,6 @@ export interface Notification {
 }
 
 interface NotificationContext {
-  profilePhotoURL: string;
+  profilePhotoURL?: string;
+  rating?: number;
 }
