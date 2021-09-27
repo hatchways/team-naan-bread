@@ -146,13 +146,3 @@ exports.payPetSitter = asyncHandler(async (req, res) => {
   }
 
 });
-
-exports.getStripePK = (req, res) => {
-  try {
-    const stripePK = { stripePK: process.env.STRIPEPK }
-    res.send(stripePK);
-  } catch (err) {
-    res.status(400);
-    throw new Error(err, "Error. Not authorized");
-  }
-};
