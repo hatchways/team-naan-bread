@@ -7,5 +7,4 @@ export interface PaymentMethod {
     exp_month: string;
     exp_year: string;
   };
-  attached: boolean;
 }

@@ -25,19 +25,21 @@ function PaymentMethodDetails({ paymentMethod, user, resetPaymentMethod }: Props
 
   return (
     <Grid item>
-      <Typography>{paymentMethod.card.brand.toUpperCase()}</Typography>
-      <Typography>**** **** **** {paymentMethod.card.last4}</Typography>
-      <Typography>
+      <div className={`card-${paymentMethod.card.brand} card-brand`}></div>
+      <Typography component="h3" variant="h3">
+        **** **** **** {paymentMethod.card.last4}
+      </Typography>
+      <Typography className="exp-date">
         Exp. Date {paymentMethod.card.exp_month} / {paymentMethod.card.exp_year}
       </Typography>
-      <Typography>
+      <Typography component="h3" variant="h3">
         {user.firstName} {user.lastName}
       </Typography>
       <Button
         onClick={resetPaymentMethod}
         type="submit"
         size="large"
-        variant="contained"
+        variant="outlined"
         color="primary"
         className={classes.submit}
       >

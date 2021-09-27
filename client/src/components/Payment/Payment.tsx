@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Grid, Typography, Paper, Button } from '@material-ui/core';
+import { Grid, Typography, Paper, CircularProgress } from '@material-ui/core';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import useStyles from './useStyles';
 import { useAuth } from '../../context/useAuthContext';
@@ -18,6 +18,7 @@ function Payment(): JSX.Element {
   const stripe = useStripe();
   const elements = useElements();
   const { loggedInUser } = useAuth();
+  const [loading, setLoading] = useState<boolean>(false);
 
   const [userProfile, setUserProfile] = useState<CustomerProfile>({
     _id: '',
@@ -45,17 +46,16 @@ function Payment(): JSX.Element {
       exp_month: '',
       exp_year: '',
     },
-    attached: false,
   });
 
   // Fetch user's profile.
   useEffect(() => {
+    setLoading(true);
     const fetchUser = async () => {
       if (loggedInUser) {
         const data: CustomerProfile = await getCustomerProfile(loggedInUser.id);
         setUserProfile(data);
         if (data.customerId.length) {
-          console.log('data customer id existe ' + data.customerId);
           const customer: Customer = await retrieveCustomer(data.customerId);
           setCustomer(customer);
           const paymentMethodId = customer?.invoice_settings?.default_payment_method;
@@ -63,25 +63,24 @@ function Payment(): JSX.Element {
             const paymentMethod: PaymentMethod = await retrievePaymentMethod(paymentMethodId);
             setCustomerPaymentMethod({
               ...paymentMethod,
-              attached: true,
             });
           }
         } else {
           const customer: Customer = await createCustomer(data._id);
-          console.log('data customer se creo');
           setCustomer(customer);
-          console.log('data customer se creo ' + customer.id);
         }
       }
+      setLoading(false);
     };
     fetchUser();
   }, [loggedInUser]);
 
   useEffect(() => {
-    if (customerPaymentMethod.id && customerPaymentMethod.attached === false) {
+    if (customerPaymentMethod.id) {
+      setLoading(true);
       const attachNewPaymentMethod = async () => {
-        const attachedPaymentMethod = await attachPaymentMethod(customerPaymentMethod.id, customer.id);
-        console.log(attachedPaymentMethod);
+        await attachPaymentMethod(customerPaymentMethod.id, customer.id);
+        setLoading(false);
       };
       attachNewPaymentMethod();
     }
@@ -110,6 +109,7 @@ function Payment(): JSX.Element {
       if (error) {
         console.log(error);
       }
+
       if (paymentMethod) {
         const newPaymentMethod: PaymentMethod = await retrievePaymentMethod(paymentMethod?.id);
         setCustomerPaymentMethod(newPaymentMethod);
@@ -125,12 +125,14 @@ function Payment(): JSX.Element {
   };
 
   return (
-    <Grid container component="section">
+    <Grid container component="section" className={classes.paymentMethodDetails}>
       <Grid item xs={9} elevation={6} component={Paper} square className={classes.mainContainer}>
         <Typography component="h2" variant="h5" className={classes.welcome}>
           Payment Methods
         </Typography>
-        {customerPaymentMethod.id ? (
+        {loading ? (
+          <CircularProgress />
+        ) : customerPaymentMethod.id ? (
           <PaymentMethodDetails
             paymentMethod={customerPaymentMethod}
             user={userProfile}
