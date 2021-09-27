@@ -21,6 +21,7 @@ import NavBar from './components/NavBar/NavBar';
 import AllNotifications from './pages/AllNotifiactions/AllNotifications';
 import NearByPetEvents from './components/PetEvent/NearByPetEvents';
 import PetEventPage from './components/PetEvent/PetEventPage';
+import PetEventForm from './components/PetEvent/PetEventForm';
 
 function App(): JSX.Element {
   return (
@@ -42,6 +43,7 @@ function App(): JSX.Element {
                   </Route>
                   <Route exact path="/events" component={NearByPetEvents} />
                   <Route exact path="/event-page" component={PetEventPage} />
+                  <Route exact path="/event-form" component={PetEventForm} />
 
                   <Route exact path="/notifications">
                     <AllNotifications />
