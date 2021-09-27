@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const profileSchema = new mongoose.Schema(
+const petProfileSchema = new mongoose.Schema(
   {
     petName: {
       type: String,
@@ -24,4 +24,4 @@ const profileSchema = new mongoose.Schema(
   },
 );
 
-module.exports = Profile = mongoose.model('profile', profileSchema);
+module.exports = petProfile = mongoose.model('petProfile', petProfileSchema);
