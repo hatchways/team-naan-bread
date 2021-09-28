@@ -1,8 +1,9 @@
 const Profile = require("../models/Profile");
 const User = require("../models/User");
 const asyncHandler = require("express-async-handler");
-//the Profile is also created on in controllers/auth when the user creates a new account. However- only the email and id fields will be filled
+const { cloudinary } = require("../utils/cloudinary");
 
+//the Profile is also created on in controllers/auth when the user creates a new account. However- only the email and id fields will be filled
 exports.createProfile = asyncHandler(async (req, res, next) => {
 
     const profileExists = await Profile.findOne({ _id: req.user.id });
@@ -93,7 +94,8 @@ exports.updateProfile = asyncHandler(async (req, res, next) => {
         }
       });
 
-})
+});
+
 exports.findProfileById = asyncHandler(async (req, res, next) => {
 
      const profile = await Profile.findById(req.body.id);
@@ -115,6 +117,52 @@ exports.findAllProfiles = asyncHandler(async (req, res, next) => {
 
     res.status(200).json({ profiles: profiles });
 })
+
+const deletePhoto = async (user) => {
+  if (user) {
+    await cloudinary.uploader.destroy(user.profilePhoto.publicId);
+    user.profilePhoto = null;
+  } else {
+    res.status(404);
+    throw new Error("No user found");
+  }
+};
+
+exports.uploadProfilePhoto = asyncHandler(async (req, res, next) => {
+  const image = req.file;
+  if (req.user.id) {
+    const user = await Profile.findById(req.user.id);
+  } else {
+    res.sendStatus(404);
+    throw new Error("No user id provided");
+  }
+  if (!user) {
+    res.sendStatus(404);
+    throw new Error("No user found");
+  }
+  if (user.profilePhoto.url) {
+    await deletePhoto(user);
+  }
+  user.profilePhoto = {
+    url: image.path,
+    publicId: image.filename,
+  };
+  user.save();
+
+  res.sendStatus(200);
+});
+
+exports.deleteProfilePhoto = asyncHandler(async (req, res, next) => {
+  const user = await Profile.findById(req.user.id);
+  if (!user) {
+    return res.sendStatus(404);
+  }
+
+  await deletePhoto(user);
+  user.save();
+
+  res.sendStatus(200);
+});
 
 exports.profileSearch = asyncHandler(async (req, res, next) => {
   const { search, times, to, from } = req.body;

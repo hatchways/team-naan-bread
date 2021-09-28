@@ -31,6 +31,10 @@ const profileSchema = new mongoose.Schema(
         url: String,
         publicId: String,
     },
+    profilePhoto: {
+      url: String,
+      publicId: String,
+    },
     requestsReceived: [
       {
         type: mongoose.Schema.Types.ObjectId,
