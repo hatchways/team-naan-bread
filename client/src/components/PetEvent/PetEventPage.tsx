@@ -19,17 +19,31 @@ import {
 import { Link as routerLink, useParams } from 'react-router-dom';
 import { ProfileApiData } from '../../interface/ProfileApiData';
 import useStyles from './useStyles';
-import { mockPetEventPage } from './mockData';
+import { useEffect, useState } from 'react';
+import { getOneEventById } from '../../helpers/APICalls/petEvent';
+import { PetEvent } from '../../interface/PetEvent';
 
 interface urlParams {
   id: string;
 }
 
-const petEvent = mockPetEventPage;
-
 export default function PetEventPage(): JSX.Element {
   const classes = useStyles();
   const { id } = useParams<urlParams>();
+  const [petEvent, setPetEvent] = useState<PetEvent>({} as PetEvent);
+
+  useEffect(() => {
+    async function fetchEvent() {
+      const response = await getOneEventById(id);
+      if (response.ok) {
+        const data = await response.json();
+        setPetEvent(data);
+      }
+    }
+    if (id) {
+      fetchEvent();
+    }
+  });
 
   return (
     <Box marginBottom={'11%'} marginTop={'10%'} alignItems={'center'} marginLeft={'10%'} marginRight={'10%'}>
@@ -40,7 +54,7 @@ export default function PetEventPage(): JSX.Element {
               <CardContent>
                 <Typography variant="h4">{petEvent.name}</Typography>
                 <Typography>
-                  {petEvent.eventDate.toLocaleDateString([], {
+                  {new Date(petEvent.eventDate).toLocaleDateString([], {
                     weekday: 'short',
                     year: '2-digit',
                     month: 'short',
@@ -75,16 +89,22 @@ export default function PetEventPage(): JSX.Element {
               googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
               libraries={['places']}
             >
-              <GoogleMap mapContainerClassName={classes.mapContainerStyle} center={petEvent.location} zoom={10}>
-                <>
-                  <Marker
-                    icon={{
-                      url: 'https://res.cloudinary.com/dalisapxa/image/upload/v1630880229/DEV/logo_nywmrf.png',
-                    }}
-                    position={petEvent.location}
-                  />
-                </>
-              </GoogleMap>
+              {petEvent.location && (
+                <GoogleMap
+                  mapContainerClassName={classes.mapContainerStyle}
+                  center={{ lng: petEvent.location.coordinates[0], lat: petEvent.location.coordinates[1] }}
+                  zoom={10}
+                >
+                  <>
+                    <Marker
+                      icon={{
+                        url: 'https://res.cloudinary.com/dalisapxa/image/upload/v1630880229/DEV/logo_nywmrf.png',
+                      }}
+                      position={{ lng: petEvent.location.coordinates[0], lat: petEvent.location.coordinates[1] }}
+                    />
+                  </>
+                </GoogleMap>
+              )}
             </LoadScript>
           )}
         </Grid>
@@ -94,14 +114,15 @@ export default function PetEventPage(): JSX.Element {
             <List>
               <Box maxHeight={'400px'} overflow="auto">
                 <ListSubheader> meetup attendees</ListSubheader>
-                {petEvent.attendees.map((attendee: ProfileApiData) => (
-                  <ListItem key={attendee._id} button component={routerLink} to={'#'}>
-                    <ListItemAvatar>
-                      <Avatar />
-                    </ListItemAvatar>
-                    <ListItemText> {attendee.firstName}</ListItemText>
-                  </ListItem>
-                ))}
+                {petEvent.attendees &&
+                  petEvent.attendees.map((attendee: ProfileApiData) => (
+                    <ListItem key={attendee._id} button component={routerLink} to={'#'}>
+                      <ListItemAvatar>
+                        <Avatar />
+                      </ListItemAvatar>
+                      <ListItemText> {attendee.firstName}</ListItemText>
+                    </ListItem>
+                  ))}
               </Box>
             </List>
           </Paper>
