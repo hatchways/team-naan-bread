@@ -19,18 +19,27 @@ import {
 } from '@material-ui/core';
 import PetsIcon from '@material-ui/icons/Pets';
 import { Link as routerLink } from 'react-router-dom';
-import { mockEventList } from './mockData';
 import useStyles from './useStyles';
-import { EventLocation } from '../../interface/PetEvent';
+import { MapLatLng, PetEvent } from '../../interface/PetEvent';
+import { requestNearbyEvents } from '../../helpers/APICalls/petEvent';
 
 export default function NearByPetEvents(): JSX.Element {
-  const [userPosition, setUserPosition] = useState<EventLocation>();
+  const [userPosition, setUserPosition] = useState<MapLatLng>();
   const [openInfoWindow, setOpenInfoWindow] = useState<string>();
+  const [eventList, setEventList] = useState<PetEvent[]>();
   const classes = useStyles();
   useEffect(() => {
+    async function requestEvents(coordinates: number[]) {
+      const response = await requestNearbyEvents(coordinates);
+      if (response.ok) {
+        const data = await response.json();
+        setEventList(data);
+      }
+    }
     navigator.geolocation.getCurrentPosition(function (position) {
       const newPosition = { lat: position.coords.latitude, lng: position.coords.longitude };
       setUserPosition(newPosition);
+      requestEvents([newPosition.lng, newPosition.lat]);
     });
   }, []);
 
@@ -42,26 +51,27 @@ export default function NearByPetEvents(): JSX.Element {
             <List>
               <ListSubheader>pet meetups near you</ListSubheader>
               <Box maxHeight={'400px'} overflow="auto">
-                {mockEventList.map((petEvent) => (
-                  <ListItem key={petEvent._id} button component={routerLink} to={`/event/${petEvent._id}`}>
-                    <ListItemAvatar>
-                      <Avatar>
-                        <PetsIcon />
-                      </Avatar>
-                    </ListItemAvatar>
-                    <ListItemText
-                      primary={petEvent.name}
-                      secondary={petEvent.eventDate.toLocaleDateString([], {
-                        weekday: 'short',
-                        year: '2-digit',
-                        month: 'short',
-                        day: 'numeric',
-                        hour: '2-digit',
-                        minute: '2-digit',
-                      })}
-                    />
-                  </ListItem>
-                ))}
+                {eventList &&
+                  eventList.map((petEvent) => (
+                    <ListItem key={petEvent._id} button component={routerLink} to={`/event/${petEvent._id}`}>
+                      <ListItemAvatar>
+                        <Avatar>
+                          <PetsIcon />
+                        </Avatar>
+                      </ListItemAvatar>
+                      <ListItemText
+                        primary={petEvent.name}
+                        secondary={new Date(petEvent.eventDate).toLocaleDateString([], {
+                          weekday: 'short',
+                          year: '2-digit',
+                          month: 'short',
+                          day: 'numeric',
+                          hour: '2-digit',
+                          minute: '2-digit',
+                        })}
+                      />
+                    </ListItem>
+                  ))}
               </Box>
             </List>
           </Paper>
@@ -75,45 +85,46 @@ export default function NearByPetEvents(): JSX.Element {
               loadingElement={<CircularProgress />}
             >
               <GoogleMap mapContainerClassName={classes.mapContainerStyle} center={userPosition} zoom={10}>
-                {mockEventList.map((petEvent) => (
-                  <>
-                    <Marker
-                      key={petEvent._id}
-                      icon={{
-                        url: 'https://res.cloudinary.com/dalisapxa/image/upload/v1630880229/DEV/logo_nywmrf.png',
-                      }}
-                      position={petEvent.location}
-                      onClick={() => {
-                        setOpenInfoWindow(petEvent._id);
-                      }}
-                    />
-                    {openInfoWindow === petEvent._id && (
-                      <InfoWindow
-                        position={petEvent.location}
-                        onCloseClick={() => {
-                          setOpenInfoWindow(undefined);
+                {eventList &&
+                  eventList.map((petEvent) => (
+                    <>
+                      <Marker
+                        key={petEvent._id}
+                        icon={{
+                          url: 'https://res.cloudinary.com/dalisapxa/image/upload/v1630880229/DEV/logo_nywmrf.png',
                         }}
-                      >
-                        <Card>
-                          <CardHeader title={petEvent.name} />
-                          <CardActions>
-                            <Button
-                              component={routerLink}
-                              to={`/event/${petEvent._id}`}
-                              fullWidth
-                              size="small"
-                              variant="contained"
-                              color="primary"
-                              type="submit"
-                            >
-                              see event
-                            </Button>
-                          </CardActions>
-                        </Card>
-                      </InfoWindow>
-                    )}
-                  </>
-                ))}
+                        position={{ lng: petEvent.location.coordinates[0], lat: petEvent.location.coordinates[1] }}
+                        onClick={() => {
+                          setOpenInfoWindow(petEvent._id);
+                        }}
+                      />
+                      {openInfoWindow === petEvent._id && (
+                        <InfoWindow
+                          position={{ lng: petEvent.location.coordinates[0], lat: petEvent.location.coordinates[1] }}
+                          onCloseClick={() => {
+                            setOpenInfoWindow(undefined);
+                          }}
+                        >
+                          <Card>
+                            <CardHeader title={petEvent.name} />
+                            <CardActions>
+                              <Button
+                                component={routerLink}
+                                to={`/event/${petEvent._id}`}
+                                fullWidth
+                                size="small"
+                                variant="contained"
+                                color="primary"
+                                type="submit"
+                              >
+                                see event
+                              </Button>
+                            </CardActions>
+                          </Card>
+                        </InfoWindow>
+                      )}
+                    </>
+                  ))}
               </GoogleMap>
             </LoadScript>
           )}
