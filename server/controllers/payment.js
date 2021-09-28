@@ -25,7 +25,12 @@ exports.createCustomer = asyncHandler(async (req, res) => {
 exports.retrieveCustomer = asyncHandler(async (req, res) => {
   try {
     const customer = await stripe.customers.retrieve(req.params.id);
-    res.send(customer);
+    if (customer) {
+      res.send(customer);
+    } else {
+      res.status(400);
+      throw new Error(err, "Customer not exists");  
+    }
   }
   catch (err) {
     res.status(400);
@@ -40,14 +45,18 @@ exports.attachPaymentMethod = asyncHandler(async (req, res) => {
       {customer: req.body.customerId}
     );
 
-    const customer = await stripe.customers.update(
-      req.body.customerId,
-      {
-        invoice_settings: {
-          default_payment_method: req.body.paymentMethodId,
+    const customer = await stripe.customers.retrieve(req.body.customerId);
+
+    if (customer) {
+      await stripe.customers.update(
+        req.body.customerId,
+        {
+          invoice_settings: {
+            default_payment_method: req.body.paymentMethodId,
+          }
         }
-      }
-    );
+      );
+    }
     
     res.send(paymentMethod);
   }

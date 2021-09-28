@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Grid, Typography, Paper, Button } from '@material-ui/core';
+import { Grid, Typography, Button } from '@material-ui/core';
 import useStyles from './useStyles';
 
 interface Props {

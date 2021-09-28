@@ -66,6 +66,10 @@ const useStyles = makeStyles((theme) => ({
       color: 'rgba(0, 0, 0, 0.5)',
     },
   },
+  errorMessage: {
+    color: 'red',
+    fontWeight: 'bold',
+  },
 }));
 
 export default useStyles;

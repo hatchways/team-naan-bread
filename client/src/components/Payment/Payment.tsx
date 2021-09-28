@@ -7,7 +7,7 @@ import getCustomerProfile from '../../helpers/APICalls/getCustomerProfile';
 import createCustomer from '../../helpers/APICalls/createCustomer';
 import { CustomerProfile, Customer } from '../../interface/ProfileApiData';
 import attachPaymentMethod from '../../helpers/APICalls/attachPaymentMethod';
-import { PaymentMethod } from '../../interface/PaymentMethod';
+import { PaymentMethod, PaymentMethodError } from '../../interface/PaymentMethod';
 import PaymentMethodCreate from './PaymentMethodCreate';
 import retrieveCustomer from '../../helpers/APICalls/retrieveCustomer';
 import retrievePaymentMethod from '../../helpers/APICalls/retrievePaymentMethod';
@@ -46,6 +46,10 @@ function Payment(): JSX.Element {
       exp_month: '',
       exp_year: '',
     },
+  });
+
+  const [error, setError] = useState<PaymentMethodError>({
+    message: '',
   });
 
   // Fetch user's profile.
@@ -107,7 +111,7 @@ function Payment(): JSX.Element {
       });
 
       if (error) {
-        console.log(error);
+        setError({ message: error.message });
       }
 
       if (paymentMethod) {
@@ -139,7 +143,7 @@ function Payment(): JSX.Element {
             resetPaymentMethod={resetPaymentMethod}
           />
         ) : (
-          <PaymentMethodCreate handleSubmit={handleSubmit} />
+          <PaymentMethodCreate handleSubmit={handleSubmit} error={error} />
         )}
       </Grid>
     </Grid>

@@ -8,3 +8,7 @@ export interface PaymentMethod {
     exp_year: string;
   };
 }
+
+export interface PaymentMethodError {
+  message: string | undefined;
+}

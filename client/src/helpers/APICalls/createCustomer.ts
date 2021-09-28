@@ -6,7 +6,6 @@ const createCustomer = async (id: string): Promise<Customer> => {
     method: 'POST',
     credentials: 'include',
   };
-  console.log(id);
   return await fetch(`/payment/${id}/create-customer`, fetchOptions)
     .then((res) => res.json())
     .catch(() => ({

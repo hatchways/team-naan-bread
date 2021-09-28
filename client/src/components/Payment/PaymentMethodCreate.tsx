@@ -1,19 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { Grid, Typography, Paper, Button } from '@material-ui/core';
-import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import React from 'react';
+import { Typography, Button } from '@material-ui/core';
+import { CardElement } from '@stripe/react-stripe-js';
 import useStyles from './useStyles';
-import { useAuth } from '../../context/useAuthContext';
-import getCustomerProfile from '../../helpers/APICalls/getCustomerProfile';
-import createCustomer from '../../helpers/APICalls/createCustomer';
-import { CustomerProfile } from '../../interface/ProfileApiData';
-import attachPaymentMethod from '../../helpers/APICalls/attachPaymentMethod';
-import { PaymentMethod } from '../../interface/PaymentMethod';
 
 interface Props {
   handleSubmit: any;
+  error: {
+    message: string | undefined;
+  };
 }
 
-function PaymentMethodCreate({ handleSubmit }: Props): JSX.Element {
+function PaymentMethodCreate({ handleSubmit, error }: Props): JSX.Element {
   const classes = useStyles();
 
   return (
@@ -34,6 +31,9 @@ function PaymentMethodCreate({ handleSubmit }: Props): JSX.Element {
           },
         }}
       />
+      <Typography component="p" className={classes.errorMessage}>
+        {error.message ? error.message : null}
+      </Typography>
       <Button type="submit" size="large" variant="contained" color="primary" className={classes.submit}>
         Add payment method
       </Button>
