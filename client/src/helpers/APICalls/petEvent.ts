@@ -12,4 +12,13 @@ const createPetEvent = async (bodyData: PetEvent) => {
   return await fetch(`/event`, fetchOptions);
 };
 
-export { createPetEvent };
+const requestNearbyEvents = async (userCoordinates: number[]) => {
+  const fetchOptions: FetchOptions = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ userCoordinates }),
+    credentials: 'include',
+  };
+  return await fetch(`/event/nearby`, fetchOptions);
+};
+export { createPetEvent, requestNearbyEvents };
