@@ -1,5 +1,9 @@
 const express = require('express');
-const { getRequests, postRequest, updateRequest } = require('../controllers/request');
+const { 
+    getRequests, 
+    postRequest, 
+    updateRequest, 
+  } = require('../controllers/request');
 const router = express.Router();
 const protect = require('../middleware/auth');
 

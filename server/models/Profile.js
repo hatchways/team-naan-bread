@@ -25,7 +25,11 @@ const profileSchema = new mongoose.Schema(
       type: String,
     },
     describeYourself: {
-      type: String,
+        type: String,
+    },
+    profilePhoto: {
+        url: String,
+        publicId: String,
     },
     profilePhoto: {
       url: String,
@@ -49,6 +53,15 @@ const profileSchema = new mongoose.Schema(
         ref: 'review',
       },
     ],
+    customerId: {
+      type: String,
+    },
+    serviceId: {
+      type: String,
+    },
+    hourlyRate: {
+      type: Number,
+    },
   },
   {
     timestamps: true,

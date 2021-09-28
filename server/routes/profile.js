@@ -7,9 +7,12 @@ findProfileById,
 findAllProfiles,
 uploadProfilePhoto,
 deleteProfilePhoto,
+profileSearch,
 } = require('../controllers/profile');
 const protect = require("../middleware/auth");
 const { multerUploads } = require("../utils/multer");
+
+router.route('/profileSearch').post(profileSearch);
 
 router.route('/createProfile').post(createProfile);
 

@@ -9,13 +9,15 @@ const { join } = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
-const authRouter = require('./routes/auth');
-const userRouter = require('./routes/user');
-const profileRouter = require('./routes/profile');
-const requestRouter = require('./routes/request');
+const authRouter = require("./routes/auth");
+const userRouter = require("./routes/user");
+const profileRouter = require("./routes/profile");
+const requestRouter = require("./routes/request");
+const availabilityRouter = require("./routes/availability");
 const reviewRouter = require('./routes/review');
 const setHeaders = require('./middleware/setHeaders');
 const notificationRouter = require('./routes/notification');
+const paymentRouter = require('./routes/payment');
 
 const { json, urlencoded } = express;
 
@@ -47,12 +49,14 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/auth', authRouter);
-app.use('/users', userRouter);
-app.use('/profile', profileRouter);
-app.use('/request', requestRouter);
+app.use("/auth", authRouter);
+app.use("/users", userRouter);
+app.use("/profile", profileRouter);
+app.use("/request", requestRouter);
+app.use("/availability", availabilityRouter);
 app.use('/review', reviewRouter);
 app.use('/notification', notificationRouter);
+app.use('/payment', paymentRouter);
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '/client/build')));
@@ -74,4 +78,4 @@ process.on('unhandledRejection', (err, promise) => {
   server.close(() => process.exit(1));
 });
 
-module.exports = { app, server };
+module.exports = { app, server, io };

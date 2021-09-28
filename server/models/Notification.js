@@ -1,21 +1,22 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const notificationSchema = mongoose.Schema(
   {
     notificationType: {
       type: String,
-      enum: ["success", "warning", "info", "confirmation"],
-      default: "info",
+      enum: ['success', 'warning', 'info', 'confirmation', 'dog sitting', 'review'],
+      default: 'info',
     },
     title: { type: String, required: true },
     description: String,
     read: { type: Boolean, default: false },
     userId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "user",
+      ref: 'user',
     },
+    context: mongoose.Schema.Types.Mixed,
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
-module.exports = Request = mongoose.model("notification", notificationSchema);
+module.exports = Notification = mongoose.model('notification', notificationSchema);
