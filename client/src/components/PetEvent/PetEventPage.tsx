@@ -20,17 +20,23 @@ import { Link as routerLink, useParams } from 'react-router-dom';
 import { ProfileApiData } from '../../interface/ProfileApiData';
 import useStyles from './useStyles';
 import { useEffect, useState } from 'react';
-import { getOneEventById } from '../../helpers/APICalls/petEvent';
+import { attendEvent, getOneEventById } from '../../helpers/APICalls/petEvent';
 import { PetEvent } from '../../interface/PetEvent';
+import { useSnackBar } from '../../context/useSnackbarContext';
+import { useAuth } from '../../context/useAuthContext';
 
 interface urlParams {
   id: string;
 }
 
 export default function PetEventPage(): JSX.Element {
+  const { updateSnackBarMessage } = useSnackBar();
+  const { loggedInUser } = useAuth();
+
   const classes = useStyles();
   const { id } = useParams<urlParams>();
   const [petEvent, setPetEvent] = useState<PetEvent>({} as PetEvent);
+  const [isAttendee, SetAsAttendee] = useState<boolean>(false);
 
   useEffect(() => {
     async function fetchEvent() {
@@ -38,12 +44,30 @@ export default function PetEventPage(): JSX.Element {
       if (response.ok) {
         const data = await response.json();
         setPetEvent(data);
+        if (loggedInUser && data.attendees.some((attendee: ProfileApiData) => attendee._id === loggedInUser?.id)) {
+          SetAsAttendee(true);
+        }
       }
     }
     if (id) {
       fetchEvent();
     }
-  });
+  }, [id, loggedInUser]);
+
+  const attend = async (petEventId: string) => {
+    const response = await attendEvent(petEventId);
+    const data = await response.json();
+    if (data.error) {
+      updateSnackBarMessage(data.error);
+    } else {
+      updateSnackBarMessage('attended ');
+      setPetEvent((state) => {
+        state.attendees.push({ firstName: 'You', _id: loggedInUser?.id } as ProfileApiData);
+        return state;
+      });
+      SetAsAttendee(true);
+    }
+  };
 
   return (
     <Box marginBottom={'11%'} marginTop={'10%'} alignItems={'center'} marginLeft={'10%'} marginRight={'10%'}>
@@ -75,7 +99,17 @@ export default function PetEventPage(): JSX.Element {
                 </Typography>
               </CardContent>
               <CardActions>
-                <Button fullWidth size="large" variant="contained" color="primary" type="submit">
+                <Button
+                  onClick={async () => {
+                    await attend(petEvent._id);
+                  }}
+                  disabled={isAttendee}
+                  fullWidth
+                  size="large"
+                  variant="contained"
+                  color="primary"
+                  type="submit"
+                >
                   attend
                 </Button>
               </CardActions>
@@ -120,7 +154,7 @@ export default function PetEventPage(): JSX.Element {
                       <ListItemAvatar>
                         <Avatar />
                       </ListItemAvatar>
-                      <ListItemText> {attendee.firstName}</ListItemText>
+                      <ListItemText> {loggedInUser?.id === attendee._id ? 'You' : attendee.firstName}</ListItemText>
                     </ListItem>
                   ))}
               </Box>
