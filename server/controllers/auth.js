@@ -1,7 +1,8 @@
-const User = require('../models/User');
-const asyncHandler = require('express-async-handler');
-const generateToken = require('../utils/generateToken');
-const Profile = require('../models/Profile');
+const User = require("../models/User");
+const asyncHandler = require("express-async-handler");
+const generateToken = require("../utils/generateToken");
+const Profile = require("../models/Profile");
+const Availability = require("../models/Availability");
 
 // @route POST /auth/register
 // @desc Register user
@@ -32,8 +33,50 @@ exports.registerUser = asyncHandler(async (req, res, next) => {
   //creating the email and adding the id to the profile
   const profile = await Profile.create({
     email: user.email,
+    _id: user._id
+  })
+
+  //creating the availability schema with the same id
+  const availability = await Availability.create({
     _id: user._id,
-  });
+    availability: {
+      Monday: {
+        to: '',
+        from: '',
+      },
+      Tuesday: {
+        to: '',
+        from: '',
+      },
+      Wednesday: {
+        to: '',
+        from: '',
+      },
+      Thursday: {
+        to: '',
+        from: '',
+      },
+      Friday: {
+        to: '',
+        from: '',
+      },
+      Saturday: {
+        to: '',
+        from: '',
+      },
+      Sunday: {
+        to: '',
+        from: '',
+      },
+    }
+  })
+
+  if(profile){
+    console.log("Profile created")
+  }
+  if(availability){
+    console.log("Availability created")
+  }
 
   if (user) {
     const token = generateToken(user._id);
