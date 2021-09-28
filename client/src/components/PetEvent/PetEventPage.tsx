@@ -108,21 +108,32 @@ export default function PetEventPage(): JSX.Element {
                     hosted by {typeof petEvent.host !== 'string' ? petEvent.host?.firstName : null}
                   </Typography>
                 </CardContent>
-                <CardActions>
-                  <Button
-                    onClick={async () => {
-                      await attend(petEvent._id);
-                    }}
-                    disabled={isAttendee}
-                    fullWidth
-                    size="large"
-                    variant="contained"
-                    color="primary"
-                    type="submit"
-                  >
-                    attend
-                  </Button>
-                </CardActions>
+                {typeof petEvent.host !== 'string' && loggedInUser?.id !== petEvent.host._id ? (
+                  <CardActions>
+                    <Button
+                      onClick={async () => {
+                        await attend(petEvent._id);
+                      }}
+                      disabled={isAttendee}
+                      fullWidth
+                      size="large"
+                      variant="contained"
+                      color="primary"
+                      type="submit"
+                    >
+                      attend
+                    </Button>
+                  </CardActions>
+                ) : (
+                  <CardActions>
+                    <Button fullWidth variant="contained" color="secondary">
+                      edit
+                    </Button>
+                    <Button fullWidth variant="contained" color="secondary">
+                      delete
+                    </Button>
+                  </CardActions>
+                )}
               </Card>
             )}
           </Box>
@@ -168,6 +179,17 @@ export default function PetEventPage(): JSX.Element {
                     <CircularProgress />
                   </Box>
                 )}
+                <ListItem button component={routerLink} to={'#'}>
+                  <ListItemAvatar>
+                    <Avatar />
+                  </ListItemAvatar>
+                  {typeof petEvent.host !== 'string' && petEvent.host && (
+                    <ListItemText
+                      primary={loggedInUser?.id === petEvent.host._id ? 'You' : petEvent.host.firstName}
+                      secondary={'host'}
+                    />
+                  )}
+                </ListItem>
 
                 {petEvent.attendees &&
                   petEvent.attendees.map((attendee: ProfileApiData) => (
