@@ -16,7 +16,7 @@ import {
   Typography,
   CircularProgress,
 } from '@material-ui/core';
-import { Link as routerLink, useParams } from 'react-router-dom';
+import { Link as routerLink, useHistory, useParams } from 'react-router-dom';
 import { ProfileApiData } from '../../interface/ProfileApiData';
 import useStyles from './useStyles';
 import { useEffect, useState } from 'react';
@@ -32,11 +32,13 @@ interface urlParams {
 export default function PetEventPage(): JSX.Element {
   const { updateSnackBarMessage } = useSnackBar();
   const { loggedInUser } = useAuth();
+  const history = useHistory();
 
   const classes = useStyles();
   const { id } = useParams<urlParams>();
   const [petEvent, setPetEvent] = useState<PetEvent>({} as PetEvent);
   const [isAttendee, SetAsAttendee] = useState<boolean>(false);
+  const [eventLoading, setEventLoading] = useState<boolean>(false);
 
   useEffect(() => {
     async function fetchEvent() {
@@ -47,12 +49,14 @@ export default function PetEventPage(): JSX.Element {
         if (loggedInUser && data.attendees.some((attendee: ProfileApiData) => attendee._id === loggedInUser?.id)) {
           SetAsAttendee(true);
         }
+      } else {
+        history.push('/events');
       }
     }
     if (id) {
       fetchEvent();
     }
-  }, [id, loggedInUser]);
+  }, [history, id, loggedInUser]);
 
   const attend = async (petEventId: string) => {
     const response = await attendEvent(petEventId);
