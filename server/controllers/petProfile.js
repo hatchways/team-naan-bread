@@ -1,9 +1,10 @@
 const PetProfile = require("../models/PetProfile");
 const asyncHandler = require("express-async-handler");
-//the Profile is also created on in controllers/auth when the user creates a new account. However- only the email and id fields will be filled
 
 exports.createPetProfile = asyncHandler(async (req, res, next) => {
   const { petName, ownerID, petType, petAge, petStatus } = req.body;
+
+
 
   const petProfile = await PetProfile.create({
     petName,
