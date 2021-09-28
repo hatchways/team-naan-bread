@@ -3,6 +3,7 @@ import { Switch, Route, useRouteMatch } from 'react-router-dom';
 import SettingsMenu from '../../components/SettingsMenu/SettingsMenu';
 import EditProfile from '../../components/EditProfile/EditProfile';
 import ProfilePhoto from '../../components/ProfilePhoto/ProfilePhoto';
+import Payment from '../../components/Payment/Payment';
 import Availability from '../../components/Availability/Availability';
 import useStyles from './useStyles';
 
@@ -20,6 +21,7 @@ function Settings(): JSX.Element {
           <Switch>
             <Route exact path={`${path}`} component={EditProfile} />
             <Route path={`${path}/profile-photo`} component={ProfilePhoto} />
+            <Route path={`${path}/payment`} component={Payment} />
             <Route exact path={`${path}/availability`} component={Availability} />
           </Switch>
         </Grid>

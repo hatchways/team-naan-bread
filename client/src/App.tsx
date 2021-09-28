@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from 'react';
 import { MuiThemeProvider } from '@material-ui/core';
 import { theme } from './themes/theme';
 import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom';
@@ -13,6 +14,8 @@ import { SnackBarProvider } from './context/useSnackbarContext';
 import { ProtectedRoute } from './context/protectedRoute';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
 
 import { TourProvider } from '@reactour/tour';
 import { steps } from './helpers/Reactour/reactorSteps';
@@ -20,6 +23,10 @@ import { steps } from './helpers/Reactour/reactorSteps';
 import './App.css';
 import NavBar from './components/NavBar/NavBar';
 import AllNotifications from './pages/AllNotifiactions/AllNotifications';
+
+const stripePromise = loadStripe(
+  'pk_test_51JYBH4HXzYVsCZt0Mls8k6b8UIXWlzgUTCinfBuNzmrqYLlUeUQuV4gcj7sePE1cDlUP2sRkFWJmAMgqovjZOEMd006aTSQqIg',
+);
 
 function App(): JSX.Element {
   return (
@@ -29,22 +36,25 @@ function App(): JSX.Element {
           <SnackBarProvider>
             <AuthProvider>
               <SocketProvider>
-                <Route path="/">
-                  <NavBar />
-                </Route>
-                <Switch>
-                  <ProtectedRoute exact path="/search" component={Searcher} />
-                  <ProtectedRoute path="/settings" component={Settings} />
-                  <ProtectedRoute exact path="/login" component={Login} />
-                  <ProtectedRoute exact path="/signup" component={Signup} />
-                  <ProtectedRoute exact path="/dashboard" component={Dashboard} />
-                  <ProtectedRoute exact path="/notifications" component={AllNotifications} />
-                  <ProtectedRoute exact path="/my-sitters" component={MySitters} />
-                  <Route path="*">
-                    <Redirect to="/login" />
+                <Elements stripe={stripePromise}>
+                  <Route path="/">
+                    <NavBar />
+                  <Route path="/">
+                    <NavBar />
                   </Route>
-                  <Route exact path="/my-sitters" component={MySitters} />
-                </Switch>
+                  <Switch>
+                    <ProtectedRoute exact path="/search" component={Searcher} />
+                    <ProtectedRoute path="/settings" component={Settings} />
+                    <ProtectedRoute exact path="/login" component={Login} />
+                    <ProtectedRoute exact path="/signup" component={Signup} />
+                    <ProtectedRoute exact path="/dashboard" component={Dashboard} />
+                    <ProtectedRoute exact path="/notifications" component={AllNotifications} />
+                    <ProtectedRoute exact path="/my-sitters" component={MySitters} />
+                    <Route path="*">
+                      <Redirect to="/login" />
+                    </Route>
+                  </Switch>
+                </Elements>
               </SocketProvider>
             </AuthProvider>
           </SnackBarProvider>
