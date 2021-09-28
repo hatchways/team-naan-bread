@@ -29,4 +29,12 @@ const getOneEventById = async (id: string) => {
   };
   return await fetch(`/event/${id}`, fetchOptions);
 };
-export { createPetEvent, requestNearbyEvents, getOneEventById };
+
+const attendEvent = async (eventId: string) => {
+  const fetchOptions: FetchOptions = {
+    method: 'POST',
+    credentials: 'include',
+  };
+  return await fetch(`/event/attend/${eventId}`, fetchOptions);
+};
+export { createPetEvent, requestNearbyEvents, getOneEventById, attendEvent };
