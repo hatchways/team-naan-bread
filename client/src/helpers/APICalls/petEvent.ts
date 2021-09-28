@@ -21,4 +21,12 @@ const requestNearbyEvents = async (userCoordinates: number[]) => {
   };
   return await fetch(`/event/nearby`, fetchOptions);
 };
-export { createPetEvent, requestNearbyEvents };
+
+const getOneEventById = async (id: string) => {
+  const fetchOptions: FetchOptions = {
+    method: 'GET',
+    credentials: 'include',
+  };
+  return await fetch(`/event/${id}`, fetchOptions);
+};
+export { createPetEvent, requestNearbyEvents, getOneEventById };
