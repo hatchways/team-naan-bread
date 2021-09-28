@@ -115,3 +115,22 @@ exports.findAllProfiles = asyncHandler(async (req, res, next) => {
 
     res.status(200).json({ profiles: profiles });
 })
+
+exports.profileSearch = asyncHandler(async (req, res, next) => {
+  const { search, times, to, from } = req.body;
+
+  //find either matching firstname or lastname
+  const profiles = await Profile.find({
+    $or: [
+      { firstName: { $regex: search, $options: "i" } },
+      { lastName: { $regex: search, $options: "i" } },
+    ],
+  });
+
+  if (!profiles) {
+    res.status(404);
+    throw new Error("No profiles found");
+  }
+
+  res.status(200).json({ profiles: profiles });
+});

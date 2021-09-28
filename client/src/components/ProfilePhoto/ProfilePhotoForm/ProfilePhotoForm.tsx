@@ -8,6 +8,9 @@ import uploadProfilePhoto from '../../../helpers/APICalls/uploadProfilePhoto';
 import { User } from '../../../interface/User';
 import deleteProfilePhoto from '../../../helpers/APICalls/deleteProfilePhoto';
 import { CircularProgress } from '@material-ui/core';
+import getProfile from '../../../helpers/APICalls/getProfile';
+import { ProfileApiData } from '../../../interface/ProfileApiData';
+
 interface Props {
   loggedInUser: User;
 }
@@ -28,8 +31,12 @@ export default function ProfilePhotoForm({ loggedInUser }: Props): JSX.Element {
   });
 
   useEffect(() => {
-    setPhoto(loggedInUser.profilePhotoUrl);
-  }, [loggedInUser.profilePhotoUrl]);
+    if (loggedInUser) {
+      getProfile(loggedInUser.id).then((data: ProfileApiData) => {
+        setPhoto(data.profilePhoto?.url);
+      });
+    }
+  }, [loggedInUser]);
 
   const changePhoto = (file: File | null) => {
     setLoading(true);
