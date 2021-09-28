@@ -9,6 +9,7 @@ const {
   cancelAttendanceToEvent,
   getOneEvent,
   removeEvent,
+  getEventsNearby,
 } = require('../controllers/event');
 
 router.route('/').post(protect, createEvent);
@@ -17,5 +18,6 @@ router.route('/attend/:id').post(protect, attendEvent);
 router.route('/cancel/:id').post(protect, cancelAttendanceToEvent);
 router.route('/:id').get(getOneEvent);
 router.route('/:id').delete(protect, removeEvent);
+router.route('/nearby').post(protect, getEventsNearby);
 
 module.exports = router;

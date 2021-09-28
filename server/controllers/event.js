@@ -95,3 +95,22 @@ exports.removeEvent = asyncHandler(async (req, res, next) => {
   const deletedEvent = await Event.findByIdAndDelete(eventId);
   return res.status(200).json(deletedEvent);
 });
+
+exports.getEventsNearby = asyncHandler(async (req, res, next) => {
+  const { userCoordinates } = req.body;
+
+  if (!userCoordinates) {
+    res.status(400);
+  }
+
+  const nearbyEvents = await Event.where('location').near({
+    center: {
+      type: 'Point',
+      coordinates: userCoordinates,
+    },
+
+    maxDistance: 100 * 1000,
+  });
+
+  return res.status(200).json(nearbyEvents);
+});
