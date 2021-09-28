@@ -38,7 +38,7 @@ export default function PetEventPage(): JSX.Element {
   const { id } = useParams<urlParams>();
   const [petEvent, setPetEvent] = useState<PetEvent>({} as PetEvent);
   const [isAttendee, SetAsAttendee] = useState<boolean>(false);
-  const [eventLoading, setEventLoading] = useState<boolean>(false);
+  const [eventLoading, setEventLoading] = useState<boolean>(true);
 
   useEffect(() => {
     async function fetchEvent() {
@@ -52,6 +52,7 @@ export default function PetEventPage(): JSX.Element {
       } else {
         history.push('/events');
       }
+      setEventLoading(false);
     }
     if (id) {
       fetchEvent();
@@ -78,52 +79,62 @@ export default function PetEventPage(): JSX.Element {
       <Grid justifyContent="center" container spacing={10}>
         <Grid item xs={12} md={6}>
           <Box maxHeight={'500px'} overflow="auto">
-            <Card key={petEvent._id} variant="outlined">
-              <CardContent>
-                <Typography variant="h4">{petEvent.name}</Typography>
-                <Typography>
-                  {new Date(petEvent.eventDate).toLocaleDateString([], {
-                    weekday: 'short',
-                    year: '2-digit',
-                    month: 'short',
-                    day: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit',
-                  })}
-                </Typography>
+            {eventLoading ? (
+              <Box padding="50%">
+                <CircularProgress />
+              </Box>
+            ) : (
+              <Card key={petEvent._id} variant="outlined">
+                <CardContent>
+                  <Typography variant="h4">{petEvent.name}</Typography>
+                  <Typography>
+                    {new Date(petEvent.eventDate).toLocaleDateString([], {
+                      weekday: 'short',
+                      year: '2-digit',
+                      month: 'short',
+                      day: 'numeric',
+                      hour: '2-digit',
+                      minute: '2-digit',
+                    })}
+                  </Typography>
 
-                <Typography color="textSecondary">{petEvent.address}</Typography>
-              </CardContent>
-              <CardContent>
-                <Typography>{petEvent.description}</Typography>
-              </CardContent>
-              <CardContent>
-                <Typography variant="button" color="textSecondary" gutterBottom>
-                  hosted by {typeof petEvent.host !== 'string' ? petEvent.host?.firstName : null}
-                </Typography>
-              </CardContent>
-              <CardActions>
-                <Button
-                  onClick={async () => {
-                    await attend(petEvent._id);
-                  }}
-                  disabled={isAttendee}
-                  fullWidth
-                  size="large"
-                  variant="contained"
-                  color="primary"
-                  type="submit"
-                >
-                  attend
-                </Button>
-              </CardActions>
-            </Card>
+                  <Typography color="textSecondary">{petEvent.address}</Typography>
+                </CardContent>
+                <CardContent>
+                  <Typography>{petEvent.description}</Typography>
+                </CardContent>
+                <CardContent>
+                  <Typography variant="button" color="textSecondary" gutterBottom>
+                    hosted by {typeof petEvent.host !== 'string' ? petEvent.host?.firstName : null}
+                  </Typography>
+                </CardContent>
+                <CardActions>
+                  <Button
+                    onClick={async () => {
+                      await attend(petEvent._id);
+                    }}
+                    disabled={isAttendee}
+                    fullWidth
+                    size="large"
+                    variant="contained"
+                    color="primary"
+                    type="submit"
+                  >
+                    attend
+                  </Button>
+                </CardActions>
+              </Card>
+            )}
           </Box>
         </Grid>
         <Grid item xs={12} md={6}>
           {process.env.REACT_APP_GOOGLE_MAPS_API_KEY && (
             <LoadScript
-              loadingElement={<CircularProgress />}
+              loadingElement={
+                <Box padding="50%">
+                  <CircularProgress />
+                </Box>
+              }
               googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
               libraries={['places']}
             >
@@ -152,6 +163,12 @@ export default function PetEventPage(): JSX.Element {
             <List>
               <Box maxHeight={'400px'} overflow="auto">
                 <ListSubheader> meetup attendees</ListSubheader>
+                {eventLoading && (
+                  <Box padding="50%">
+                    <CircularProgress />
+                  </Box>
+                )}
+
                 {petEvent.attendees &&
                   petEvent.attendees.map((attendee: ProfileApiData) => (
                     <ListItem key={attendee._id} button component={routerLink} to={'#'}>
