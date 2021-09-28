@@ -5,7 +5,10 @@ createProfile,
 updateProfile,
 findProfileById,
 findAllProfiles,
+profileSearch,
 } = require('../controllers/profile');
+
+router.route('/profileSearch').post(profileSearch);
 
 router.route('/createProfile').post(createProfile);
 
