@@ -20,7 +20,7 @@ import { Link as routerLink, useHistory, useParams } from 'react-router-dom';
 import { ProfileApiData } from '../../interface/ProfileApiData';
 import useStyles from './useStyles';
 import { useEffect, useState } from 'react';
-import { attendEvent, getOneEventById } from '../../helpers/APICalls/petEvent';
+import { attendEvent, cancelEventAttendance, getOneEventById } from '../../helpers/APICalls/petEvent';
 import { PetEvent } from '../../interface/PetEvent';
 import { useSnackBar } from '../../context/useSnackbarContext';
 import { useAuth } from '../../context/useAuthContext';
@@ -60,18 +60,27 @@ export default function PetEventPage(): JSX.Element {
     }
   }, [history, id, loggedInUser]);
 
-  const attend = async (petEventId: string) => {
-    const response = await attendEvent(petEventId);
+  const attendOrCancel = async (petEventId: string) => {
+    let response;
+    if (isAttendee) {
+      response = await cancelEventAttendance(petEventId);
+    } else {
+      response = await attendEvent(petEventId);
+    }
     const data = await response.json();
     if (data.error) {
       updateSnackBarMessage(data.error);
     } else {
       updateSnackBarMessage('attended ');
       setPetEvent((state) => {
-        state.attendees.push({ firstName: 'You', _id: loggedInUser?.id } as ProfileApiData);
+        if (isAttendee) {
+          state.attendees = state.attendees.filter((attendee) => attendee._id != loggedInUser?.id);
+        } else {
+          state.attendees.push({ firstName: 'You', _id: loggedInUser?.id } as ProfileApiData);
+        }
         return state;
       });
-      SetAsAttendee(true);
+      isAttendee ? SetAsAttendee(false) : SetAsAttendee(true);
     }
   };
 
@@ -113,16 +122,15 @@ export default function PetEventPage(): JSX.Element {
                   <CardActions>
                     <Button
                       onClick={async () => {
-                        await attend(petEvent._id);
+                        await attendOrCancel(petEvent._id);
                       }}
-                      disabled={isAttendee}
                       fullWidth
                       size="large"
                       variant="contained"
                       color="primary"
                       type="submit"
                     >
-                      attend
+                      {isAttendee ? 'cancel attendance' : 'attend'}
                     </Button>
                   </CardActions>
                 ) : (
