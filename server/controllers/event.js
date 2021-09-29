@@ -9,7 +9,7 @@ exports.createEvent = asyncHandler(async (req, res, next) => {
 });
 
 exports.editEvent = asyncHandler(async (req, res, next) => {
-  const { name, eventDate, location } = req.body;
+  const { name, eventDate, location, description, address } = req.body;
   const hostId = req.user.id;
   const eventId = req.query.id;
   const petEvent = await Event.findById(eventId);
@@ -19,7 +19,11 @@ exports.editEvent = asyncHandler(async (req, res, next) => {
   if (!petEvent.host.equals(hostId)) {
     return res.sendStatus(403);
   }
-  const editedEvent = await Event.findOneAndUpdate({ _id: eventId }, { name, eventDate, location }, { new: true });
+  const editedEvent = await Event.findOneAndUpdate(
+    { _id: eventId },
+    { name, eventDate, location, description, address },
+    { new: true },
+  );
 
   return res.status(201).json(editedEvent);
 });
@@ -73,6 +77,14 @@ exports.getOneEvent = asyncHandler(async (req, res, next) => {
     .populate('attendees', 'firstName lastName email')
     .populate('host', 'firstName lastName email');
 
+  return res.status(200).json(petEvent);
+});
+exports.getOneSimpleEvent = asyncHandler(async (req, res, next) => {
+  const eventId = req.params.id;
+  if (!eventId) {
+    return res.sendStatus(400);
+  }
+  const petEvent = await Event.findById(eventId);
   return res.status(200).json(petEvent);
 });
 
