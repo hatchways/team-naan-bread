@@ -76,6 +76,9 @@ exports.getOneEvent = asyncHandler(async (req, res, next) => {
   const petEvent = await Event.findById(eventId)
     .populate('attendees', 'firstName lastName email')
     .populate('host', 'firstName lastName email');
+  if (!petEvent) {
+    return res.sendStatus(404);
+  }
 
   return res.status(200).json(petEvent);
 });
@@ -85,6 +88,10 @@ exports.getOneSimpleEvent = asyncHandler(async (req, res, next) => {
     return res.sendStatus(400);
   }
   const petEvent = await Event.findById(eventId);
+  if (!petEvent) {
+    return res.sendStatus(404);
+  }
+
   return res.status(200).json(petEvent);
 });
 
