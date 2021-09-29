@@ -29,6 +29,13 @@ const getOneEventById = async (id: string) => {
   };
   return await fetch(`/event/${id}`, fetchOptions);
 };
+const getOneSimpleEventById = async (id: string) => {
+  const fetchOptions: FetchOptions = {
+    method: 'GET',
+    credentials: 'include',
+  };
+  return await fetch(`/event/simple/${id}`, fetchOptions);
+};
 
 const attendEvent = async (eventId: string) => {
   const fetchOptions: FetchOptions = {
@@ -47,4 +54,4 @@ const editEvent = async (eventId: string, bodyData: PetEvent) => {
   };
   return await fetch(`/event/${eventId}`, fetchOptions);
 };
-export { createPetEvent, requestNearbyEvents, getOneEventById, attendEvent, editEvent };
+export { createPetEvent, requestNearbyEvents, getOneEventById, attendEvent, editEvent, getOneSimpleEventById };
