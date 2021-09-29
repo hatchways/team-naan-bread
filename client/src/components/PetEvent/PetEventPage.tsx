@@ -126,7 +126,13 @@ export default function PetEventPage(): JSX.Element {
                   </CardActions>
                 ) : (
                   <CardActions>
-                    <Button fullWidth variant="contained" color="secondary">
+                    <Button
+                      component={routerLink}
+                      to={`/edit/event/${petEvent._id}`}
+                      fullWidth
+                      variant="contained"
+                      color="secondary"
+                    >
                       edit
                     </Button>
                     <Button fullWidth variant="contained" color="secondary">
