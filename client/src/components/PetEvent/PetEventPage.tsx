@@ -24,6 +24,7 @@ import { attendEvent, getOneEventById } from '../../helpers/APICalls/petEvent';
 import { PetEvent } from '../../interface/PetEvent';
 import { useSnackBar } from '../../context/useSnackbarContext';
 import { useAuth } from '../../context/useAuthContext';
+import DeleteEventButton from './DeleteEventButton';
 
 interface urlParams {
   id: string;
@@ -135,9 +136,8 @@ export default function PetEventPage(): JSX.Element {
                     >
                       edit
                     </Button>
-                    <Button fullWidth variant="contained" color="secondary">
-                      delete
-                    </Button>
+
+                    <DeleteEventButton eventId={petEvent._id} />
                   </CardActions>
                 )}
               </Card>
