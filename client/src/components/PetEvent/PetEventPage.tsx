@@ -71,7 +71,7 @@ export default function PetEventPage(): JSX.Element {
     if (data.error) {
       updateSnackBarMessage(data.error);
     } else {
-      updateSnackBarMessage('attended ');
+      isAttendee ? updateSnackBarMessage('canceled attendance ') : updateSnackBarMessage('attended ');
       setPetEvent((state) => {
         if (isAttendee) {
           state.attendees = state.attendees.filter((attendee) => attendee._id != loggedInUser?.id);
