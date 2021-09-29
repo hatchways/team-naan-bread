@@ -44,6 +44,7 @@ function App(): JSX.Element {
                   <Route exact path="/events" component={NearByPetEvents} />
                   <Route exact path="/event/:id" component={PetEventPage} />
                   <Route exact path="/event-form" component={PetEventForm} />
+                  <Route exact path="/edit/event/:eventID" component={PetEventForm} />
 
                   <Route exact path="/notifications">
                     <AllNotifications />
