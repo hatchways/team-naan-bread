@@ -54,4 +54,20 @@ const editEvent = async (eventId: string, bodyData: PetEvent) => {
   };
   return await fetch(`/event?id=${eventId}`, fetchOptions);
 };
-export { createPetEvent, requestNearbyEvents, getOneEventById, attendEvent, editEvent, getOneSimpleEventById };
+
+const deleteEventById = async (eventId: string) => {
+  const fetchOptions: FetchOptions = {
+    method: 'DELETE',
+    credentials: 'include',
+  };
+  return await fetch(`/event/${eventId}`, fetchOptions);
+};
+export {
+  createPetEvent,
+  requestNearbyEvents,
+  getOneEventById,
+  attendEvent,
+  editEvent,
+  getOneSimpleEventById,
+  deleteEventById,
+};
