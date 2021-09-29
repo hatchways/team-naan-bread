@@ -62,6 +62,14 @@ const deleteEventById = async (eventId: string) => {
   };
   return await fetch(`/event/${eventId}`, fetchOptions);
 };
+const cancelEventAttendance = async (eventId: string) => {
+  const fetchOptions: FetchOptions = {
+    method: 'POST',
+    credentials: 'include',
+  };
+  return await fetch(`/event/cancel/${eventId}`, fetchOptions);
+};
+
 export {
   createPetEvent,
   requestNearbyEvents,
@@ -70,4 +78,5 @@ export {
   editEvent,
   getOneSimpleEventById,
   deleteEventById,
+  cancelEventAttendance,
 };
