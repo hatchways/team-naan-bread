@@ -37,4 +37,14 @@ const attendEvent = async (eventId: string) => {
   };
   return await fetch(`/event/attend/${eventId}`, fetchOptions);
 };
-export { createPetEvent, requestNearbyEvents, getOneEventById, attendEvent };
+
+const editEvent = async (eventId: string, bodyData: PetEvent) => {
+  const fetchOptions: FetchOptions = {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(bodyData),
+    credentials: 'include',
+  };
+  return await fetch(`/event/${eventId}`, fetchOptions);
+};
+export { createPetEvent, requestNearbyEvents, getOneEventById, attendEvent, editEvent };
