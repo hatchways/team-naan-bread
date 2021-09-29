@@ -25,7 +25,15 @@ const profileSchema = new mongoose.Schema(
       type: String,
     },
     describeYourself: {
-      type: String,
+        type: String,
+    },
+    profilePhoto: {
+        url: String,
+        publicId: String,
+    },
+    profilePhoto: {
+      url: String,
+      publicId: String,
     },
     requestsReceived: [
       {
