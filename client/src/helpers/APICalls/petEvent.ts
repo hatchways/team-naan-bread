@@ -52,6 +52,6 @@ const editEvent = async (eventId: string, bodyData: PetEvent) => {
     body: JSON.stringify(bodyData),
     credentials: 'include',
   };
-  return await fetch(`/event/${eventId}`, fetchOptions);
+  return await fetch(`/event?id=${eventId}`, fetchOptions);
 };
 export { createPetEvent, requestNearbyEvents, getOneEventById, attendEvent, editEvent, getOneSimpleEventById };

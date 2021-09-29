@@ -14,7 +14,7 @@ const {
 } = require('../controllers/event');
 
 router.route('/').post(protect, createEvent);
-router.route('/:id').put(protect, editEvent);
+router.route('/').put(protect, editEvent);
 router.route('/attend/:id').post(protect, attendEvent);
 router.route('/cancel/:id').post(protect, cancelAttendanceToEvent);
 router.route('/:id').get(getOneEvent);
