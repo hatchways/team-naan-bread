@@ -6,7 +6,6 @@ const pointSchema = new mongoose.Schema({
     enum: ['Point'],
     required: true,
   },
-  //Note that longitude comes first in a GeoJSON coordinate array, not latitude
   coordinates: {
     type: [Number],
     required: true,
