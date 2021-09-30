@@ -4,8 +4,8 @@ const router = express.Router();
 const {
 createPetProfile,
 updatePetProfile,
-findPetProfilesByOwnerId,
-findAllPetProfiles,
+findPetProfiles,
+getAllPetProfiles,
 } = require('../controllers/petProfile');
 const { check, validationResult } = require("express-validator");
 
@@ -17,8 +17,6 @@ router.route('/createPetProfile').post(
     check('petStatus').isString(),
     (req, res, next) => {
         const errors = validationResult(req);
-    
-        console.log(errors);
         if (!errors.isEmpty())
           return res.status(400).json({ errors: errors.array() });
         next();
@@ -33,16 +31,14 @@ router.route('/updatePetProfile').post(
     check('petStatus').isString(),
     (req, res, next) => {
         const errors = validationResult(req);
-    
-        console.log(errors);
         if (!errors.isEmpty())
           return res.status(400).json({ errors: errors.array() });
         next();
     }],
     updatePetProfile);
 
-router.route('/findPetProfilesByOwnerId').post(protect, findPetProfilesByOwnerId);
+router.route('/findPetProfiles').post(protect, findPetProfiles);
 
-router.route('/findAllPetProfiles').get(protect, findAllPetProfiles);
+router.route('/getAllPetProfiles').get(protect, getAllPetProfiles);
 
 module.exports = router;

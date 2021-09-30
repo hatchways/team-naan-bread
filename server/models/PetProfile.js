@@ -17,13 +17,13 @@ const petProfileSchema = new mongoose.Schema(
         type: Number,
     },
     petStatus: {
-      type: String,
-      enum: [ "availabile", "not available", null ],
+        type: String,
+        enum: [ "availabile", "not available", null ],
+    },
   },
-  },
-  {
-    timestamps: true,
-  },
+    {
+        timestamps: true,
+    },
 );
 
 module.exports = petProfile = mongoose.model('petProfile', petProfileSchema);
