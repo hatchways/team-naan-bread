@@ -12,9 +12,9 @@ const {
 } = require('../controllers/event');
 
 router.route('/').post(protect, createEvent);
-router.route('/').put(protect, editEvent);
-router.route('/attend/:id').post(protect, attendEvent);
-router.route('/cancel/:id').post(protect, cancelAttendanceToEvent);
+router.route('/').patch(protect, editEvent);
+router.route('/attend/:id').patch(protect, attendEvent);
+router.route('/cancel/:id').patch(protect, cancelAttendanceToEvent);
 router.route('/:id').get(getOneEvent);
 router.route('/:id').delete(protect, removeEvent);
 

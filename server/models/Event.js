@@ -8,7 +8,12 @@ const eventSchema = mongoose.Schema(
       longitude: { type: Number },
       address: { type: String },
     },
-    attendees: [{ type: mongoose.Schema.Types.ObjectId, ref: 'profile' }],
+    attendees: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'profile',
+      },
+    ],
     host: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'profile',
@@ -17,4 +22,4 @@ const eventSchema = mongoose.Schema(
   { timestamps: true },
 );
 
-module.exports = Event = mongoose.model('event', eventSchema);
+module.exports = mongoose.model('Event', eventSchema);
