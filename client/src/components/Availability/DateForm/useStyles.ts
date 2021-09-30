@@ -5,7 +5,7 @@ const useStyles = makeStyles((theme) => ({
   weekday: {
     display: 'flex',
     flexDirection: 'row',
-    marginTop: '5%',
+    marginTop: '20px',
     width: '100%',
     justifyContent: 'space-between',
     alignItems: 'center',

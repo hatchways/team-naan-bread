@@ -4,9 +4,11 @@ const petProfileSchema = new mongoose.Schema(
   {
     petName: {
       type: String,
+      required: true,
     },
     ownerID: {
       type: String,
+      required: true,
     },
     petType: {
         type: String,

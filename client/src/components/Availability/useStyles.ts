@@ -3,17 +3,16 @@ import { findByLabelText } from '@testing-library/dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    width: '100vw',
-    height: '100vh',
+    width: '100%',
   },
   mainContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    height: '90vh',
-    alignItems: 'center',
-    padding: theme.spacing(10),
+    width: '100%',
+    justifyContent: 'center',
+    padding: theme.spacing(4),
+    minWidth: '1000px',
   },
   content: {
     width: '100%',
@@ -55,10 +54,14 @@ const useStyles = makeStyles((theme) => ({
     marginTop: '2%',
     display: 'flex',
     width: '100%',
+    height: '50px',
     justifyContent: 'center',
   },
   button: {
     width: '16%',
+  },
+  divider: {
+    margin: 10,
   },
 }));
 
