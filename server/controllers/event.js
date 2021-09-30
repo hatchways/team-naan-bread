@@ -112,7 +112,7 @@ exports.removeEvent = asyncHandler(async (req, res, next) => {
     throw new Error('you are not authorized to delete this event');
   }
   const deletedEvent = await Event.findByIdAndDelete(eventId);
-  return res.status(200).json(deletedEvent);
+  return res.sendStatus(204);
 });
 
 exports.getEventsNearby = asyncHandler(async (req, res, next) => {
