@@ -39,7 +39,7 @@ const getOneSimpleEventById = async (id: string) => {
 
 const attendEvent = async (eventId: string) => {
   const fetchOptions: FetchOptions = {
-    method: 'POST',
+    method: 'PATCH',
     credentials: 'include',
   };
   return await fetch(`/event/attend/${eventId}`, fetchOptions);
@@ -47,7 +47,7 @@ const attendEvent = async (eventId: string) => {
 
 const editEvent = async (eventId: string, bodyData: PetEvent) => {
   const fetchOptions: FetchOptions = {
-    method: 'PUT',
+    method: 'PATCH',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(bodyData),
     credentials: 'include',
@@ -64,7 +64,7 @@ const deleteEventById = async (eventId: string) => {
 };
 const cancelEventAttendance = async (eventId: string) => {
   const fetchOptions: FetchOptions = {
-    method: 'POST',
+    method: 'PATCH',
     credentials: 'include',
   };
   return await fetch(`/event/cancel/${eventId}`, fetchOptions);
