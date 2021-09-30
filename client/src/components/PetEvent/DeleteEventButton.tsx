@@ -25,7 +25,6 @@ export default function DeleteEventButton({ eventId }: Props) {
   };
 
   const deleteEvent = async () => {
-    console.log('yes yes yes');
     setLoadingDelete(true);
     await deleteEventById(eventId);
     setLoadingDelete(false);
