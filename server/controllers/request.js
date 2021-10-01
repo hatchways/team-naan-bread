@@ -1,7 +1,7 @@
 require("dotenv").config();
 const Request = require('../models/Request');
 const Profile = require('../models/Profile');
-const Notification = require('../models/Notification');
+const { sendNotification } = require('../services/notifications');
 const asyncHandler = require('express-async-handler');
 
 // @route GET /request
@@ -58,19 +58,18 @@ exports.postRequest = asyncHandler(async (req, res) => {
   const currentUser = await User.findById(userId);
 
   const requestDurationInHours = parseInt((request.end - request.start) / 36e5);
-  const requesterFirstNameOrSomeone =
-    updatedUserProfile && updatedUserProfile.firstName ? updatedUserProfile.firstName : 'someone';
+  const requesterFirstNameOrAnonymous =
+    updatedUserProfile && updatedUserProfile.firstName ? updatedUserProfile.firstName : 'Anonymous';
 
-  const newNotification = await Notification.create({
+  const notificationTitle = `${requesterFirstNameOrAnonymous} has requested your service for ${requestDurationInHours} hours`;
+  await sendNotification(req.io, {
     userId: sitterId,
     notificationType: 'dog sitting',
-    title: `${requesterFirstNameOrSomeone} has requested your service for ${requestDurationInHours} hours`,
+    title: notificationTitle,
     context: {
       profilePhotoURL: currentUser.profilePhoto.url,
     },
   });
-
-  req.io.to(sitterId).emit('new-notification', newNotification);
 
   res.send(request);
 });

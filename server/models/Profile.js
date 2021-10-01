@@ -25,7 +25,15 @@ const profileSchema = new mongoose.Schema(
       type: String,
     },
     describeYourself: {
-      type: String,
+        type: String,
+    },
+    profilePhoto: {
+        url: String,
+        publicId: String,
+    },
+    profilePhoto: {
+      url: String,
+      publicId: String,
     },
     requestsReceived: [
       {
@@ -39,6 +47,12 @@ const profileSchema = new mongoose.Schema(
         ref: 'request',
       },
     ],
+    reviewsReceived: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'review',
+      },
+    ],
     customerId: {
       type: String,
     },
@@ -48,12 +62,6 @@ const profileSchema = new mongoose.Schema(
     hourlyRate: {
       type: Number,
     },
-    reviewsReceived: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'review',
-      },
-    ],
   },
   {
     timestamps: true,

@@ -9,8 +9,8 @@ const mockPetEventPage: PetEvent = {
   location: { lat: 26.8206, lng: 30.8 },
   attendees: [
     { _id: '1', email: 'a@sample.com', firstName: 'attendee1' } as ProfileApiData,
-    { _id: '1', email: 'sample@sample.com', firstName: 'attendee2' } as ProfileApiData,
-    { _id: '1', email: 'sample@sample.com', firstName: 'attendee3' } as ProfileApiData,
+    { _id: '2', email: 'sample@sample.com', firstName: 'attendee2' } as ProfileApiData,
+    { _id: '3', email: 'sample@sample.com', firstName: 'attendee3' } as ProfileApiData,
   ],
   address: 'port said, Egypt',
   host: { _id: '1', email: 'sample@sample.com', firstName: 'hostName' } as ProfileApiData,
