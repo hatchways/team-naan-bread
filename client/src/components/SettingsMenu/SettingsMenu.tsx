@@ -19,10 +19,10 @@ function SettingsMenu(props: Props): JSX.Element {
           <Link to={`${props.url}/profile-photo`}>Profile Photo</Link>
         </MenuItem>
         <MenuItem>
-          <Link to="">Availability</Link>
+          <Link to={`${props.url}/availability`}>Availability</Link>
         </MenuItem>
         <MenuItem>
-          <Link to="">Payment</Link>
+          <Link to={`${props.url}/payment`}>Payment</Link>
         </MenuItem>
         <MenuItem>
           <Link to="">Security</Link>

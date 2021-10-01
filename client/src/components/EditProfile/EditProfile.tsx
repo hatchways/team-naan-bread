@@ -11,10 +11,12 @@ import EditProfileForm from './EditProfileForm/EditProfileForm';
 import getProfile from '../../helpers/APICalls/getProfile';
 import updateProfile from '../../helpers/APICalls/updateProfile';
 import { ProfileApiData } from '../../interface/ProfileApiData';
+import { useSnackBar } from '../../context/useSnackbarContext';
 
 export default function Profile(): JSX.Element {
   const classes = useStyles();
   const { loggedInUser } = useAuth();
+  const { updateSnackBarMessage } = useSnackBar();
   const [userProfile, setUserProfile] = useState<ProfileApiData>({
     _id: '',
     email: '',
@@ -102,10 +104,10 @@ export default function Profile(): JSX.Element {
     updateProfile(body).then((data: ProfileApiData) => {
       console.log(data);
     });
+    updateSnackBarMessage('Profile Updated');
   };
 
   if (!loggedInUser) return <CircularProgress />;
-  if (!userProfile) return <>Loading</>;
 
   return (
     <Grid container component="section" className={classes.root}>

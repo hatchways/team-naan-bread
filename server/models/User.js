@@ -20,10 +20,6 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  profilePhoto: {
-    url: String,
-    publicId: String,
-  },
   requests: [
     {
       type: mongoose.Schema.Types.ObjectId,

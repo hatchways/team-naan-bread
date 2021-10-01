@@ -11,4 +11,14 @@ export interface ProfileApiData {
   createdAt: string;
   updatedAt: string;
   __v: string;
+  profilePhoto?: Photo;
+}
+
+export interface Photo {
+  publicId: string;
+  url: string;
+}
+
+export interface SearchProfilesApiData {
+  profiles: Array<ProfileApiData>;
 }
