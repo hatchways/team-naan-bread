@@ -1,12 +1,25 @@
 const mongoose = require('mongoose');
+
+const pointSchema = new mongoose.Schema({
+  type: {
+    type: String,
+    enum: ['Point'],
+    required: true,
+  },
+  coordinates: {
+    type: [Number],
+    required: true,
+  },
+});
+
 const eventSchema = mongoose.Schema(
   {
     name: { type: String, required: true },
     eventDate: { type: Date, required: true },
     location: {
-      latitude: { type: Number },
-      longitude: { type: Number },
-      address: { type: String },
+      type: pointSchema,
+      required: true,
+      index: '2dsphere',
     },
     attendees: [
       {
@@ -18,6 +31,8 @@ const eventSchema = mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'profile',
     },
+    description: String,
+    address: String,
   },
   { timestamps: true },
 );

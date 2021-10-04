@@ -2,15 +2,14 @@ const asyncHandler = require('express-async-handler');
 const Event = require('../models/Event');
 
 exports.createEvent = asyncHandler(async (req, res, next) => {
-  const { name, eventDate, location } = req.body;
+  const { name, eventDate, location, description, address } = req.body;
   const host = req.user.id;
-  const newEvent = await Event.create({ name, eventDate, location, host });
-
+  const newEvent = await Event.create({ name, eventDate, location, description, address, host });
   return res.status(201).json(newEvent);
 });
 
 exports.editEvent = asyncHandler(async (req, res, next) => {
-  const { name, eventDate, location } = req.body;
+  const { name, eventDate, location, description, address } = req.body;
   const hostId = req.user.id;
   const eventId = req.query.id;
   const petEvent = await Event.findById(eventId);
@@ -20,7 +19,11 @@ exports.editEvent = asyncHandler(async (req, res, next) => {
   if (!petEvent.host.equals(hostId)) {
     return res.sendStatus(403);
   }
-  const editedEvent = await Event.findOneAndUpdate({ _id: eventId }, { name, eventDate, location }, { new: true });
+  const editedEvent = await Event.findOneAndUpdate(
+    { _id: eventId },
+    { name, eventDate, location, description, address },
+    { new: true },
+  );
 
   return res.status(201).json(editedEvent);
 });
@@ -73,6 +76,21 @@ exports.getOneEvent = asyncHandler(async (req, res, next) => {
   const petEvent = await Event.findById(eventId)
     .populate('attendees', 'firstName lastName email')
     .populate('host', 'firstName lastName email');
+  if (!petEvent) {
+    return res.sendStatus(404);
+  }
+
+  return res.status(200).json(petEvent);
+});
+exports.getOneSimpleEvent = asyncHandler(async (req, res, next) => {
+  const eventId = req.params.id;
+  if (!eventId) {
+    return res.sendStatus(400);
+  }
+  const petEvent = await Event.findById(eventId);
+  if (!petEvent) {
+    return res.sendStatus(404);
+  }
 
   return res.status(200).json(petEvent);
 });
@@ -95,4 +113,23 @@ exports.removeEvent = asyncHandler(async (req, res, next) => {
   }
   const deletedEvent = await Event.findByIdAndDelete(eventId);
   return res.sendStatus(204);
+});
+
+exports.getEventsNearby = asyncHandler(async (req, res, next) => {
+  const { userCoordinates } = req.body;
+
+  if (!userCoordinates) {
+    res.status(400);
+  }
+
+  const nearbyEvents = await Event.where('location').near({
+    center: {
+      type: 'Point',
+      coordinates: userCoordinates,
+    },
+
+    maxDistance: 100 * 1000,
+  });
+
+  return res.status(200).json(nearbyEvents);
 });

@@ -25,6 +25,7 @@ import NavBar from './components/NavBar/NavBar';
 import AllNotifications from './pages/AllNotifiactions/AllNotifications';
 import NearByPetEvents from './components/PetEvent/NearByPetEvents';
 import PetEventPage from './components/PetEvent/PetEventPage';
+import PetEventForm from './components/PetEvent/PetEventForm';
 
 const stripePromise = loadStripe(
   'pk_test_51JYBH4HXzYVsCZt0Mls8k6b8UIXWlzgUTCinfBuNzmrqYLlUeUQuV4gcj7sePE1cDlUP2sRkFWJmAMgqovjZOEMd006aTSQqIg',
@@ -49,7 +50,9 @@ function App(): JSX.Element {
                     <ProtectedRoute exact path="/signup" component={Signup} />
                     <ProtectedRoute exact path="/dashboard" component={Dashboard} />
                     <ProtectedRoute exact path="/events" component={NearByPetEvents} />
-                    <ProtectedRoute exact path="/event-page" component={PetEventPage} />
+                    <ProtectedRoute exact path="/event/:id" component={PetEventPage} />
+                    <ProtectedRoute exact path="/event-form" component={PetEventForm} />
+                    <ProtectedRoute exact path="/edit/event/:eventID" component={PetEventForm} />
                     <ProtectedRoute exact path="/notifications" component={AllNotifications} />
                     <ProtectedRoute exact path="/my-sitters" component={MySitters} />
                     <Route path="*">

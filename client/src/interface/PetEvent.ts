@@ -11,8 +11,12 @@ export interface PetEvent {
   host: ProfileApiData | string;
 }
 
-export interface EventLocation {
+export interface MapLatLng {
   lat: number;
   lng: number;
-  address?: string;
+}
+
+export interface EventLocation {
+  coordinates: number[];
+  type?: string;
 }
