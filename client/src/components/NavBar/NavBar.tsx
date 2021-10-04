@@ -6,6 +6,7 @@ import NotificationsMenu from './NotificationsMenu/NotificationsMenu';
 import { useSocket } from '../../context/useSocketContext';
 import { useEffect } from 'react';
 import AuthHeader from '../../components/AuthHeader/AuthHeader';
+import PetEventsNavbarMenu from './PetEventsNavbarMenu/PetEventsNavbarMenu';
 
 export default function NavBar(): JSX.Element {
   const { loggedInUser } = useAuth();
@@ -59,6 +60,8 @@ export default function NavBar(): JSX.Element {
                     <Button>My Sitters</Button>
                   </Link>
                 </Box>
+
+                <PetEventsNavbarMenu />
                 <Box padding={1} marginLeft={1}>
                   <IconButton component={routerLink} to="/settings">
                     <AvatarDisplay loggedIn user={loggedInUser} />

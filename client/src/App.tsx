@@ -16,17 +16,17 @@ import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
-
 import { TourProvider } from '@reactour/tour';
 import { steps } from './helpers/Reactour/reactorSteps';
 
 import './App.css';
 import NavBar from './components/NavBar/NavBar';
 import AllNotifications from './pages/AllNotifiactions/AllNotifications';
+import NearByPetEvents from './components/PetEvent/NearByPetEvents';
+import PetEventPage from './components/PetEvent/PetEventPage';
+import PetEventForm from './components/PetEvent/PetEventForm';
 
-const stripePromise = loadStripe(
-  'pk_test_51JYBH4HXzYVsCZt0Mls8k6b8UIXWlzgUTCinfBuNzmrqYLlUeUQuV4gcj7sePE1cDlUP2sRkFWJmAMgqovjZOEMd006aTSQqIg',
-);
+const stripePromise = loadStripe(process.env.REACT_APP_STRIPE || '');
 
 function App(): JSX.Element {
   return (
@@ -39,8 +39,6 @@ function App(): JSX.Element {
                 <Elements stripe={stripePromise}>
                   <Route path="/">
                     <NavBar />
-                  <Route path="/">
-                    <NavBar />
                   </Route>
                   <Switch>
                     <ProtectedRoute exact path="/search" component={Searcher} />
@@ -48,6 +46,10 @@ function App(): JSX.Element {
                     <ProtectedRoute exact path="/login" component={Login} />
                     <ProtectedRoute exact path="/signup" component={Signup} />
                     <ProtectedRoute exact path="/dashboard" component={Dashboard} />
+                    <ProtectedRoute exact path="/events" component={NearByPetEvents} />
+                    <ProtectedRoute exact path="/event/:id" component={PetEventPage} />
+                    <ProtectedRoute exact path="/event-form" component={PetEventForm} />
+                    <ProtectedRoute exact path="/edit/event/:eventID" component={PetEventForm} />
                     <ProtectedRoute exact path="/notifications" component={AllNotifications} />
                     <ProtectedRoute exact path="/my-sitters" component={MySitters} />
                     <Route path="*">

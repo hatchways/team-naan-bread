@@ -31,15 +31,44 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     padding: theme.spacing(2, 4),
+    marginTop: theme.spacing(4),
     height: 56,
     borderRadius: theme.shape.borderRadius,
     fontSize: 16,
-    backgroundColor: theme.palette.primary.main,
     fontWeight: 'bold',
   },
   creditCard: {
     fontSize: 16,
     margin: theme.spacing(4, 0),
+  },
+  paymentMethodDetails: {
+    '& .card-brand': {
+      backgroundSize: 'contain',
+      backgroundPosition: 'center center',
+      backgroundRepeat: 'no-repeat',
+      width: 90,
+      height: 60,
+      marginBottom: theme.spacing(2),
+    },
+    '& .card-visa': {
+      backgroundImage: 'url("https://logos-marcas.com/wp-content/uploads/2020/04/Visa-Emblema.png")',
+    },
+    '& .card-mastercard': {
+      backgroundImage: 'url("https://1000marcas.net/wp-content/uploads/2019/12/logo-Mastercard.png")',
+    },
+    '& h3': {
+      fontWeight: '900',
+      fontSize: 20,
+    },
+    '& .exp-date': {
+      marginBottom: theme.spacing(2),
+      fontWeight: 'bold',
+      color: 'rgba(0, 0, 0, 0.5)',
+    },
+  },
+  errorMessage: {
+    color: 'red',
+    fontWeight: 'bold',
   },
 }));
 
