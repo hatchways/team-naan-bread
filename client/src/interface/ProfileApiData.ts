@@ -22,3 +22,20 @@ export interface Photo {
 export interface SearchProfilesApiData {
   profiles: Array<ProfileApiData>;
 }
+
+export interface CustomerProfile {
+  _id: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  requestsSubmitted: string[];
+  customerId: string;
+}
+
+export interface Customer {
+  id: string;
+  email: string;
+  invoice_settings: {
+    default_payment_method: string;
+  };
+}

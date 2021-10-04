@@ -3,6 +3,80 @@ const Profile = require('../models/Profile');
 const asyncHandler = require('express-async-handler');
 const stripe = require('stripe')(process.env.STRIPE);
 
+exports.createCustomer = asyncHandler(async (req, res) => {
+  const user = await Profile.findById(req.params.id);
+  const { email } = user;
+
+  try {
+    const customer = await stripe.customers.create({email});
+    
+    // update user in DB
+    user.customerId = customer.id;
+    user.save();
+    
+    res.send(customer);
+  }
+  catch (err) {
+    res.status(400);
+    throw new Error(err, "Error creating customer");
+  }
+});
+
+exports.retrieveCustomer = asyncHandler(async (req, res) => {
+  try {
+    const customer = await stripe.customers.retrieve(req.params.id);
+    if (customer) {
+      res.send(customer);
+    } else {
+      res.status(400);
+      throw new Error(err, "Customer not exists");  
+    }
+  }
+  catch (err) {
+    res.status(400);
+    throw new Error(err, "Error retrieving customer");
+  }
+});
+
+exports.attachPaymentMethod = asyncHandler(async (req, res) => {
+  try {
+    const paymentMethod = await stripe.paymentMethods.attach(
+      req.body.paymentMethodId,
+      {customer: req.body.customerId}
+    );
+
+    const customer = await stripe.customers.retrieve(req.body.customerId);
+
+    if (customer) {
+      await stripe.customers.update(
+        req.body.customerId,
+        {
+          invoice_settings: {
+            default_payment_method: req.body.paymentMethodId,
+          }
+        }
+      );
+    }
+    
+    res.send(paymentMethod);
+  }
+  catch (err) {
+    res.status(400);
+    throw new Error(err, 'Error attaching payment method');
+  }
+});
+
+exports.retrievePaymentMethod = asyncHandler(async (req, res) => {
+  try {
+    const paymentMethod = await stripe.paymentMethods.retrieve(req.params.id);
+    res.send(paymentMethod);
+  }
+  catch (err) {
+    res.status(400);
+    throw new Error(err, 'Error retrieving payment method');
+  }
+});
+
 exports.payPetSitter = asyncHandler(async (req, res) => {
   let { 
     userId, 

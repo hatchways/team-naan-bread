@@ -16,7 +16,6 @@ import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
-
 import { TourProvider } from '@reactour/tour';
 import { steps } from './helpers/Reactour/reactorSteps';
 
@@ -27,9 +26,7 @@ import NearByPetEvents from './components/PetEvent/NearByPetEvents';
 import PetEventPage from './components/PetEvent/PetEventPage';
 import PetEventForm from './components/PetEvent/PetEventForm';
 
-const stripePromise = loadStripe(
-  'pk_test_51JYBH4HXzYVsCZt0Mls8k6b8UIXWlzgUTCinfBuNzmrqYLlUeUQuV4gcj7sePE1cDlUP2sRkFWJmAMgqovjZOEMd006aTSQqIg',
-);
+const stripePromise = loadStripe(process.env.REACT_APP_STRIPE || '');
 
 function App(): JSX.Element {
   return (
