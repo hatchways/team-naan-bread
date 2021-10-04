@@ -3,14 +3,6 @@ const asyncHandler = require("express-async-handler");
 
 exports.createPetProfile = asyncHandler(async (req, res, next) => {
   const { petName, ownerID, petType, petAge, petStatus } = req.body;
-  if (!petName) {
-    res.status(404);
-    throw new Error("No pet name provided");
-  }
-  if (!ownerID) {
-    res.status(404);
-    throw new Error("No owner id provided");
-  }
   
   const petProfile = await PetProfile.create({
     petName,
@@ -25,14 +17,6 @@ exports.createPetProfile = asyncHandler(async (req, res, next) => {
 exports.updatePetProfile = asyncHandler(async (req, res, next) => {
   const values = ({ _id, petName, ownerID, petType, petAge, petStatus } =
     req.body);
-    if (!petName) {
-      res.status(404);
-      throw new Error("No pet name provided");
-    }
-    if (!ownerID) {
-      res.status(404);
-      throw new Error("No owner id provided");
-    }
 
     for (let prop in values) {
       if (!values[prop]) {
@@ -49,10 +33,7 @@ exports.updatePetProfile = asyncHandler(async (req, res, next) => {
   res.status(200).json({ petProfile });
 });
 exports.findPetProfiles = asyncHandler(async (req, res, next) => {
-  if (!ownerID) {
-    res.status(404);
-    throw new Error("No owner id provided");
-  }
+
   const petProfile = await petProfile.findById({ ownerID: req.body.ownerID });
   if (!petProfile) {
     res.status(404);
@@ -67,7 +48,7 @@ exports.getAllPetProfiles = asyncHandler(async (req, res, next) => {
 
   if (!petProfiles) {
     res.status(404);
-    throw new Error("No profiles found");
+    res.send([])
   }
 
   res.status(200).json({ petProfiles });
