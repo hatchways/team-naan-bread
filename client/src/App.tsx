@@ -23,6 +23,8 @@ import { steps } from './helpers/Reactour/reactorSteps';
 import './App.css';
 import NavBar from './components/NavBar/NavBar';
 import AllNotifications from './pages/AllNotifiactions/AllNotifications';
+import NearByPetEvents from './components/PetEvent/NearByPetEvents';
+import PetEventPage from './components/PetEvent/PetEventPage';
 
 const stripePromise = loadStripe(
   'pk_test_51JYBH4HXzYVsCZt0Mls8k6b8UIXWlzgUTCinfBuNzmrqYLlUeUQuV4gcj7sePE1cDlUP2sRkFWJmAMgqovjZOEMd006aTSQqIg',
@@ -39,8 +41,6 @@ function App(): JSX.Element {
                 <Elements stripe={stripePromise}>
                   <Route path="/">
                     <NavBar />
-                  <Route path="/">
-                    <NavBar />
                   </Route>
                   <Switch>
                     <ProtectedRoute exact path="/search" component={Searcher} />
@@ -48,6 +48,8 @@ function App(): JSX.Element {
                     <ProtectedRoute exact path="/login" component={Login} />
                     <ProtectedRoute exact path="/signup" component={Signup} />
                     <ProtectedRoute exact path="/dashboard" component={Dashboard} />
+                    <ProtectedRoute exact path="/events" component={NearByPetEvents} />
+                    <ProtectedRoute exact path="/event-page" component={PetEventPage} />
                     <ProtectedRoute exact path="/notifications" component={AllNotifications} />
                     <ProtectedRoute exact path="/my-sitters" component={MySitters} />
                     <Route path="*">
