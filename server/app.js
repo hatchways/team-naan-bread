@@ -18,6 +18,7 @@ const reviewRouter = require('./routes/review');
 const setHeaders = require('./middleware/setHeaders');
 const notificationRouter = require('./routes/notification');
 const paymentRouter = require('./routes/payment');
+const petProfileRouter = require('./routes/petProfile');
 const eventRouter = require('./routes/event');
 
 const { json, urlencoded } = express;
@@ -58,6 +59,7 @@ app.use("/availability", availabilityRouter);
 app.use('/review', reviewRouter);
 app.use('/notification', notificationRouter);
 app.use('/payment', paymentRouter);
+app.use('/petProfile', petProfileRouter);
 app.use('/event', eventRouter);
 
 if (process.env.NODE_ENV === 'production') {
