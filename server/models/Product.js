@@ -12,6 +12,10 @@ const productSchema = mongoose.Schema(
     description: {
       type: String,
     },
+    productImage: {
+      url: String,
+      publicId: String,
+    },
     stock: {
       type: Number,
       default: 1,
