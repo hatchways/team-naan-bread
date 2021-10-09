@@ -59,7 +59,7 @@ function Payment(): JSX.Element {
       if (loggedInUser) {
         const data: CustomerProfile = await getCustomerProfile(loggedInUser.id);
         setUserProfile(data);
-        if (data.customerId.length) {
+        if (data.customerId?.length) {
           const customer: Customer = await retrieveCustomer(data.customerId);
           setCustomer(customer);
           const paymentMethodId = customer?.invoice_settings?.default_payment_method;
