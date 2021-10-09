@@ -62,6 +62,10 @@ const profileSchema = new mongoose.Schema(
     hourlyRate: {
       type: Number,
     },
+    company: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'company',
+    },
   },
   {
     timestamps: true,
