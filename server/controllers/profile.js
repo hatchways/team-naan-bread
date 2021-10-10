@@ -132,6 +132,15 @@ exports.uploadProfilePhoto = asyncHandler(async (req, res, next) => {
   const image = req.file;
   if (req.user.id) {
     const user = await Profile.findById(req.user.id);
+    if (user.profilePhoto.url) {
+      await deletePhoto(user);
+    }
+    user.profilePhoto = {
+      url: image.path,
+      publicId: image.filename,
+    };
+    user.save();
+    res.sendStatus(200);
   } else {
     res.sendStatus(404);
     throw new Error("No user id provided");
@@ -140,16 +149,6 @@ exports.uploadProfilePhoto = asyncHandler(async (req, res, next) => {
     res.sendStatus(404);
     throw new Error("No user found");
   }
-  if (user.profilePhoto.url) {
-    await deletePhoto(user);
-  }
-  user.profilePhoto = {
-    url: image.path,
-    publicId: image.filename,
-  };
-  user.save();
-
-  res.sendStatus(200);
 });
 
 exports.deleteProfilePhoto = asyncHandler(async (req, res, next) => {
