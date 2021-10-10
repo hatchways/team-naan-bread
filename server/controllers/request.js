@@ -57,8 +57,6 @@ exports.postRequest = asyncHandler(async (req, res) => {
   await Profile.updateOne({ _id: sitterId }, { $push: { requestsReceived: request._id } });
   const currentUser = await Profile.findById(userId);
 
-  console.log(currentUser)
-
   const requestDurationInHours = parseInt((request.end - request.start) / 36e5);
   const requesterFirstNameOrAnonymous =
     updatedUserProfile && updatedUserProfile.firstName ? updatedUserProfile.firstName : 'Anonymous';
@@ -69,7 +67,7 @@ exports.postRequest = asyncHandler(async (req, res) => {
     notificationType: 'dog sitting',
     title: notificationTitle,
     context: {
-      profilePhotoURL: currentUser.profilePhoto.url,
+      profilePhotoURL: currentUser.profilePhoto.url | '',
     },
   });
 
