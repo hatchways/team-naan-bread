@@ -149,7 +149,7 @@ export default function MySitters(): JSX.Element {
                   </Typography>
                   <Box className={classes.cardUserInfoBox}>
                     <Box>
-                      <img src={mockImg} alt="user" className={classes.cardUserThumbnail} />
+                      <img src={nextBooking[0]?.user.profilePhoto?.url} alt="user" className={classes.cardUserThumbnail} />
                     </Box>
                     <Typography component="h3" className={classes.cardUserName}>
                       {`

@@ -30,7 +30,13 @@ interface Booking {
   end: string;
   accepted: string;
   declined: string;
-  user: { firstName: string; lastName: string };
+  user: { 
+    firstName: string; 
+    lastName: string;
+    profilePhoto: {
+      url: string;
+    };
+  };
 }
 
 function BookingCard({ 
@@ -80,7 +86,7 @@ function BookingCard({
                 <Grid item xs={8}>
                   <Box className={classes.cardUserInfoBox} >
                     <Box>
-                      <img src={mockImg} alt="user" className={classes.cardUserThumbnail}/>
+                      <img src={booking.user.profilePhoto?.url || mockImg} alt="user" className={classes.cardUserThumbnail}/>
                     </Box>
                     <Typography component="h3" className={classes.cardUserName}>
                       {`
