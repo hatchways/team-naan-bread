@@ -55,7 +55,9 @@ exports.postRequest = asyncHandler(async (req, res) => {
     { $push: { requestsSubmitted: request._id } },
   );
   await Profile.updateOne({ _id: sitterId }, { $push: { requestsReceived: request._id } });
-  const currentUser = await User.findById(userId);
+  const currentUser = await Profile.findById(userId);
+
+  console.log(currentUser)
 
   const requestDurationInHours = parseInt((request.end - request.start) / 36e5);
   const requesterFirstNameOrAnonymous =
