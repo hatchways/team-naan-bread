@@ -67,7 +67,7 @@ exports.postRequest = asyncHandler(async (req, res) => {
     notificationType: 'dog sitting',
     title: notificationTitle,
     context: {
-      profilePhotoURL: currentUser.profilePhoto.url | '',
+      profilePhotoURL: currentUser.profilePhoto.url || '',
     },
   });
 
