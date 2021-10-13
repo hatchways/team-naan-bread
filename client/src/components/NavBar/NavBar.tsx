@@ -1,7 +1,7 @@
 import { useAuth } from '../../context/useAuthContext';
 import { AppBar, Toolbar, Button, IconButton, Link, Box } from '@material-ui/core';
 import AvatarDisplay from '../AvatarDisplay/AvatarDisplay';
-import { Link as routerLink } from 'react-router-dom';
+import { Link as routerLink, useRouteMatch } from 'react-router-dom';
 import NotificationsMenu from './NotificationsMenu/NotificationsMenu';
 import { useSocket } from '../../context/useSocketContext';
 import { useEffect } from 'react';
@@ -11,6 +11,13 @@ import PetEventsNavbarMenu from './PetEventsNavbarMenu/PetEventsNavbarMenu';
 export default function NavBar(): JSX.Element {
   const { loggedInUser } = useAuth();
   const { initSocket, disconnectSocket } = useSocket();
+
+  let linkTo = '/login';
+  let btnText = 'Login';
+  if ('/login' == window.location.pathname) {
+    linkTo = '/signup';
+    btnText = 'Sign up';
+  }
 
   useEffect(() => {
     initSocket();
@@ -71,7 +78,7 @@ export default function NavBar(): JSX.Element {
             )}
             {!loggedInUser && (
               <>
-                <AuthHeader linkTo="/signup" btnText="Sign up" linkText="Become a Sitter" />
+                <AuthHeader linkTo={linkTo} btnText={btnText} linkText="Become a Sitter" />
               </>
             )}
           </Toolbar>
