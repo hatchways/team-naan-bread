@@ -57,12 +57,6 @@ export default function NavBar(): JSX.Element {
                 </Box>
                 <NotificationsMenu />
                 <Box padding={1} marginLeft={1}>
-                  <Button>My jobs</Button>
-                </Box>
-                <Box padding={1} marginLeft={1}>
-                  <Button>Messages</Button>
-                </Box>
-                <Box padding={1} marginLeft={1}>
                   <Link component={routerLink} to="/my-sitters">
                     <Button>My Sitters</Button>
                   </Link>
