@@ -74,8 +74,8 @@ exports.getOneEvent = asyncHandler(async (req, res, next) => {
     return res.sendStatus(400);
   }
   const petEvent = await Event.findById(eventId)
-    .populate('attendees', 'firstName lastName email')
-    .populate('host', 'firstName lastName email');
+    .populate('attendees', 'firstName lastName profilePhoto')
+    .populate('host', 'firstName lastName profilePhoto');
   if (!petEvent) {
     return res.sendStatus(404);
   }
