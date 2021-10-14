@@ -32,12 +32,11 @@ exports.createReview = asyncHandler(async (req, res, next) => {
 
   const notificationTitle = `${reviewerFirstNameOrAnonymous} gave you a review of ${rating} stars`;
 
-  const currentUser = await User.findById(reviewerId);
   await sendNotification(req.io, {
     userId: profileReviewedId,
     title: notificationTitle,
     context: {
-      profilePhotoURL: currentUser.profilePhoto.url,
+      profilePhotoURL: reviewerProfile.profilePhoto.url,
       rating: rating,
     },
     notificationType: 'review',
