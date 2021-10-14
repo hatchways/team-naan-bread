@@ -15,7 +15,7 @@ export default function NavBar(): JSX.Element {
 
   let linkTo = '/login';
   let btnText = 'Login';
-  if ('/login' == location.pathname) {
+  if ('/login' === location.pathname) {
     linkTo = '/signup';
     btnText = 'Sign up';
   }
