@@ -24,7 +24,6 @@ import { useAuth } from "../../context/useAuthContext";
 
 export default function MySitters(): JSX.Element {
   const classes = useStyles();
-  const { loggedInUser } = useAuth();
 
   const [requests, setRequests] = useState<RequestData[]>([]);
   const [dates, setDates] = useState<Date[]>([])
@@ -152,7 +151,7 @@ export default function MySitters(): JSX.Element {
                   <Box className={classes.cardUserInfoBox}>
                     <Box>
                       <Avatar
-                        src={loggedInUser && loggedInUser.profilePhotoUrl ? loggedInUser.profilePhotoUrl : undefined}
+                        src={nextBooking[0]?.user.profilePhoto  ? nextBooking[0].user.profilePhoto.url : undefined}
                         alt="user"
                         className={classes.cardUserThumbnail}
                       />
