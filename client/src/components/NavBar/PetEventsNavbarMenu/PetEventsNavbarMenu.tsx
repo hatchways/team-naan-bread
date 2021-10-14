@@ -43,7 +43,7 @@ export default function PetEventsNavbarMenu(): JSX.Element {
           events near you
         </MenuItem>
         <MenuItem component={routerLink} to="/event-form">
-          creat new event
+          create new event
         </MenuItem>
       </Menu>
     </Box>
