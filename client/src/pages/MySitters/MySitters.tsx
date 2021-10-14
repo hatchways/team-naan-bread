@@ -12,17 +12,19 @@ import {
   CardContent,
   IconButton,
   Typography,
-  Grow
+  Grow,
+  Avatar
 } from '@material-ui/core';
 import { Settings } from "@material-ui/icons";
 import useStyles from "./useStyles";
 import BookingCard from "../../components/BookingCards/BookingCard";
 import BookingsDatePicker from "../../components/BookingsDatePicker/BookingsDatePicker";
+import { useAuth } from "../../context/useAuthContext";
 
-const mockImg = 'https://badairies.co.uk/assets/admin/plugins/images/users/4.jpg';
 
 export default function MySitters(): JSX.Element {
   const classes = useStyles();
+  const { loggedInUser } = useAuth();
 
   const [requests, setRequests] = useState<RequestData[]>([]);
   const [dates, setDates] = useState<Date[]>([])
@@ -149,7 +151,11 @@ export default function MySitters(): JSX.Element {
                   </Typography>
                   <Box className={classes.cardUserInfoBox}>
                     <Box>
-                      <img src={mockImg} alt="user" className={classes.cardUserThumbnail} />
+                      <Avatar
+                        src={loggedInUser && loggedInUser.profilePhotoUrl ? loggedInUser.profilePhotoUrl : undefined}
+                        alt="user"
+                        className={classes.cardUserThumbnail}
+                      />
                     </Box>
                     <Typography component="h3" className={classes.cardUserName}>
                       {`
