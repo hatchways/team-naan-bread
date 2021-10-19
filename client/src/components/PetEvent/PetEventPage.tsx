@@ -71,12 +71,16 @@ export default function PetEventPage(): JSX.Element {
     if (data.error) {
       updateSnackBarMessage(data.error);
     } else {
-      isAttendee ? updateSnackBarMessage('canceled attendance ') : updateSnackBarMessage('attended ');
+      isAttendee ? updateSnackBarMessage('canceled attendance') : updateSnackBarMessage('attended');
       setPetEvent((state) => {
         if (isAttendee) {
           state.attendees = state.attendees.filter((attendee) => attendee._id != loggedInUser?.id);
         } else {
-          state.attendees.push({ firstName: 'You', _id: loggedInUser?.id } as ProfileApiData);
+          state.attendees.push({
+            firstName: 'You',
+            _id: loggedInUser?.id,
+            profilePhoto: { url: loggedInUser?.profilePhotoUrl },
+          } as ProfileApiData);
         }
         return state;
       });
@@ -195,7 +199,13 @@ export default function PetEventPage(): JSX.Element {
                 )}
                 <ListItem button component={routerLink} to={'#'}>
                   <ListItemAvatar>
-                    <Avatar />
+                    <Avatar
+                      src={
+                        typeof petEvent.host !== 'string' && petEvent.host && petEvent.host.profilePhoto
+                          ? petEvent.host.profilePhoto.url
+                          : undefined
+                      }
+                    />
                   </ListItemAvatar>
                   {typeof petEvent.host !== 'string' && petEvent.host && (
                     <ListItemText
@@ -209,7 +219,7 @@ export default function PetEventPage(): JSX.Element {
                   petEvent.attendees.map((attendee: ProfileApiData) => (
                     <ListItem key={attendee._id} button component={routerLink} to={'#'}>
                       <ListItemAvatar>
-                        <Avatar />
+                        <Avatar src={attendee.profilePhoto ? attendee.profilePhoto.url : undefined} />
                       </ListItemAvatar>
                       <ListItemText> {loggedInUser?.id === attendee._id ? 'You' : attendee.firstName}</ListItemText>
                     </ListItem>

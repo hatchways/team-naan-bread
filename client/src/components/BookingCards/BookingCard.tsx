@@ -1,15 +1,16 @@
 /* eslint-disable prettier/prettier */
 import React  from "react";
 import useStyles from "./useStyles";
-import { 
-  Card, 
-  CardHeader, 
-  CardContent, 
-  IconButton, 
-  Typography, 
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  IconButton,
+  Typography,
   Link,
-  Box, 
-  Grid
+  Box,
+  Grid,
+  Avatar
 } from "@material-ui/core";
 import { Settings } from "@material-ui/icons";
 
@@ -30,25 +31,25 @@ interface Booking {
   end: string;
   accepted: string;
   declined: string;
-  user: { firstName: string; lastName: string };
+  user: { firstName: string; lastName: string, profilePhoto?: { url: string; }; };
 }
 
-function BookingCard({ 
-  createDate, 
-  requests, 
-  cardAction, 
-  selectedBooking, 
+function BookingCard({
+  createDate,
+  requests,
+  cardAction,
+  selectedBooking,
   displayCardActions,
   updateSelectedRequest}: Props ): JSX.Element {
-  
+
   const classes = useStyles();
 
   return (
     <Box component="div" style={{height: 264, overflow: "auto"}}>
-      {requests.length 
+      {requests.length
         ? requests.map((booking: Booking) => (
           <Card key={booking._id} className={classes.cardBooking}>
-            <CardHeader 
+            <CardHeader
               classes={{title: classes.cardsBookingHeaderTitle}}
               title={createDate(booking.start, booking.end)}
               action={
@@ -73,14 +74,14 @@ function BookingCard({
                   }
                 </IconButton>
               }
-              className={classes.cardBookingHeader} 
+              className={classes.cardBookingHeader}
             />
             <CardContent className={classes.cardBookingContent}>
               <Grid container>
                 <Grid item xs={8}>
                   <Box className={classes.cardUserInfoBox} >
                     <Box>
-                      <img src={mockImg} alt="user" className={classes.cardUserThumbnail}/>
+                      <Avatar src={booking.user.profilePhoto?booking.user.profilePhoto.url:undefined} alt="user" className={classes.cardUserThumbnail}/>
                     </Box>
                     <Typography component="h3" className={classes.cardUserName}>
                       {`
@@ -92,16 +93,16 @@ function BookingCard({
                 </Grid>
                 <Grid item xs={4}>
                   <Typography className={classes.cardBookingState}>
-                    {booking.accepted 
-                      ? "Accepted" : booking.declined 
-                        ? "Declined" 
+                    {booking.accepted
+                      ? "Accepted" : booking.declined
+                        ? "Declined"
                         : "Pending"}
                   </Typography>
                 </Grid>
               </Grid>
             </CardContent>
           </Card>
-          )) 
+          ))
         : <Card>
             <CardContent>
               No bookings to display.

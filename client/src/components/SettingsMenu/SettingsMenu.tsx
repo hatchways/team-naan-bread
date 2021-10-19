@@ -24,12 +24,6 @@ function SettingsMenu(props: Props): JSX.Element {
         <MenuItem>
           <Link to={`${props.url}/payment`}>Payment</Link>
         </MenuItem>
-        <MenuItem>
-          <Link to="">Security</Link>
-        </MenuItem>
-        <MenuItem>
-          <Link to="">Settings</Link>
-        </MenuItem>
       </MenuList>
     </Box>
   );

@@ -13,4 +13,7 @@ export interface RequestData {
 export interface RequestUser {
   firstName: string;
   lastName: string;
+  profilePhoto: {
+    url: string;
+  };
 }

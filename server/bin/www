@@ -30,6 +30,9 @@ const io = require("../app").io
 //Middleware to authenticate socket
 const authSocket = async (socket, next) => {
   const auth = socket.handshake.auth;
+  if(!socket.handshake.headers.cookie) {
+    return next(new Error('No token, authorization denied'));
+  }
   const token = socket.handshake.headers.cookie.split('=')[1];
   if (!token) {
     next(new Error('No token, authorization denied'));
@@ -46,6 +49,9 @@ const authSocket = async (socket, next) => {
   return next();
 };
 
+io.use(authSocket);
+
+const onlineUsers = []
 io.on('connection', (socket) => {
   socket.send('Hello!');
   socket.on('go-online', (id) => {

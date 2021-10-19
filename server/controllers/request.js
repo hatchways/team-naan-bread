@@ -1,4 +1,4 @@
-require("dotenv").config();
+require('dotenv').config();
 const Request = require('../models/Request');
 const Profile = require('../models/Profile');
 const { sendNotification } = require('../services/notifications');
@@ -55,7 +55,6 @@ exports.postRequest = asyncHandler(async (req, res) => {
     { $push: { requestsSubmitted: request._id } },
   );
   await Profile.updateOne({ _id: sitterId }, { $push: { requestsReceived: request._id } });
-  const currentUser = await User.findById(userId);
 
   const requestDurationInHours = parseInt((request.end - request.start) / 36e5);
   const requesterFirstNameOrAnonymous =
@@ -67,7 +66,7 @@ exports.postRequest = asyncHandler(async (req, res) => {
     notificationType: 'dog sitting',
     title: notificationTitle,
     context: {
-      profilePhotoURL: currentUser.profilePhoto.url,
+      profilePhotoURL: updatedUserProfile.profilePhoto.url,
     },
   });
 

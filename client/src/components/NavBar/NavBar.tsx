@@ -1,7 +1,7 @@
 import { useAuth } from '../../context/useAuthContext';
 import { AppBar, Toolbar, Button, IconButton, Link, Box } from '@material-ui/core';
 import AvatarDisplay from '../AvatarDisplay/AvatarDisplay';
-import { Link as routerLink } from 'react-router-dom';
+import { Link as routerLink, useLocation } from 'react-router-dom';
 import NotificationsMenu from './NotificationsMenu/NotificationsMenu';
 import { useSocket } from '../../context/useSocketContext';
 import { useEffect } from 'react';
@@ -11,7 +11,14 @@ import PetEventsNavbarMenu from './PetEventsNavbarMenu/PetEventsNavbarMenu';
 export default function NavBar(): JSX.Element {
   const { loggedInUser } = useAuth();
   const { initSocket, disconnectSocket } = useSocket();
+  const location = useLocation();
 
+  let linkTo = '/login';
+  let btnText = 'Login';
+  if ('/login' === location.pathname) {
+    linkTo = '/signup';
+    btnText = 'Sign up';
+  }
   useEffect(() => {
     initSocket();
   }, [initSocket]);
@@ -50,12 +57,6 @@ export default function NavBar(): JSX.Element {
                 </Box>
                 <NotificationsMenu />
                 <Box padding={1} marginLeft={1}>
-                  <Button>My jobs</Button>
-                </Box>
-                <Box padding={1} marginLeft={1}>
-                  <Button>Messages</Button>
-                </Box>
-                <Box padding={1} marginLeft={1}>
                   <Link component={routerLink} to="/my-sitters">
                     <Button>My Sitters</Button>
                   </Link>
@@ -71,7 +72,7 @@ export default function NavBar(): JSX.Element {
             )}
             {!loggedInUser && (
               <>
-                <AuthHeader linkTo="/signup" btnText="Sign up" linkText="Become a Sitter" />
+                <AuthHeader linkTo={linkTo} btnText={btnText} linkText="Become a Sitter" />
               </>
             )}
           </Toolbar>
